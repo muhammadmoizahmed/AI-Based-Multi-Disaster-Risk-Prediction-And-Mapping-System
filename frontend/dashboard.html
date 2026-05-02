@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DisasterGuard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Top Navigation -->
+    <nav class="navbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
+        <div class="navbar-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <!-- Notifications -->
+                <button class="notif-btn" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span id="notifBadge" class="notif-badge">3</span>
+                </button>
+                
+                <!-- Notification Box -->
+                <div id="notifBox" style="display:none; border:1px solid #ccc; padding:10px; width:200px; margin-top:10px;">
+                    <p>New message</p>
+                    <p>New order received</p>
+                </div>
+                <!-- User Menu -->
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;" onclick="toggleUserMenu()">
+                    <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        <span id="userInitials">JD</span>
+                    </div>
+                    <span id="userName" style="font-weight: 600;">John Doe</span>
+                    <i class="fas fa-chevron-down" style="color: var(--text-muted);"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Main</p>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="pages/alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                <li><a href="pages/history.html"><i class="fas fa-history"></i> History</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <p class="sidebar-title">Disaster Monitoring</p>
+            <ul class="sidebar-menu">
+                <li><a href="pages/flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a></li>
+                <li><a href="pages/earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
+                <li><a href="pages/wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
+                <li><a href="pages/heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
+                <li><a href="pages/weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <p class="sidebar-title">Support</p>
+            <ul class="sidebar-menu">
+                <li><a href="pages/live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live Chat</a></li>
+                <li><a href="pages/settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <p class="sidebar-title">Account</p>
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <!-- Page Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Dashboard</h1>
+                <p style="color: var(--text-secondary);">Welcome back! Here's your disaster monitoring overview.</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-secondary" onclick="refreshData()">
+                    <i class="fas fa-sync-alt" id="refreshIcon"></i>
+                    Refresh
+                </button>
+                <button class="btn btn-primary" onclick="generateReport()">
+                    <i class="fas fa-download"></i>
+                    Export Report
+                </button>
+            </div>
+        </div>
+
+        <!-- Risk Score Cards -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- Flood Risk -->
+            <div class="card-3d risk-card" style="border-left: 4px solid var(--accent-primary);">
+                <div class="risk-header">
+                    <span class="risk-title"><i class="fas fa-water" style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Flood Risk</span>
+                    <span id="floodBadge" class="risk-badge high">High</span>
+                </div>
+                <div id="floodScore" class="risk-score" style="color: var(--accent-primary);">0.73</div>
+                <div class="risk-bar">
+                    <div id="floodBar" class="risk-bar-fill high" style="width: 73%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                    <small style="color: var(--text-secondary);">Karachi, Sindh</small>
+                    <a href="pages/flood.html" style="color: var(--accent-primary); font-size: 0.85rem; text-decoration: none;">View Details →</a>
+                </div>
+            </div>
+
+            <!-- Earthquake Risk -->
+            <div class="card-3d risk-card" style="border-left: 4px solid var(--accent-secondary);">
+                <div class="risk-header">
+                    <span class="risk-title"><i class="fas fa-globe-asia" style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Earthquake Risk</span>
+                    <span id="quakeBadge" class="risk-badge moderate">Moderate</span>
+                </div>
+                <div id="quakeScore" class="risk-score" style="color: var(--accent-secondary);">0.45</div>
+                <div class="risk-bar">
+                    <div id="quakeBar" class="risk-bar-fill moderate" style="width: 45%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                    <small style="color: var(--text-secondary);">Islamabad Region</small>
+                    <a href="pages/earthquake.html" style="color: var(--accent-secondary); font-size: 0.85rem; text-decoration: none;">View Details →</a>
+                </div>
+            </div>
+
+            <!-- Wildfire Risk -->
+            <div class="card-3d risk-card" style="border-left: 4px solid var(--accent-tertiary);">
+                <div class="risk-header">
+                    <span class="risk-title"><i class="fas fa-fire" style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>Wildfire Risk</span>
+                    <span id="fireBadge" class="risk-badge low">Low</span>
+                </div>
+                <div id="fireScore" class="risk-score" style="color: var(--accent-tertiary);">0.12</div>
+                <div class="risk-bar">
+                    <div id="fireBar" class="risk-bar-fill low" style="width: 12%;"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                    <small style="color: var(--text-secondary);">Punjab Region</small>
+                    <a href="pages/wildfire.html" style="color: var(--accent-tertiary); font-size: 0.85rem; text-decoration: none;">View Details →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map and Alerts Section -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- Mini Heatmap -->
+            <div class="card-3d">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.5rem 0;">
+                    <h3 style="font-weight: 700;"><i class="fas fa-map-marked-alt" style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Heatmap - Pakistan</h3>
+                    <a href="pages/heatmap.html" class="btn btn-secondary" style="padding: 0.5rem 1rem;">Full View</a>
+                </div>
+                <div class="map-container" style="margin: 1rem; border-radius: var(--radius-md); height: 350px;">
+                    <div id="miniMap" style="width: 100%; height: 100%; border-radius: var(--radius-md);"></div>
+                </div>
+                <!-- Legend -->
+                <div style="display: flex; gap: 1.5rem; padding: 0 1.5rem 1.5rem; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="width: 12px; height: 12px; background: var(--risk-low); border-radius: 50%;"></span>
+                        <small style="color: var(--text-secondary);">Low (0-0.3)</small>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="width: 12px; height: 12px; background: var(--risk-moderate); border-radius: 50%;"></span>
+                        <small style="color: var(--text-secondary);">Moderate (0.3-0.6)</small>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="width: 12px; height: 12px; background: var(--risk-high); border-radius: 50%;"></span>
+                        <small style="color: var(--text-secondary);">High (0.6-0.8)</small>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="width: 12px; height: 12px; background: var(--risk-extreme); border-radius: 50%;"></span>
+                        <small style="color: var(--text-secondary);">Extreme (0.8+)</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Alerts -->
+            <div class="card-3d">
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.5rem 0;">
+                    <h3 style="font-weight: 700;"><i class="fas fa-bell" style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>Recent Alerts</h3>
+                    <a href="pages/alerts.html" style="color: var(--accent-primary); font-size: 0.85rem; text-decoration: none;">View All</a>
+                </div>
+                <div class="alert-feed" style="padding: 1rem;">
+                    <!-- Alert 1 -->
+                    <div class="alert-item warning">
+                        <div class="alert-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>Flood Risk Increased</h4>
+                            <p>Karachi - Heavy rainfall predicted</p>
+                        </div>
+                        <span class="alert-time">2 min ago</span>
+                    </div>
+                    
+                    <!-- Alert 2 -->
+                    <div class="alert-item critical">
+                        <div class="alert-icon">
+                            <i class="fas fa-globe-asia"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>Earthquake Detected</h4>
+                            <p>Magnitude 4.2 near Islamabad</p>
+                        </div>
+                        <span class="alert-time">15 min ago</span>
+                    </div>
+                    
+                    <!-- Alert 3 -->
+                    <div class="alert-item warning">
+                        <div class="alert-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>Fire Hotspot Detected</h4>
+                            <p>Satellite data shows activity</p>
+                        </div>
+                        <span class="alert-time">1 hour ago</span>
+                    </div>
+
+                    <!-- Alert 4 -->
+                    <div class="alert-item warning">
+                        <div class="alert-icon">
+                            <i class="fas fa-cloud-rain"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h4>Rainfall Alert</h4>
+                            <p>72hr forecast: 150mm expected</p>
+                        </div>
+                        <span class="alert-time">3 hours ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="card-3d stat-card">
+                <div style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0, 212, 255, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    <i class="fas fa-map-marker-alt" style="color: var(--accent-primary); font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value">12</div>
+                <div class="stat-label">Cities Monitored</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(123, 44, 191, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    <i class="fas fa-database" style="color: var(--accent-secondary); font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value">847</div>
+                <div class="stat-label">API Calls Today</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 0, 110, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    <i class="fas fa-exclamation-triangle" style="color: var(--accent-tertiary); font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value">3</div>
+                <div class="stat-label">Active Alerts</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0, 200, 83, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    <i class="fas fa-check-circle" style="color: var(--risk-low); font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value">95%</div>
+                <div class="stat-label">System Uptime</div>
+            </div>
+        </div>
+
+        <!-- Recent Activity Table -->
+        <div class="card-3d">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1.5rem;">
+                <h3 style="font-weight: 700;"><i class="fas fa-history" style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Recent Activity</h3>
+                <a href="pages/history.html" style="color: var(--accent-primary); font-size: 0.85rem; text-decoration: none;">View All →</a>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Event Type</th>
+                            <th>Location</th>
+                            <th>Risk Level</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fas fa-water" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Flood</td>
+                            <td>Karachi, Sindh</td>
+                            <td><span class="risk-badge high">High (0.73)</span></td>
+                            <td>2025-04-16 14:30</td>
+                            <td><span class="status-badge warning">Monitoring</span></td>
+                            <td><a href="pages/flood.html" style="color: var(--accent-primary);">Details</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-globe-asia" style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Earthquake</td>
+                            <td>Islamabad</td>
+                            <td><span class="risk-badge moderate">Mod (0.45)</span></td>
+                            <td>2025-04-16 12:15</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td><a href="pages/earthquake.html" style="color: var(--accent-primary);">Details</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-fire" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Wildfire</td>
+                            <td>Punjab Region</td>
+                            <td><span class="risk-badge low">Low (0.12)</span></td>
+                            <td>2025-04-16 08:00</td>
+                            <td><span class="status-badge active">Normal</span></td>
+                            <td><a href="pages/wildfire.html" style="color: var(--accent-primary);">Details</a></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-cloud-rain" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Heavy Rain</td>
+                            <td>Lahore, Punjab</td>
+                            <td><span class="risk-badge moderate">Mod (0.58)</span></td>
+                            <td>2025-04-15 22:45</td>
+                            <td><span class="status-badge warning">Alert</span></td>
+                            <td><a href="pages/flood.html" style="color: var(--accent-primary);">Details</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification Dropdown -->
+    <div id="notifDropdown" style="display: none; position: fixed; top: 70px; right: 2rem; width: 350px; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); box-shadow: var(--shadow-3d); z-index: 1001;">
+        <div style="padding: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <h4 style="font-weight: 700;">Notifications</h4>
+        </div>
+        <div style="max-height: 300px; overflow-y: auto; padding: 0.5rem;">
+            <div class="alert-item warning" style="margin: 0.5rem;">
+                <div class="alert-icon"><i class="fas fa-water"></i></div>
+                <div class="alert-content">
+                    <h4>Flood Risk Alert</h4>
+                    <p>Karachi risk increased to HIGH</p>
+                </div>
+            </div>
+            <div class="alert-item critical" style="margin: 0.5rem;">
+                <div class="alert-icon"><i class="fas fa-globe-asia"></i></div>
+                <div class="alert-content">
+                    <h4>Earthquake Detected</h4>
+                    <p>Magnitude 4.2 near Islamabad</p>
+                </div>
+            </div>
+            <div class="alert-item warning" style="margin: 0.5rem;">
+                <div class="alert-icon"><i class="fas fa-fire"></i></div>
+                <div class="alert-content">
+                    <h4>Fire Hotspot</h4>
+                    <p>New satellite detection</p>
+                </div>
+            </div>
+        </div>
+        <div style="padding: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
+            <a href="pages/alerts.html" style="color: var(--accent-primary); font-size: 0.9rem; text-decoration: none;">View All Notifications</a>
+        </div>
+    </div>
+
+    <!-- User Dropdown -->
+    <div id="userDropdown" style="display: none; position: fixed; top: 70px; right: 5rem; width: 220px; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); box-shadow: var(--shadow-3d); z-index: 1001;">
+        <div style="padding: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <p style="font-weight: 700;">John Doe</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">john.doe@email.com</p>
+        </div>
+        <ul style="list-style: none; padding: 0.5rem;">
+            <li><a href="pages/settings.html" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="pages/profile.html" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-user"></i> Profile</a></li>
+            <li style="border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 0.5rem;"><a href="#" onclick="logout()" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--risk-extreme); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 9999; box-shadow: var(--shadow-3d);">
+        <i id="toastIcon" class="fas fa-info-circle" style="color: var(--accent-primary);"></i>
+        <span id="toastMessage">Notification</span>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Check authentication - DISABLED FOR PREVIEW
+        document.addEventListener('DOMContentLoaded', () => {
+            // const token = localStorage.getItem('auth_token');
+            // if (!token) {
+            //     window.location.href = 'login.html';
+            //     return;
+            // }
+            
+            // Load user data
+            const userData = JSON.parse(localStorage.getItem('verified_user') || '{}');
+            if (userData.firstName) {
+                document.getElementById('userName').textContent = `${userData.firstName} ${userData.lastName}`;
+                document.getElementById('userInitials').textContent = 
+                    (userData.firstName[0] + userData.lastName[0]).toUpperCase();
+            }
+            
+            // Initialize mini map
+            initMiniMap();
+            
+            // Start live updates
+            startLiveUpdates();
+        });
+
+        // Initialize Mini Map
+        function initMiniMap() {
+            const map = L.map('miniMap', {
+                zoomControl: false,
+                attributionControl: false
+            }).setView([30.3753, 69.3451], 5);
+
+            // Dark theme map tiles
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                maxZoom: 19
+            }).addTo(map);
+
+            // Sample risk markers
+            const locations = [
+                { lat: 24.8607, lon: 67.0011, city: 'Karachi', risk: 'high' },
+                { lat: 31.5497, lon: 74.3436, city: 'Lahore', risk: 'moderate' },
+                { lat: 33.6844, lon: 73.0479, city: 'Islamabad', risk: 'moderate' },
+                { lat: 30.1798, lon: 66.9750, city: 'Quetta', risk: 'low' },
+                { lat: 34.0151, lon: 71.5249, city: 'Peshawar', risk: 'low' }
+            ];
+
+            const colors = {
+                low: '#00c853',
+                moderate: '#ffd600',
+                high: '#ff6d00',
+                extreme: '#ff1744'
+            };
+
+            locations.forEach(loc => {
+                L.circleMarker([loc.lat, loc.lon], {
+                    radius: 15,
+                    fillColor: colors[loc.risk],
+                    color: '#fff',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.7
+                }).addTo(map).bindPopup(`<b>${loc.city}</b><br>Risk: ${loc.risk.toUpperCase()}`);
+            });
+        }
+
+        // Live updates simulation
+        function startLiveUpdates() {
+            setInterval(() => {
+                // Simulate slight risk score changes
+                const floodScore = 0.70 + (Math.random() * 0.05);
+                updateRiskCard('flood', floodScore);
+            }, 30000); // Every 30 seconds
+        }
+
+        function updateRiskCard(type, score) {
+            const scoreEl = document.getElementById(`${type}Score`);
+            const barEl = document.getElementById(`${type}Bar`);
+            const badgeEl = document.getElementById(`${type}Badge`);
+            
+            scoreEl.textContent = score.toFixed(2);
+            barEl.style.width = `${score * 100}%`;
+            
+            // Update badge based on score
+            let badgeClass, badgeText;
+            if (score < 0.3) {
+                badgeClass = 'low';
+                badgeText = 'Low';
+            } else if (score < 0.6) {
+                badgeClass = 'moderate';
+                badgeText = 'Moderate';
+            } else if (score < 0.8) {
+                badgeClass = 'high';
+                badgeText = 'High';
+            } else {
+                badgeClass = 'extreme';
+                badgeText = 'Extreme';
+            }
+            
+            badgeEl.className = `risk-badge ${badgeClass}`;
+            badgeEl.textContent = badgeText;
+        }
+
+        // UI Functions
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function refreshData() {
+            const icon = document.getElementById('refreshIcon');
+            icon.classList.add('fa-spin');
+            
+            showToast('Refreshing data...', 'info');
+            
+            setTimeout(() => {
+                icon.classList.remove('fa-spin');
+                showToast('Data updated successfully!', 'success');
+            }, 1500);
+        }
+
+        function generateReport() {
+            showToast('Generating PDF report...', 'info');
+            
+            setTimeout(() => {
+                showToast('Report downloaded successfully!', 'success');
+            }, 2000);
+        }
+
+        function logout() {
+            localStorage.removeItem('auth_token');
+            window.location.href = 'login.html';
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            const colors = {
+                success: 'var(--risk-low)',
+                error: 'var(--risk-extreme)',
+                info: 'var(--accent-primary)'
+            };
+            
+            toastIcon.className = `fas ${icons[type]}`;
+            toastIcon.style.color = colors[type];
+            
+            toast.style.display = 'flex';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar')) {
+                document.getElementById('notifDropdown').style.display = 'none';
+                document.getElementById('userDropdown').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

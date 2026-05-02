@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - DisasterGuard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard <span style="font-size: 0.7em; background: var(--accent-tertiary); padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;">ADMIN</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="dashboard.html" class="btn btn-secondary">Back to Admin</a>
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">AD</div>
+            </div>
+        </div>
+    </nav>
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Overview</p>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="users.html" class="active"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="api-monitor.html"><i class="fas fa-network-wired"></i> API Monitor</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">System</p>
+            <ul class="sidebar-menu">
+                <li><a href="models.html"><i class="fas fa-brain"></i> Model Management</a></li>
+                <li><a href="config.html"><i class="fas fa-cog"></i> Alert Config</a></li>
+                <li><a href="logs.html"><i class="fas fa-file-alt"></i> System Logs</a></li>
+            </ul>
+        </div>
+         <div class="sidebar-section">
+            <p class="sidebar-title">Quick Actions</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-user"></i> User View</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-users" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>User Management</h1>
+                <p style="color: var(--text-secondary);">Manage registered users and their permissions</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <input type="text" class="input-field" placeholder="Search users..." style="width: 250px; padding: 0.75rem 1rem;">
+                <button class="btn btn-primary"><i class="fas fa-user-plus"></i><Search>Search User</Search></button>
+            </div>
+        </div>
+        <div class="card-3d">
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Joined</th>
+                            <th>Last Active</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div style="display: flex; align-items: center; gap: 0.75rem;"><div style="width: 32px; height: 32px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">AS</div><span>Ahmed Shah</span></div></td>
+                            <td>ahmed@email.com</td>
+                            <td><span class="status-badge active">User</span></td>
+                            <td>2025-04-16</td>
+                            <td>2 hours ago</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td><a href="edit-user.html?id=1" class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-edit"></i> Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center; gap: 0.75rem;"><div style="width: 32px; height: 32px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">FK</div><span>Fatima Khan</span></div></td>
+                            <td>fatima@email.com</td>
+                            <td><span class="status-badge active">User</span></td>
+                            <td>2025-04-15</td>
+                            <td>5 hours ago</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td><a href="edit-user.html?id=2" class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-edit"></i> Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center; gap: 0.75rem;"><div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff006e, #ffbe0b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">HR</div><span>Hamid Raza</span></div></td>
+                            <td>hamid@email.com</td>
+                            <td><span class="status-badge critical">Admin</span></td>
+                            <td>2025-04-10</td>
+                            <td>1 hour ago</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-edit"></i> Edit</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script>
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
