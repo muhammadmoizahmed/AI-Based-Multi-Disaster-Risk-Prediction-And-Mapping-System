@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Management - DisasterGuard Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Admin Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard <span
+                    style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <button class="btn btn-secondary" onclick="refreshAllModels()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <button class="btn btn-primary" onclick="showDeployModal()">
+                    <i class="fas fa-rocket"></i> Deploy New Model
+                </button>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div
+                        style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        AD</div>
+                    <span style="font-weight: 600;">Admin</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Overview</p>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="users.html"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="api-monitor.html"><i class="fas fa-network-wired"></i> API Monitor</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">System</p>
+            <ul class="sidebar-menu">
+                <li><a href="models.html" class="active"><i class="fas fa-brain"></i> Model Management</a></li>
+                <li><a href="config.html"><i class="fas fa-cog"></i> Alert Config</a></li>
+                <li><a href="logs.html"><i class="fas fa-file-alt"></i> System Logs</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Quick Actions</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-user"></i> User View</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">
+                    <i class="fas fa-brain" style="color: var(--accent-secondary); margin-right: 0.75rem;"></i>Model
+                    Management
+                </h1>
+                <p style="color: var(--text-secondary);">AI/ML models for disaster prediction and risk assessment</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="card-3d" style="padding: 1rem 1.5rem; text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-primary);" id="activeModels">5
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Active Models</div>
+                </div>
+                <div class="card-3d" style="padding: 1rem 1.5rem; text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-secondary);" id="avgAccuracy">
+                        94.2%</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Avg Accuracy</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Status Cards -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- Flood LSTM Model -->
+            <div class="card-3d" style="padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div
+                            style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-water" style="font-size: 1.5rem; color: white;"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-weight: 700;">Flood LSTM</h4>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">v2.3.1</span>
+                        </div>
+                    </div>
+                    <span class="status-badge" style="background: var(--risk-low);">Active</span>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.9rem; color: var(--text-muted);">Accuracy</span>
+                        <span style="font-weight: 600;" id="floodAcc">92.4%</span>
+                    </div>
+                    <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                        <div id="floodAccBar"
+                            style="height: 100%; width: 92.4%; background: var(--accent-primary); border-radius: 3px; transition: width 0.3s;">
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.85rem;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="color: var(--text-muted);">Precision</div>
+                        <div style="font-weight: 600;" id="floodPrec">89.7%</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="color: var(--text-muted);">Recall</div>
+                        <div style="font-weight: 600;" id="floodRec">94.1%</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;"><i class="fas fa-play"></i>
+                        Test</button>
+                    <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;"><i class="fas fa-download"></i>
+                        Export</button>
+                </div>
+            </div>
+
+            <!-- Earthquake CNN Model -->
+            <div class="card-3d" style="padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div
+                            style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-secondary), var(--accent-quaternary)); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-globe-asia" style="font-size: 1.5rem; color: white;"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-weight: 700;">Quake CNN</h4>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">v1.8.2</span>
+                        </div>
+                    </div>
+                    <span class="status-badge" style="background: var(--risk-low);">Active</span>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.9rem; color: var(--text-muted);">Accuracy</span>
+                        <span style="font-weight: 600;" id="quakeAcc">96.8%</span>
+                    </div>
+                    <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                        <div id="quakeAccBar"
+                            style="height: 100%; width: 96.8%; background: var(--accent-secondary); border-radius: 3px; transition: width 0.3s;">
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.85rem;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="color: var(--text-muted);">Precision</div>
+                        <div style="font-weight: 600;" id="quakePrec">94.2%</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="color: var(--text-muted);">Recall</div>
+                        <div style="font-weight: 600;" id="quakeRec">97.5%</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;"><i class="fas fa-play"></i>
+                        Test</button>
+                    <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;"><i class="fas fa-download"></i>
+                        Export</button>
+                </div>
+            </div>
+
+            <!-- Wildfire Detection Model -->
+            <div class="card-3d" style="padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <div
+                            style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-tertiary), #ff6b35); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-fire" style="font-size: 1.5rem; color: white;"></i>
+                        </div>
+                        <div>
+                            <h4 style="font-weight: 700;">Fire Detect</h4>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">v3.0.0</span>
+                        </div>
+                    </div>
+                    <span class="status-badge" style="background: var(--risk-low);">Active</span>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.9rem; color: var(--text-muted);">Accuracy</span>
+                        <span style="font-weight: 600;" id="fireAcc">91.3%</span>
+                    </div>
+                    <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
+                        <div id="fireAccBar"
+                            style="height: 100%; width: 91.3%; background: var(--accent-tertiary); border-radius: 3px; transition: width 0.3s;">
+                        </div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.85rem;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="color: var(--text-muted);">Precision</div>
+                        <div style="font-weight: 600;" id="firePrec">88.9%</div>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: var(--radius-sm);">
+                        <div style="color: var(--text-muted);">Recall</div>
+                        <div style="font-weight: 600;" id="fireRec">92.7%</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button class="btn btn-primary" style="flex: 1; padding: 0.5rem;"><i class="fas fa-play"></i>
+                        Test</button>
+                    <button class="btn btn-secondary" style="flex: 1; padding: 0.5rem;"><i class="fas fa-download"></i>
+                        Export</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Performance Chart -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="card-3d" style="padding: 1.5rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1rem;">Model Accuracy Trend (7 Days)</h3>
+                <canvas id="accuracyChart" height="180"></canvas>
+            </div>
+            <div class="card-3d" style="padding: 1.5rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1rem;">Model Usage</h3>
+                <canvas id="usageChart" height="180"></canvas>
+            </div>
+        </div>
+
+        <!-- Training Jobs Table -->
+        <div class="card-3d" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h3 style="font-weight: 700;">Recent Training Jobs</h3>
+                <button class="btn btn-primary" onclick="startNewTraining()"><i class="fas fa-plus"></i> New
+                    Training</button>
+            </div>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">Job ID
+                        </th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">Model
+                        </th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">Status
+                        </th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">
+                            Progress</th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">Started
+                        </th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">ETA
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="trainingJobs">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Deploy Modal -->
+    <div id="deployModal"
+        style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center;">
+        <div class="card-3d" style="width: 500px; padding: 2rem;">
+            <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-rocket"
+                    style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Deploy New Model</h3>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem;">
+                <div class="input-group">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Model Name</label>
+                    <input type="text" class="input-field" placeholder="e.g., Flood Predictor v3" style="width: 100%;">
+                </div>
+                <div class="input-group">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Model Type</label>
+                    <select class="input-field" style="width: 100%;">
+                        <option>LSTM (Time Series)</option>
+                        <option>CNN (Image Detection)</option>
+                        <option>Random Forest</option>
+                        <option>XGBoost</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Framework</label>
+                    <select class="input-field" style="width: 100%;">
+                        <option>TensorFlow</option>
+                        <option>PyTorch</option>
+                        <option>Scikit-Learn</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-secondary" style="flex: 1;" onclick="closeDeployModal()">Cancel</button>
+                <button class="btn btn-primary" style="flex: 1;" onclick="deployModel()">Deploy</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Generate random accuracy between min and max
+        function randomAcc(min, max) {
+            return (Math.random() * (max - min) + min).toFixed(1);
+        }
+
+        // Update model cards with random data
+        function updateModelCards() {
+            const floodAcc = randomAcc(88, 95);
+            document.getElementById('floodAcc').textContent = floodAcc + '%';
+            document.getElementById('floodAccBar').style.width = floodAcc + '%';
+            document.getElementById('floodPrec').textContent = randomAcc(85, 93) + '%';
+            document.getElementById('floodRec').textContent = randomAcc(89, 96) + '%';
+
+            const quakeAcc = randomAcc(92, 98);
+            document.getElementById('quakeAcc').textContent = quakeAcc + '%';
+            document.getElementById('quakeAccBar').style.width = quakeAcc + '%';
+            document.getElementById('quakePrec').textContent = randomAcc(90, 96) + '%';
+            document.getElementById('quakeRec').textContent = randomAcc(93, 98) + '%';
+
+            const fireAcc = randomAcc(85, 94);
+            document.getElementById('fireAcc').textContent = fireAcc + '%';
+            document.getElementById('fireAccBar').style.width = fireAcc + '%';
+            document.getElementById('firePrec').textContent = randomAcc(82, 92) + '%';
+            document.getElementById('fireRec').textContent = randomAcc(87, 95) + '%';
+
+            // Update average
+            const avg = ((parseFloat(floodAcc) + parseFloat(quakeAcc) + parseFloat(fireAcc)) / 3).toFixed(1);
+            document.getElementById('avgAccuracy').textContent = avg + '%';
+        }
+
+        // Generate training jobs
+        function generateTrainingJobs() {
+            const models = ['Flood LSTM', 'Quake CNN', 'Fire Detect', 'Risk Ensemble'];
+            const statuses = [
+                { text: 'Running', color: 'var(--accent-primary)' },
+                { text: 'Completed', color: 'var(--risk-low)' },
+                { text: 'Queued', color: 'var(--accent-quaternary)' },
+                { text: 'Failed', color: 'var(--risk-extreme)' }
+            ];
+            const tbody = document.getElementById('trainingJobs');
+            tbody.innerHTML = '';
+
+            for (let i = 0; i < 6; i++) {
+                const jobId = 'JOB-' + Math.floor(Math.random() * 9000 + 1000);
+                const model = models[Math.floor(Math.random() * models.length)];
+                const status = statuses[Math.floor(Math.random() * statuses.length)];
+                const progress = Math.floor(Math.random() * 100);
+                const time = new Date();
+                time.setHours(time.getHours() - i * 2);
+
+                tbody.innerHTML += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 0.75rem 1rem; font-family: monospace;">${jobId}</td>
+                        <td style="padding: 0.75rem 1rem;">${model}</td>
+                        <td style="padding: 0.75rem 1rem;"><span style="color: ${status.color}; font-weight: 600;">${status.text}</span></td>
+                        <td style="padding: 0.75rem 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px;">
+                                    <div style="height: 100%; width: ${progress}%; background: ${status.color}; border-radius: 3px;"></div>
+                                </div>
+                                <span style="font-size: 0.8rem;">${progress}%</span>
+                            </div>
+                        </td>
+                        <td style="padding: 0.75rem 1rem; color: var(--text-muted);">${time.toLocaleString()}</td>
+                        <td style="padding: 0.75rem 1rem; color: var(--text-muted);">${status.text === 'Running' ? '45 min' : '-'}</td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Accuracy Trend Chart
+        const ctx1 = document.getElementById('accuracyChart').getContext('2d');
+        const accuracyChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [
+                    {
+                        label: 'Flood LSTM',
+                        data: Array.from({ length: 7 }, () => randomAcc(88, 95)),
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Quake CNN',
+                        data: Array.from({ length: 7 }, () => randomAcc(92, 98)),
+                        borderColor: '#7b2cbf',
+                        backgroundColor: 'rgba(123, 44, 191, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Fire Detect',
+                        data: Array.from({ length: 7 }, () => randomAcc(85, 94)),
+                        borderColor: '#ff006e',
+                        backgroundColor: 'rgba(255, 0, 110, 0.1)',
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#fff' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: 'rgba(255,255,255,0.6)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        ticks: { color: 'rgba(255,255,255,0.6)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
+        });
+
+        // Usage Chart
+        const ctx2 = document.getElementById('usageChart').getContext('2d');
+        const usageChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Flood LSTM', 'Quake CNN', 'Fire Detect'],
+                datasets: [{
+                    label: 'Predictions (24h)',
+                    data: [15420, 12890, 9876],
+                    backgroundColor: ['#00d4ff', '#7b2cbf', '#ff006e'],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: 'rgba(255,255,255,0.6)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        ticks: { color: 'rgba(255,255,255,0.6)' },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // Modal functions
+        function showDeployModal() {
+            document.getElementById('deployModal').style.display = 'flex';
+        }
+
+        function closeDeployModal() {
+            document.getElementById('deployModal').style.display = 'none';
+        }
+
+        function deployModel() {
+            alert('Model deployment started! (This would connect to backend in production)');
+            closeDeployModal();
+        }
+
+        function startNewTraining() {
+            alert('New training job initiated! (This would connect to ML pipeline in production)');
+            generateTrainingJobs();
+        }
+
+        // Refresh all models
+        function refreshAllModels() {
+            updateModelCards();
+            generateTrainingJobs();
+
+            // Update charts
+            accuracyChart.data.datasets.forEach(dataset => {
+                dataset.data = Array.from({ length: 7 }, () => randomAcc(85, 98));
+            });
+            accuracyChart.update();
+        }
+
+        // Auto-refresh every 8 seconds
+        setInterval(() => {
+            updateModelCards();
+        }, 8000);
+
+        // Initial load
+        updateModelCards();
+        generateTrainingJobs();
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

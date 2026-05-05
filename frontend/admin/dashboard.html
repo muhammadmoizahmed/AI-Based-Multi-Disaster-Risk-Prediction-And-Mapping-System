@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - DisasterGuard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Admin Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard
+                <span
+                    style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <button class="btn btn-secondary" onclick="toggleDebugMode()">
+                    <i class="fas fa-bug"></i>
+                    Debug Mode
+                </button>
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
+                    onclick="toggleUserMenu()">
+                    <div
+                        style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        AD</div>
+                    <span style="font-weight: 600;">Admin</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Overview</p>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="users.html"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="api-monitor.html"><i class="fas fa-network-wired"></i> API Monitor</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">System</p>
+            <ul class="sidebar-menu">
+                <li><a href="models.html"><i class="fas fa-brain"></i> Model Management</a></li>
+                <li><a href="config.html"><i class="fas fa-cog"></i> Alert Config</a></li>
+                <li><a href="logs.html"><i class="fas fa-clipboard-list"></i> Audit Logs</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Quick Actions</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-user"></i> User View</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <!-- Page Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">
+                    <i class="fas fa-tachometer-alt" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>
+                    Admin Dashboard
+                </h1>
+                <p style="color: var(--text-secondary);">System overview and health monitoring</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="card-3d" style="padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                    <span
+                        style="width: 10px; height: 10px; background: var(--risk-low); border-radius: 50%; animation: pulse 2s infinite;"></span>
+                    <span style="font-weight: 600;">System Online</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Stats -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="card-3d stat-card">
+                <div
+                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0, 212, 255, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    <i class="fas fa-users" style="color: var(--accent-primary); font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value" id="totalUsers">1,247</div>
+                <div class="stat-label">Registered Users</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div
+                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(123, 44, 191, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    <i class="fas fa-server" style="color: var(--accent-secondary); font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value" id="apiCalls">8.5K</div>
+                <div class="stat-label">API Calls Today</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div
+                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0, 200, 83, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    <i class="fas fa-heartbeat" style="color: var(--risk-low); font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value">99.9%</div>
+                <div class="stat-label">System Uptime</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div
+                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 0, 110, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    <i class="fas fa-brain" style="color: var(--accent-tertiary); font-size: 1.5rem;"></i>
+                </div>
+                <div class="stat-value">v2.4.1</div>
+                <div class="stat-label">Model Version</div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- API Usage Chart -->
+            <div class="card-3d">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                    <h3 style="font-weight: 700;"><i class="fas fa-chart-area"
+                            style="margin-right: 0.5rem; color: var(--accent-primary);"></i>API Usage (Last 24 Hours)
+                    </h3>
+                </div>
+                <div style="padding: 1.5rem;">
+                    <canvas id="apiChart" height="250"></canvas>
+                </div>
+            </div>
+
+            <!-- API Status -->
+            <div class="card-3d" style="padding: 1.5rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1.5rem;">API Health Status</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div
+                        style="padding: 1rem; background: rgba(0, 200, 83, 0.1); border: 1px solid rgba(0, 200, 83, 0.2); border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fas fa-satellite" style="color: var(--risk-low);"></i>
+                                <span style="font-weight: 600;">NASA APIs</span>
+                            </div>
+                            <span class="status-badge active">Operational</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">EONET, POWER,
+                            FIRMS - All active</p>
+                    </div>
+                    <div
+                        style="padding: 1rem; background: rgba(0, 200, 83, 0.1); border: 1px solid rgba(0, 200, 83, 0.2); border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fas fa-globe-asia" style="color: var(--risk-low);"></i>
+                                <span style="font-weight: 600;">USGS Earthquake</span>
+                            </div>
+                            <span class="status-badge active">Operational</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Response time:
+                            245ms avg</p>
+                    </div>
+                    <div
+                        style="padding: 1rem; background: rgba(0, 200, 83, 0.1); border: 1px solid rgba(0, 200, 83, 0.2); border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <i class="fas fa-cloud-sun" style="color: var(--risk-low);"></i>
+                                <span style="font-weight: 600;">OpenWeather</span>
+                            </div>
+                            <span class="status-badge active">Operational</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">Response time:
+                            180ms avg</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Users and Model Status -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- Recent Users -->
+            <div class="card-3d">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-weight: 700;"><i class="fas fa-user-plus"
+                                style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Recent Registrations
+                        </h3>
+                        <a href="users.html" style="color: var(--accent-primary); font-size: 0.9rem;">View All</a>
+                    </div>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Joined</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div
+                                            style="width: 32px; height: 32px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">
+                                            AS</div>
+                                        <span>Ahmed Shah</span>
+                                    </div>
+                                </td>
+                                <td>ahmed@email.com</td>
+                                <td>User</td>
+                                <td>2 hours ago</td>
+                                <td><span class="status-badge active">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div
+                                            style="width: 32px; height: 32px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">
+                                            FK</div>
+                                        <span>Fatima Khan</span>
+                                    </div>
+                                </td>
+                                <td>fatima@email.com</td>
+                                <td>User</td>
+                                <td>5 hours ago</td>
+                                <td><span class="status-badge active">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        <div
+                                            style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff006e, #ffbe0b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">
+                                            HR</div>
+                                        <span>Hamid Raza</span>
+                                    </div>
+                                </td>
+                                <td>hamid@email.com</td>
+                                <td>Admin</td>
+                                <td>1 day ago</td>
+                                <td><span class="status-badge active">Active</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Model Status -->
+            <div class="card-3d" style="padding: 1.5rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-brain"
+                        style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>ML Model Status</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="padding: 1rem; background: rgba(0, 200, 83, 0.05); border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: 600;">Flood LSTM Model</span>
+                            <span style="color: var(--risk-low); font-weight: 600;">Active</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Accuracy: 94.2% | Last trained: 2
+                            days ago</p>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(0, 200, 83, 0.05); border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: 600;">Earthquake Predictor</span>
+                            <span style="color: var(--risk-low); font-weight: 600;">Active</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Accuracy: 89.7% | Last trained: 5
+                            days ago</p>
+                    </div>
+                    <div style="padding: 1rem; background: rgba(255, 214, 0, 0.05); border-radius: var(--radius-md);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                            <span style="font-weight: 600;">Fire Detection CNN</span>
+                            <span style="color: var(--risk-moderate); font-weight: 600;">Updating</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary);">Progress: 75% | ETA: 15 mins</p>
+                        <div
+                            style="height: 6px; background: var(--bg-tertiary); border-radius: 3px; margin-top: 0.5rem; overflow: hidden;">
+                            <div
+                                style="height: 100%; width: 75%; background: var(--risk-moderate); border-radius: 3px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="models.html" class="btn btn-secondary" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-cog"></i>
+                    Manage Models
+                </a>
+            </div>
+        </div>
+
+        <!-- System Logs Preview -->
+        <div class="card-3d">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-weight: 700;"><i class="fas fa-terminal"
+                            style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Recent System Logs</h3>
+                    <a href="logs.html" style="color: var(--accent-primary); font-size: 0.9rem;">View All</a>
+                </div>
+            </div>
+            <div
+                style="padding: 1rem; max-height: 250px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.85rem;">
+                <div style="padding: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.02);">
+                    <span style="color: var(--text-muted);">[2025-04-16 14:32:15]</span>
+                    <span style="color: var(--risk-low);">[INFO]</span>
+                    <span style="color: var(--text-secondary);">NASA EONET API fetched 12 new events</span>
+                </div>
+                <div style="padding: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.02);">
+                    <span style="color: var(--text-muted);">[2025-04-16 14:30:42]</span>
+                    <span style="color: var(--risk-low);">[INFO]</span>
+                    <span style="color: var(--text-secondary);">Earthquake prediction model updated for Islamabad</span>
+                </div>
+                <div style="padding: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.02);">
+                    <span style="color: var(--text-muted);">[2025-04-16 14:28:10]</span>
+                    <span style="color: var(--risk-moderate);">[WARN]</span>
+                    <span style="color: var(--text-secondary);">USGS API response time > 500ms</span>
+                </div>
+                <div style="padding: 0.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.02);">
+                    <span style="color: var(--text-muted);">[2025-04-16 14:25:33]</span>
+                    <span style="color: var(--risk-low);">[INFO]</span>
+                    <span style="color: var(--text-secondary);">User #1247 (Ahmed Shah) registered successfully</span>
+                </div>
+                <div style="padding: 0.5rem;">
+                    <span style="color: var(--text-muted);">[2025-04-16 14:20:00]</span>
+                    <span style="color: var(--risk-low);">[INFO]</span>
+                    <span style="color: var(--text-secondary);">Scheduled data sync completed - 847 records</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Dropdown -->
+    <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
+        <div class="dropdown-header">
+            <p id="dropdownName">Admin</p>
+            <p id="dropdownEmail">admin@disasterguard.com</p>
+        </div>
+        <ul class="dropdown-list">
+            <li><a href="../pages/settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="../pages/profile.html" class="dropdown-item"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a href="#" onclick="logout()" class="dropdown-item logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+
+    <script>
+        // API Usage Chart
+        new Chart(document.getElementById('apiChart'), {
+            type: 'line',
+            data: {
+                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+                datasets: [{
+                    label: 'API Calls',
+                    data: [120, 80, 450, 820, 680, 540, 320],
+                    borderColor: '#00d4ff',
+                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Errors',
+                    data: [2, 0, 3, 5, 2, 1, 0],
+                    borderColor: '#ff1744',
+                    backgroundColor: 'rgba(255, 23, 68, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: '#a0a0b0' } } },
+                scales: {
+                    x: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                    y: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                }
+            }
+        });
+
+        function toggleDebugMode() {
+            alert('Debug mode toggled. Check console for detailed logs.');
+        }
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Load user data
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = JSON.parse(localStorage.getItem('verified_user') || '{}');
+            if (userData.firstName) {
+                const name = `${userData.firstName} ${userData.lastName}`;
+                document.getElementById('dropdownName').textContent = name;
+                document.getElementById('dropdownEmail').textContent = userData.email;
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar') && !e.target.closest('#userDropdown')) {
+                const dropdown = document.getElementById('userDropdown');
+                if (dropdown) dropdown.style.display = 'none';
+            }
+        });
+
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('auth_token');
+            window.location.href = '../login.html';
+        }
+        function toggleDebugMode() {
+            document.querySelector('.btn-secondary').classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

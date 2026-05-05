@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Config - DisasterGuard Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard <span
+                    style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <button class="btn btn-primary" onclick="saveConfig()"><i class="fas fa-save"></i> Save Changes</button>
+                <div
+                    style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                    AD</div>
+            </div>
+        </div>
+    </nav>
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Overview</p>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="users.html"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="api-monitor.html"><i class="fas fa-network-wired"></i> API Monitor</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">System</p>
+            <ul class="sidebar-menu">
+                <li><a href="models.html"><i class="fas fa-brain"></i> Model Management</a></li>
+                <li><a href="config.html" class="active"><i class="fas fa-cog"></i> Alert Config</a></li>
+                <li><a href="logs.html"><i class="fas fa-file-alt"></i> System Logs</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Quick Actions</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-user"></i> User View</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-cog"
+                        style="color: var(--accent-primary); margin-right: 0.75rem;"></i>Alert Configuration</h1>
+                <p style="color: var(--text-secondary);">System-wide alert thresholds and notification settings</p>
+            </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="card-3d" style="padding: 2rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-exclamation-triangle"
+                        style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Alert Thresholds</h3>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Flood Warning
+                            Level</label>
+                        <input type="range" min="0" max="1" step="0.05" value="0.6" class="input-field"
+                            style="width: 100%;">
+                        <div
+                            style="display: flex; justify-content: space-between; margin-top: 0.25rem; font-size: 0.8rem; color: var(--text-muted);">
+                            <span>Low</span><span>0.60</span><span>Critical</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Earthquake
+                            Magnitude Alert</label>
+                        <input type="range" min="3" max="9" step="0.1" value="5.0" class="input-field"
+                            style="width: 100%;">
+                        <div
+                            style="display: flex; justify-content: space-between; margin-top: 0.25rem; font-size: 0.8rem; color: var(--text-muted);">
+                            <span>3.0</span><span>5.0</span><span>9.0</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Wildfire
+                            Detection Confidence</label>
+                        <input type="range" min="0" max="1" step="0.05" value="0.75" class="input-field"
+                            style="width: 100%;">
+                        <div
+                            style="display: flex; justify-content: space-between; margin-top: 0.25rem; font-size: 0.8rem; color: var(--text-muted);">
+                            <span>Low</span><span>0.75</span><span>High</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-3d" style="padding: 2rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-bell"
+                        style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Notification Settings</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: 20px; height: 20px;">
+                        <span>Email Notifications</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: 20px; height: 20px;">
+                        <span>SMS Alerts</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: 20px; height: 20px;">
+                        <span>Push Notifications</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                        <input type="checkbox" style="width: 20px; height: 20px;">
+                        <span>Slack Integration</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                        <input type="checkbox" style="width: 20px; height: 20px;">
+                        <span>Discord Webhook</span>
+                    </label>
+                </div>
+            </div>
+            <div class="card-3d" style="padding: 2rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-clock"
+                        style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Update Intervals</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">API Data Refresh
+                            (minutes)</label>
+                        <input type="number" class="input-field" value="15" style="width: 100%;">
+                    </div>
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Risk Assessment
+                            (hours)</label>
+                        <input type="number" class="input-field" value="1" style="width: 100%;">
+                    </div>
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Model Retraining
+                            (days)</label>
+                        <input type="number" class="input-field" value="7" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div class="card-3d" style="padding: 2rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-shield-alt"
+                        style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Security Settings</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: 20px; height: 20px;">
+                        <span>API Key Required</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: 20px; height: 20px;">
+                        <span>Rate Limiting</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
+                        <input type="checkbox" checked style="width: 20px; height: 20px;">
+                        <span>Request Logging</span>
+                    </label>
+                    <div class="input-group" style="margin-top: 0.5rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-muted);">Max
+                            Requests/Min</label>
+                        <input type="number" class="input-field" value="100" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        function saveConfig() {
+            alert('Configuration saved! (This would persist to backend in production)');
+        }
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Monitor - DisasterGuard Admin</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Admin Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard
+                <span
+                    style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <button class="btn btn-secondary" onclick="refreshAllData()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div
+                        style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        AD</div>
+                    <span style="font-weight: 600;">Admin</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Overview</p>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="users.html"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="api-monitor.html" class="active"><i class="fas fa-network-wired"></i> API Monitor</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">System</p>
+            <ul class="sidebar-menu">
+                <li><a href="models.html"><i class="fas fa-brain"></i> Model Management</a></li>
+                <li><a href="config.html"><i class="fas fa-cog"></i> Alert Config</a></li>
+                <li><a href="logs.html"><i class="fas fa-file-alt"></i> System Logs</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Quick Actions</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-user"></i> User View</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">
+                    <i class="fas fa-network-wired" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>API
+                    Monitor
+                </h1>
+                <p style="color: var(--text-secondary);">Real-time API health and performance monitoring</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div class="card-3d" style="padding: 1rem 1.5rem; text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-primary);" id="overallStatus">
+                        98%</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Uptime</div>
+                </div>
+                <div class="card-3d" style="padding: 1rem 1.5rem; text-align: center;">
+                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-secondary);" id="avgLatency">
+                        245ms</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">Avg Latency</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Status Cards -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="card-3d" style="padding: 1.5rem; border-left: 4px solid var(--risk-low);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                    <div>
+                        <h4 style="font-weight: 700; margin-bottom: 0.25rem;">USGS Earthquake</h4>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Seismic Data</span>
+                    </div>
+                    <span class="status-badge" style="background: var(--risk-low);">Online</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Latency:</span>
+                    <span style="font-weight: 600;" id="usgsLatency">189ms</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 0.5rem;">
+                    <span style="color: var(--text-muted);">Requests:</span>
+                    <span style="font-weight: 600;" id="usgsRequests">1,247/hr</span>
+                </div>
+            </div>
+
+            <div class="card-3d" style="padding: 1.5rem; border-left: 4px solid var(--risk-low);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                    <div>
+                        <h4 style="font-weight: 700; margin-bottom: 0.25rem;">NASA EONET</h4>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Wildfire Events</span>
+                    </div>
+                    <span class="status-badge" style="background: var(--risk-low);">Online</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Latency:</span>
+                    <span style="font-weight: 600;" id="nasaLatency">312ms</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 0.5rem;">
+                    <span style="color: var(--text-muted);">Requests:</span>
+                    <span style="font-weight: 600;" id="nasaRequests">892/hr</span>
+                </div>
+            </div>
+
+            <div class="card-3d" style="padding: 1.5rem; border-left: 4px solid var(--risk-moderate);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                    <div>
+                        <h4 style="font-weight: 700; margin-bottom: 0.25rem;">OpenWeather</h4>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Weather Data</span>
+                    </div>
+                    <span class="status-badge" style="background: var(--risk-moderate);">Slow</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Latency:</span>
+                    <span style="font-weight: 600; color: var(--risk-moderate);" id="weatherLatency">1,247ms</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 0.5rem;">
+                    <span style="color: var(--text-muted);">Requests:</span>
+                    <span style="font-weight: 600;" id="weatherRequests">2,156/hr</span>
+                </div>
+            </div>
+
+            <div class="card-3d" style="padding: 1.5rem; border-left: 4px solid var(--risk-low);">
+                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                    <div>
+                        <h4 style="font-weight: 700; margin-bottom: 0.25rem;">GDACS</h4>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Global Disasters</span>
+                    </div>
+                    <span class="status-badge" style="background: var(--risk-low);">Online</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
+                    <span style="color: var(--text-muted);">Latency:</span>
+                    <span style="font-weight: 600;" id="gdacsLatency">423ms</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.9rem; margin-top: 0.5rem;">
+                    <span style="color: var(--text-muted);">Requests:</span>
+                    <span style="font-weight: 600;" id="gdacsRequests">634/hr</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="card-3d" style="padding: 1.5rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1rem;">API Response Time (Last 24 Hours)</h3>
+                <canvas id="latencyChart" height="200"></canvas>
+            </div>
+            <div class="card-3d" style="padding: 1.5rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1rem;">Request Distribution</h3>
+                <canvas id="distributionChart" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- API Logs Table -->
+        <div class="card-3d" style="padding: 1.5rem;">
+            <h3 style="font-weight: 700; margin-bottom: 1rem;">Recent API Calls</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">Time
+                        </th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">
+                            Endpoint</th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">Method
+                        </th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">Status
+                        </th>
+                        <th style="text-align: left; padding: 1rem; color: var(--text-muted); font-weight: 600;">Latency
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="apiLogs">
+                    <!-- Populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // Generate random latency between min and max
+        function randomLatency(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        // Generate random requests count
+        function randomRequests() {
+            return Math.floor(Math.random() * 3000) + 500;
+        }
+
+        // Generate random status (mostly 200, occasionally others)
+        function randomStatus() {
+            const rand = Math.random();
+            if (rand > 0.95) return 500;
+            if (rand > 0.90) return 429;
+            if (rand > 0.85) return 404;
+            return 200;
+        }
+
+        // Update all API cards with random data
+        function updateAPICards() {
+            document.getElementById('usgsLatency').textContent = randomLatency(150, 400) + 'ms';
+            document.getElementById('usgsRequests').textContent = randomRequests().toLocaleString() + '/hr';
+
+            document.getElementById('nasaLatency').textContent = randomLatency(250, 600) + 'ms';
+            document.getElementById('nasaRequests').textContent = randomRequests().toLocaleString() + '/hr';
+
+            document.getElementById('weatherLatency').textContent = randomLatency(800, 1800) + 'ms';
+            document.getElementById('weatherRequests').textContent = randomRequests().toLocaleString() + '/hr';
+
+            document.getElementById('gdacsLatency').textContent = randomLatency(300, 700) + 'ms';
+            document.getElementById('gdacsRequests').textContent = randomRequests().toLocaleString() + '/hr';
+
+            // Update overall stats
+            const uptime = (95 + Math.random() * 4).toFixed(1);
+            const avgLat = randomLatency(180, 500);
+            document.getElementById('overallStatus').textContent = uptime + '%';
+            document.getElementById('avgLatency').textContent = avgLat + 'ms';
+        }
+
+        // Generate API logs
+        function generateLogs() {
+            const endpoints = [
+                '/api/earthquake/recent',
+                '/api/wildfire/active',
+                '/api/flood/predict',
+                '/api/weather/current',
+                '/api/alerts/all',
+                '/api/risk/assessment',
+                '/api/heatmap/data'
+            ];
+            const tbody = document.getElementById('apiLogs');
+            tbody.innerHTML = '';
+
+            for (let i = 0; i < 10; i++) {
+                const time = new Date();
+                time.setMinutes(time.getMinutes() - i * 3);
+                const endpoint = endpoints[Math.floor(Math.random() * endpoints.length)];
+                const status = randomStatus();
+                const latency = randomLatency(100, 2000);
+
+                let statusColor = status === 200 ? 'var(--risk-low)' :
+                    status === 429 ? 'var(--risk-moderate)' : 'var(--risk-extreme)';
+
+                tbody.innerHTML += `
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <td style="padding: 0.75rem 1rem;">${time.toLocaleTimeString()}</td>
+                        <td style="padding: 0.75rem 1rem; font-family: monospace;">${endpoint}</td>
+                        <td style="padding: 0.75rem 1rem;"><span style="color: var(--accent-primary);">GET</span></td>
+                        <td style="padding: 0.75rem 1rem;"><span style="color: ${statusColor}; font-weight: 600;">${status}</span></td>
+                        <td style="padding: 0.75rem 1rem;">${latency}ms</td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Initialize Latency Chart
+        const ctx1 = document.getElementById('latencyChart').getContext('2d');
+        const latencyChart = new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: Array.from({ length: 24 }, (_, i) => `${i}:00`),
+                datasets: [
+                    {
+                        label: 'USGS Earthquake',
+                        data: Array.from({ length: 24 }, () => randomLatency(150, 400)),
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'NASA EONET',
+                        data: Array.from({ length: 24 }, () => randomLatency(250, 600)),
+                        borderColor: '#7b2cbf',
+                        backgroundColor: 'rgba(123, 44, 191, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'OpenWeather',
+                        data: Array.from({ length: 24 }, () => randomLatency(800, 1800)),
+                        borderColor: '#ff006e',
+                        backgroundColor: 'rgba(255, 0, 110, 0.1)',
+                        tension: 0.4
+                    },
+                    {
+                        label: 'GDACS',
+                        data: Array.from({ length: 24 }, () => randomLatency(300, 700)),
+                        borderColor: '#ffbe0b',
+                        backgroundColor: 'rgba(255, 190, 11, 0.1)',
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels: { color: '#fff' } }
+                },
+                scales: {
+                    y: {
+                        ticks: { color: 'rgba(255,255,255,0.6)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    },
+                    x: {
+                        ticks: { color: 'rgba(255,255,255,0.6)' },
+                        grid: { color: 'rgba(255,255,255,0.1)' }
+                    }
+                }
+            }
+        });
+
+        // Initialize Distribution Chart
+        const ctx2 = document.getElementById('distributionChart').getContext('2d');
+        const distributionChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['USGS', 'NASA', 'Weather', 'GDACS'],
+                datasets: [{
+                    data: [35, 25, 25, 15],
+                    backgroundColor: ['#00d4ff', '#7b2cbf', '#ff006e', '#ffbe0b'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#fff' }
+                    }
+                }
+            }
+        });
+
+        // Refresh all data
+        function refreshAllData() {
+            updateAPICards();
+            generateLogs();
+
+            // Update charts with new random data
+            latencyChart.data.datasets.forEach(dataset => {
+                dataset.data = Array.from({ length: 24 }, () => randomLatency(100, 2000));
+            });
+            latencyChart.update();
+        }
+
+        // Auto-refresh every 5 seconds
+        setInterval(() => {
+            updateAPICards();
+            generateLogs();
+        }, 5000);
+
+        // Initial load
+        updateAPICards();
+        generateLogs();
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+
+</html>
