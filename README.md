@@ -47,30 +47,44 @@ An AI-powered disaster prediction and early warning system specifically designed
 
 ### User Features
 
+<<<<<<< HEAD
 - User registration and authentication with email verification
+=======
+- User registration and authentication
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 - Personal dashboard with risk scores
 - City-specific disaster monitoring
 - Alert history and notifications
 - Report generation (PDF export)
 - Settings and preferences
+<<<<<<< HEAD
 - Password visibility toggle in login/registration
 - Remember me functionality for auto-login
 - Weather data integration with OpenWeatherMap
 - User profile dropdown with logout functionality
 - Terms of Service and Privacy Policy pages
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 
 ### Admin Features
 
 - System health monitoring
+<<<<<<< HEAD
 - User management with OAuth provider tracking
+=======
+- User management
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 - API usage analytics
 - Model management and retraining
 - Audit logs
 - Alert configuration
 - Debug mode
+<<<<<<< HEAD
 - Password visibility toggle in admin login
 - Remember me functionality for admin credentials
 - Professional authentication styling
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 
 ---
 
@@ -116,9 +130,12 @@ An AI-powered disaster prediction and early warning system specifically designed
 - **Chart.js** - Data visualization (Admin panel)
 - **Font Awesome** - Icons
 - **Google Fonts (Inter)** - Typography
+<<<<<<< HEAD
 - **Weather API Integration** - OpenWeatherMap for real-time weather data
 - **User Authentication** - Login/registration with email verification
 - **Admin Panel** - Complete management system
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 
 ### Backend (Implemented)
 - **Python** - API integration scripts
@@ -148,13 +165,20 @@ An AI-powered disaster prediction and early warning system specifically designed
 fyp/
 ├── frontend/
 │   ├── index.html              # Landing page
+<<<<<<< HEAD
 │   ├── login.html              # User login with password toggle & remember me
+=======
+│   ├── login.html              # User login
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 │   ├── register.html           # User registration with PIN verification
 │   ├── verify-email.html       # Email PIN verification
 │   ├── forgot-password.html    # Password recovery
 │   ├── dashboard.html          # User dashboard
+<<<<<<< HEAD
 │   ├── terms.html              # Terms of Service page
 │   ├── privacy.html            # Privacy Policy page
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 │   ├── css/
 │   │   └── styles.css          # Main stylesheet (dark theme)
 │   ├── js/
@@ -166,6 +190,7 @@ fyp/
 │   │   ├── wildfire.html       # Wildfire monitoring page
 │   │   ├── heatmap.html        # Risk heatmap view
 │   │   ├── history.html        # Activity history
+<<<<<<< HEAD
 │   │   ├── live-chat.html      # AI chat assistant
 │   │   ├── profile.html        # User profile management
 │   │   ├── settings.html       # User settings
@@ -175,6 +200,12 @@ fyp/
 │       ├── dashboard.html      # Admin overview
 │       ├── users.html          # User management
 │       ├── edit-user.html      # User editing interface
+=======
+│   │   └── settings.html       # User settings
+│   └── admin/
+│       ├── dashboard.html      # Admin overview
+│       ├── users.html          # User management
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 │       ├── config.html         # Alert configuration
 │       ├── logs.html           # System logs
 │       ├── models.html         # ML model management
@@ -488,6 +519,7 @@ Screenshots of the UI are available in `frontend_screenshort.pdf`.
 - [x] **Social Login** - Google & GitHub OAuth integration
 - [x] **verify-email.html** - Dedicated PIN verification page
 - [x] **Toast Notifications** - Success/error feedback system
+<<<<<<< HEAD
 - [x] **User Authentication System** - Complete login/registration flow
 - [x] **Password Visibility Toggle** - Eye icon for password fields
 - [x] **Remember Me Functionality** - Save user credentials locally
@@ -497,6 +529,8 @@ Screenshots of the UI are available in `frontend_screenshort.pdf`.
 - [x] **Terms of Service & Privacy Policy** - Legal pages with navigation
 - [x] **Admin Panel Authentication** - Remember me and password toggle
 - [x] **Professional UI Styling** - Consistent design across all pages
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 
 ### Backend Development (Remaining)
 - [ ] PostgreSQL database integration (using in-memory storage currently)

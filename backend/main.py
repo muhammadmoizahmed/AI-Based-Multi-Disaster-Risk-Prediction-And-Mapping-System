@@ -34,9 +34,12 @@ GITHUB_CLIENT_ID = os.getenv('github_client_id', '')
 GITHUB_CLIENT_SECRET = os.getenv('github_client_secret', '')
 GITHUB_REDIRECT_URI = 'http://localhost:5000/api/auth/github/callback'
 
+<<<<<<< HEAD
 # Weather API
 OPENWEATHERMAP_API_KEY = os.getenv('openweathermap_api_key', '')
 
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 # SMTP Config
 SMTP_EMAIL = os.getenv('smtp_email', '')
 SMTP_PASSWORD = os.getenv('smtp_password', '')
@@ -85,12 +88,17 @@ def root():
     return {"message": "DisasterGuard API Running", "status": "ok"}
 
 @app.post("/api/auth/login")
+<<<<<<< HEAD
 async def login(data: LoginData, request: Request):
     client_ip = request.client.host if request.client else ''
     
     if data.email and data.password:
         # Update user IP on login
         update_user(None, email=data.email, ip_address=client_ip)
+=======
+async def login(data: LoginData):
+    if data.email and data.password:
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         return {"success": True, "message": "Login successful", "user": {"email": data.email}}
     return {"success": False, "message": "Invalid credentials"}, 401
 
@@ -204,14 +212,21 @@ async def google_login():
     return {"auth_url": auth_url}
 
 @app.get("/api/auth/google/callback")
+<<<<<<< HEAD
 async def google_callback(code: str, request: Request):
+=======
+async def google_callback(code: str):
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     if not code:
         return {"success": False, "message": "No code provided"}, 400
     
     try:
+<<<<<<< HEAD
         client_ip = request.client.host if request.client else ''
         
         # Use the old redirect URI for token exchange (Google Console still has it)
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         token_response = requests.post(
             "https://oauth2.googleapis.com/token",
             data={
@@ -219,7 +234,11 @@ async def google_callback(code: str, request: Request):
                 "client_secret": GOOGLE_CLIENT_SECRET,
                 "code": code,
                 "grant_type": "authorization_code",
+<<<<<<< HEAD
                 "redirect_uri": "http://localhost:5000/api/auth/google/callback"
+=======
+                "redirect_uri": GOOGLE_REDIRECT_URI
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             }
         )
         token_json = token_response.json()
@@ -230,6 +249,7 @@ async def google_callback(code: str, request: Request):
             headers={"Authorization": f"Bearer {access_token}"}
         ).json()
         
+<<<<<<< HEAD
         # Save user to database
         email = userinfo.get("email")
         name = userinfo.get("name", email.split('@')[0])
@@ -247,6 +267,14 @@ async def google_callback(code: str, request: Request):
             url=f"http://localhost:8000/oauth-callback.html?provider=google&success=true&{user_param}",
             status_code=302
         )
+=======
+        return {
+            "success": True,
+            "message": "Google login successful",
+            "user": {"email": userinfo.get("email"), "name": userinfo.get("name")},
+            "redirect": "dashboard.html"
+        }
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     except Exception as e:
         return {"success": False, "message": f"Google auth failed: {str(e)}"}, 500
 
@@ -266,13 +294,20 @@ async def github_login():
     return {"auth_url": auth_url}
 
 @app.get("/api/auth/github/callback")
+<<<<<<< HEAD
 async def github_callback(code: str, request: Request):
+=======
+async def github_callback(code: str):
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     if not code:
         return {"success": False, "message": "No code provided"}, 400
     
     try:
+<<<<<<< HEAD
         client_ip = request.client.host if request.client else ''
         
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         token_response = requests.post(
             "https://github.com/login/oauth/access_token",
             data={
@@ -291,6 +326,7 @@ async def github_callback(code: str, request: Request):
             headers={"Authorization": f"token {access_token}"}
         ).json()
         
+<<<<<<< HEAD
         # Get email if not public
         email = user_data.get("email")
         if not email:
@@ -317,6 +353,14 @@ async def github_callback(code: str, request: Request):
             url=f"http://localhost:8000/oauth-callback.html?provider=github&success=true&{user_param}",
             status_code=302
         )
+=======
+        return {
+            "success": True,
+            "message": "GitHub login successful",
+            "user": {"email": user_data.get("email"), "name": user_data.get("name")},
+            "redirect": "dashboard.html"
+        }
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     except Exception as e:
         return {"success": False, "message": f"GitHub auth failed: {str(e)}"}, 500
 
@@ -364,6 +408,7 @@ async def get_predictions(location: str = "default"):
     }
 
 # Admin Routes
+<<<<<<< HEAD
 from db_users import get_all_users, get_user_by_id, create_user, update_user, delete_user, search_users, get_user_count
 
 @app.get("/api/admin/dashboard")
@@ -375,11 +420,19 @@ async def admin_dashboard():
     return {
         "total_users": total_users,
         "active_users": active_users,
+=======
+@app.get("/api/admin/dashboard")
+async def admin_dashboard():
+    return {
+        "total_users": 150,
+        "active_users": 89,
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         "total_predictions": 1250,
         "system_health": "good"
     }
 
 @app.get("/api/admin/users")
+<<<<<<< HEAD
 async def get_users(page: int = 1, search: str = ""):
     if search:
         users = search_users(search)
@@ -450,6 +503,15 @@ async def remove_user(user_id: int):
 async def get_weather_api_key():
     return {
         "api_key": OPENWEATHERMAP_API_KEY
+=======
+async def get_users(page: int = 1):
+    return {
+        "users": [
+            {"id": 1, "name": "John Doe", "email": "john@example.com", "status": "active"}
+        ],
+        "total": 150,
+        "page": page
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     }
 
 if __name__ == "__main__":

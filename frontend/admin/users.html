@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
+<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
+=======
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <body>
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
@@ -18,6 +27,7 @@
         <div class="navbar-content">
             <a href="../index.html" class="logo">
                 <i class="fas fa-shield-alt"></i>
+<<<<<<< HEAD
                 DisasterGuard <span
                     style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
             </a>
@@ -26,6 +36,13 @@
                 <div
                     style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
                     AD</div>
+=======
+                DisasterGuard <span style="font-size: 0.7em; background: var(--accent-tertiary); padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;">ADMIN</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="dashboard.html" class="btn btn-secondary">Back to Admin</a>
+                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">AD</div>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </div>
         </div>
     </nav>
@@ -46,7 +63,11 @@
                 <li><a href="logs.html"><i class="fas fa-file-alt"></i> System Logs</a></li>
             </ul>
         </div>
+<<<<<<< HEAD
         <div class="sidebar-section">
+=======
+         <div class="sidebar-section">
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             <p class="sidebar-title">Quick Actions</p>
             <ul class="sidebar-menu">
                 <li><a href="../dashboard.html"><i class="fas fa-user"></i> User View</a></li>
@@ -57,6 +78,7 @@
     <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
+<<<<<<< HEAD
                 <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-users"
                         style="color: var(--accent-primary); margin-right: 0.75rem;"></i>User Management</h1>
                 <p style="color: var(--text-secondary);">Manage registered users and their permissions</p>
@@ -67,6 +89,14 @@
                 <button class="btn btn-primary"><i class="fas fa-user-plus"></i>
                     <Search>Search User</Search>
                 </button>
+=======
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-users" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>User Management</h1>
+                <p style="color: var(--text-secondary);">Manage registered users and their permissions</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <input type="text" class="input-field" placeholder="Search users..." style="width: 250px; padding: 0.75rem 1rem;">
+                <button class="btn btn-primary"><i class="fas fa-user-plus"></i><Search>Search User</Search></button>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </div>
         </div>
         <div class="card-3d">
@@ -76,8 +106,11 @@
                         <tr>
                             <th>User</th>
                             <th>Email</th>
+<<<<<<< HEAD
                             <th>Provider</th>
                             <th>IP Address</th>
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             <th>Role</th>
                             <th>Joined</th>
                             <th>Last Active</th>
@@ -85,12 +118,42 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
+<<<<<<< HEAD
                     <tbody id="usersTableBody">
                         <tr>
                             <td colspan="9" style="text-align: center; padding: 2rem;">
                                 <i class="fas fa-spinner fa-spin" style="font-size: 1.5rem; color: var(--accent-primary);"></i>
                                 <p style="margin-top: 1rem; color: var(--text-muted);">Loading users...</p>
                             </td>
+=======
+                    <tbody>
+                        <tr>
+                            <td><div style="display: flex; align-items: center; gap: 0.75rem;"><div style="width: 32px; height: 32px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">AS</div><span>Ahmed Shah</span></div></td>
+                            <td>ahmed@email.com</td>
+                            <td><span class="status-badge active">User</span></td>
+                            <td>2025-04-16</td>
+                            <td>2 hours ago</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td><a href="edit-user.html?id=1" class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-edit"></i> Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center; gap: 0.75rem;"><div style="width: 32px; height: 32px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">FK</div><span>Fatima Khan</span></div></td>
+                            <td>fatima@email.com</td>
+                            <td><span class="status-badge active">User</span></td>
+                            <td>2025-04-15</td>
+                            <td>5 hours ago</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td><a href="edit-user.html?id=2" class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-edit"></i> Edit</a></td>
+                        </tr>
+                        <tr>
+                            <td><div style="display: flex; align-items: center; gap: 0.75rem;"><div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff006e, #ffbe0b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">HR</div><span>Hamid Raza</span></div></td>
+                            <td>hamid@email.com</td>
+                            <td><span class="status-badge critical">Admin</span></td>
+                            <td>2025-04-10</td>
+                            <td>1 hour ago</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td><button class="btn btn-secondary" style="padding: 0.5rem 1rem;"><i class="fas fa-edit"></i> Edit</button></td>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         </tr>
                     </tbody>
                 </table>
@@ -98,6 +161,7 @@
         </div>
     </main>
     <script>
+<<<<<<< HEAD
         let currentPage = 1;
         let searchQuery = '';
 
@@ -227,6 +291,8 @@
         // Load users on page load
         fetchUsers();
 
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         function toggleUserMenu() {
             const dropdown = document.getElementById('userDropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
@@ -242,6 +308,7 @@
             }
         }
         function logout() {
+<<<<<<< HEAD
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.clear();
                 window.location.href = 'index.html';
@@ -251,3 +318,11 @@
 </body>
 
 </html>
+=======
+            localStorage.removeItem('adminToken');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5

@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Chat - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
+<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,16 +19,37 @@
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
 
+=======
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+    
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     <nav class="navbar">
         <div class="navbar-content">
             <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard</a>
             <div style="display: flex; align-items: center; gap: 1.5rem;">
+<<<<<<< HEAD
 
                 <!-- User Menu -->
                 <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
                     onclick="toggleUserMenu()">
                     <div
                         style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+=======
+                <!-- Notifications -->
+                <button class="btn btn-secondary" style="position: relative;" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span id="notifBadge" style="position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background: var(--risk-extreme); border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+                </button>
+                
+                <!-- User Menu -->
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;" onclick="toggleUserMenu()">
+                    <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <span id="userInitials">JD</span>
                     </div>
                     <span id="userName" style="font-weight: 600;">John Doe</span>
@@ -46,12 +71,18 @@
         <div class="sidebar-section">
             <p class="sidebar-title">Disaster Monitoring</p>
             <ul class="sidebar-menu">
+<<<<<<< HEAD
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a>
                 </li>
                 <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
                         Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
+=======
+                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a></li>
+                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
+                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
             </ul>
@@ -59,9 +90,13 @@
         <div class="sidebar-section">
             <p class="sidebar-title">Support</p>
             <ul class="sidebar-menu">
+<<<<<<< HEAD
                 <li><a href="live-chat.html" class="active"><i class="fas fa-comments"
                             style="color: var(--accent-primary);"></i> Live Chat</a></li>
                 <li><a href="profile.html"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
+=======
+                <li><a href="live-chat.html" class="active"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live Chat</a></li>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </div>
@@ -76,6 +111,7 @@
     <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem; height: calc(100vh - 70px);">
         <div style="display: flex; gap: 1.5rem; height: 100%;">
             <!-- Chat Area -->
+<<<<<<< HEAD
             <div class="card-3d mirror-effect"
                 style="flex: 1; display: flex; flex-direction: column; padding: 0; overflow: hidden;">
                 <!-- Chat Header -->
@@ -84,14 +120,25 @@
                     <div style="display: flex; align-items: center; gap: 1rem;">
                         <div
                             style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+=======
+            <div class="card-3d mirror-effect" style="flex: 1; display: flex; flex-direction: column; padding: 0; overflow: hidden;">
+                <!-- Chat Header -->
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             <i class="fas fa-robot" style="font-size: 1.5rem; color: white;"></i>
                         </div>
                         <div>
                             <h3 style="font-weight: 700; margin-bottom: 0.25rem;">DisasterGuard AI Assistant</h3>
+<<<<<<< HEAD
                             <p style="color: var(--text-secondary); font-size: 0.9rem;"><span
                                     style="color: var(--risk-low);"><i class="fas fa-circle"
                                         style="font-size: 0.5rem; margin-right: 0.5rem;"></i>Online</span> - Powered by
                                 Gemini AI</p>
+=======
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;"><span style="color: var(--risk-low);"><i class="fas fa-circle" style="font-size: 0.5rem; margin-right: 0.5rem;"></i>Online</span> - Powered by Gemini AI</p>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         </div>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
@@ -105,6 +152,7 @@
                 </div>
 
                 <!-- Messages Area -->
+<<<<<<< HEAD
                 <div id="chatMessages"
                     style="flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
                     <!-- Welcome Message -->
@@ -119,6 +167,18 @@
                             <p style="color: var(--text-secondary); font-size: 0.9rem;">I can help you with:</p>
                             <ul
                                 style="color: var(--text-secondary); font-size: 0.9rem; margin: 0.5rem 0; padding-left: 1.5rem;">
+=======
+                <div id="chatMessages" style="flex: 1; overflow-y: auto; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <!-- Welcome Message -->
+                    <div style="display: flex; gap: 1rem; align-items: flex-start;">
+                        <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i class="fas fa-robot" style="color: white;"></i>
+                        </div>
+                        <div style="background: var(--bg-tertiary); padding: 1rem; border-radius: var(--radius-md); max-width: 70%; border-top-left-radius: 4px;">
+                            <p style="margin-bottom: 0.5rem;">👋 Hello! I'm your DisasterGuard AI Assistant.</p>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem;">I can help you with:</p>
+                            <ul style="color: var(--text-secondary); font-size: 0.9rem; margin: 0.5rem 0; padding-left: 1.5rem;">
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                                 <li>Disaster predictions and risk assessments</li>
                                 <li>Current weather conditions</li>
                                 <li>Safety guidelines and preparedness tips</li>
@@ -126,8 +186,12 @@
                                 <li>Flood, earthquake, and wildfire updates</li>
                             </ul>
                             <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
+<<<<<<< HEAD
                                 <i class="fas fa-info-circle" style="color: var(--accent-primary);"></i> Type your
                                 question below to get started!
+=======
+                                <i class="fas fa-info-circle" style="color: var(--accent-primary);"></i> Type your question below to get started!
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             </p>
                         </div>
                     </div>
@@ -136,6 +200,7 @@
                 <!-- Quick Suggestions -->
                 <div style="padding: 0.75rem 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.05);">
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+<<<<<<< HEAD
                         <button class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;"
                             onclick="sendQuickMessage('What is the current flood risk in Karachi?')">
                             <i class="fas fa-water"></i> Karachi Flood Risk
@@ -150,12 +215,25 @@
                         </button>
                         <button class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;"
                             onclick="sendQuickMessage('Current weather in Lahore')">
+=======
+                        <button class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;" onclick="sendQuickMessage('What is the current flood risk in Karachi?')">
+                            <i class="fas fa-water"></i> Karachi Flood Risk
+                        </button>
+                        <button class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;" onclick="sendQuickMessage('What should I do during an earthquake?')">
+                            <i class="fas fa-globe-asia"></i> Earthquake Safety
+                        </button>
+                        <button class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;" onclick="sendQuickMessage('Emergency helpline numbers Pakistan')">
+                            <i class="fas fa-phone"></i> Emergency Numbers
+                        </button>
+                        <button class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;" onclick="sendQuickMessage('Current weather in Lahore')">
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             <i class="fas fa-cloud-sun"></i> Lahore Weather
                         </button>
                     </div>
                 </div>
 
                 <!-- Input Area -->
+<<<<<<< HEAD
                 <div
                     style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); background: var(--bg-tertiary);">
                     <form id="chatForm" style="display: flex; gap: 1rem;" onsubmit="sendMessage(event)">
@@ -163,6 +241,12 @@
                             <input type="text" id="messageInput" class="input-field"
                                 placeholder="Type your message here..." style="width: 100%; padding: 0.875rem 1rem;"
                                 autocomplete="off">
+=======
+                <div style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); background: var(--bg-tertiary);">
+                    <form id="chatForm" style="display: flex; gap: 1rem;" onsubmit="sendMessage(event)">
+                        <div style="flex: 1; position: relative;">
+                            <input type="text" id="messageInput" class="input-field" placeholder="Type your message here..." style="width: 100%; padding: 0.875rem 1rem;" autocomplete="off">
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         </div>
                         <button type="submit" class="btn btn-primary" style="padding: 0.875rem 1.5rem;">
                             <i class="fas fa-paper-plane"></i> Send
@@ -172,6 +256,7 @@
             </div>
 
             <!-- Sidebar Info -->
+<<<<<<< HEAD
             <div
                 style="width: 300px; display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; max-height: calc(100vh - 70px); padding-right: 0.5rem;">
                 <!-- AI Status Card -->
@@ -182,6 +267,14 @@
                         <div
                             style="width: 12px; height: 12px; background: var(--risk-low); border-radius: 50%; animation: pulse 2s infinite;">
                         </div>
+=======
+            <div style="width: 300px; display: flex; flex-direction: column; gap: 1rem; overflow-y: auto; max-height: calc(100vh - 70px); padding-right: 0.5rem;">
+                <!-- AI Status Card -->
+                <div class="card-3d" style="padding: 1.5rem; flex-shrink: 0;">
+                    <h4 style="font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-microchip" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>AI Status</h4>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="width: 12px; height: 12px; background: var(--risk-low); border-radius: 50%; animation: pulse 2s infinite;"></div>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <span>AI Model: Gemini Pro</span>
                     </div>
                     <div style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
@@ -194,6 +287,7 @@
 
                 <!-- Emergency Contacts -->
                 <div class="card-3d" style="padding: 1.5rem; flex-shrink: 0;">
+<<<<<<< HEAD
                     <h4 style="font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-phone-alt"
                             style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Emergency Numbers</h4>
                     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
@@ -219,6 +313,24 @@
                             style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
                             <span><i class="fas fa-heartbeat"
                                     style="color: #00c853; margin-right: 0.5rem;"></i>Ambulance</span>
+=======
+                    <h4 style="font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-phone-alt" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Emergency Numbers</h4>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                            <span><i class="fas fa-ambulance" style="color: #ff1744; margin-right: 0.5rem;"></i>Rescue 1122</span>
+                            <strong style="color: var(--accent-primary);">1122</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                            <span><i class="fas fa-fire-extinguisher" style="color: #ff6d00; margin-right: 0.5rem;"></i>Fire Brigade</span>
+                            <strong style="color: var(--accent-primary);">16</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                            <span><i class="fas fa-shield-alt" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Police</span>
+                            <strong style="color: var(--accent-primary);">15</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
+                            <span><i class="fas fa-heartbeat" style="color: #00c853; margin-right: 0.5rem;"></i>Ambulance</span>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             <strong style="color: var(--accent-primary);">115</strong>
                         </div>
                     </div>
@@ -226,8 +338,12 @@
 
                 <!-- Chat Tips -->
                 <div class="card-3d" style="padding: 1.5rem; flex-shrink: 0;">
+<<<<<<< HEAD
                     <h4 style="font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-lightbulb"
                             style="color: #ffd600; margin-right: 0.5rem;"></i>Tips</h4>
+=======
+                    <h4 style="font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-lightbulb" style="color: #ffd600; margin-right: 0.5rem;"></i>Tips</h4>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     <ul style="font-size: 0.9rem; color: var(--text-secondary); padding-left: 1rem; line-height: 1.6;">
                         <li>Be specific about location</li>
                         <li>Mention disaster type clearly</li>
@@ -239,6 +355,7 @@
         </div>
     </main>
 
+<<<<<<< HEAD
     <!-- User Dropdown -->
     <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
         <div class="dropdown-header">
@@ -258,11 +375,18 @@
         // Load user name
         AuthManager.loadUserName();
         
+=======
+    <script>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         // Chat message storage
         let chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
 
         // Load chat history on page load
+<<<<<<< HEAD
         window.onload = function () {
+=======
+        window.onload = function() {
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             if (chatHistory.length > 0) {
                 chatHistory.forEach(msg => {
                     if (msg.type === 'user') {
@@ -280,6 +404,7 @@
             e.preventDefault();
             const input = document.getElementById('messageInput');
             const message = input.value.trim();
+<<<<<<< HEAD
 
             if (!message) return;
 
@@ -301,6 +426,29 @@
             removeTypingIndicator();
             addBotMessage(response);
 
+=======
+            
+            if (!message) return;
+            
+            // Add user message
+            addUserMessage(message);
+            input.value = '';
+            
+            // Save to history
+            chatHistory.push({ type: 'user', content: message, timestamp: new Date().toISOString() });
+            saveChatHistory();
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Get AI response (Simulated - Replace with Gemini API)
+            const response = await getAIResponse(message);
+            
+            // Remove typing indicator and add bot response
+            removeTypingIndicator();
+            addBotMessage(response);
+            
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             // Save bot response to history
             chatHistory.push({ type: 'bot', content: response, timestamp: new Date().toISOString() });
             saveChatHistory();
@@ -378,9 +526,15 @@
         async function getAIResponse(message) {
             // Simulate API delay
             await new Promise(resolve => setTimeout(resolve, 2000));
+<<<<<<< HEAD
 
             const lowerMsg = message.toLowerCase();
 
+=======
+            
+            const lowerMsg = message.toLowerCase();
+            
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             // Simple response logic (Replace with Gemini API call)
             if (lowerMsg.includes('flood') && lowerMsg.includes('karachi')) {
                 return "Based on current data, Karachi has a **HIGH** flood risk (0.73) due to heavy rainfall of 145mm in the last 24 hours. The most affected areas include Saddar, Gulshan-e-Iqbal, and Korangi. I recommend staying indoors and avoiding low-lying areas. Would you like specific safety guidelines?";
@@ -446,7 +600,11 @@
                 const time = new Date(msg.timestamp).toLocaleString();
                 return `[${time}] ${msg.type === 'user' ? 'You' : 'AI'}: ${msg.content}`;
             }).join('\n\n');
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             const blob = new Blob([chatText], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -480,6 +638,7 @@
             const dropdown = document.getElementById('userDropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         }
+<<<<<<< HEAD
 
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
@@ -499,3 +658,8 @@
 </body>
 
 </html>
+=======
+    </script>
+</body>
+</html>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5

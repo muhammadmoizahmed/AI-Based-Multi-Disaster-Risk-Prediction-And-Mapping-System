@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Current Weather - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
+<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,16 +19,37 @@
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
 
+=======
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+    
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     <nav class="navbar">
         <div class="navbar-content">
             <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard</a>
             <div style="display: flex; align-items: center; gap: 1.5rem;">
+<<<<<<< HEAD
 
                 <!-- User Menu -->
                 <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
                     onclick="toggleUserMenu()">
                     <div
                         style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+=======
+                <!-- Notifications -->
+                <button class="btn btn-secondary" style="position: relative;" onclick="toggleNotifications()">
+                    <i class="fas fa-bell"></i>
+                    <span id="notifBadge" style="position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background: var(--risk-extreme); border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
+                </button>
+                
+                <!-- User Menu -->
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;" onclick="toggleUserMenu()">
+                    <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <span id="userInitials">JD</span>
                     </div>
                     <span id="userName" style="font-weight: 600;">John Doe</span>
@@ -46,6 +71,7 @@
         <div class="sidebar-section">
             <p class="sidebar-title">Disaster Monitoring</p>
             <ul class="sidebar-menu">
+<<<<<<< HEAD
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a>
                 </li>
                 <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
@@ -55,11 +81,19 @@
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="weather.html" class="active"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i>
                         Weather</a></li>
+=======
+                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a></li>
+                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
+                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
+                <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
+                <li><a href="weather.html" class="active"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </ul>
         </div>
         <div class="sidebar-section">
             <p class="sidebar-title">Support</p>
             <ul class="sidebar-menu">
+<<<<<<< HEAD
                 <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live
                         Chat</a></li>
                 <li><a href="profile.html"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
@@ -72,6 +106,12 @@
                 <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </div>
+=======
+                <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live Chat</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     </aside>
 
     <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
@@ -85,6 +125,7 @@
             </div>
             <div style="display: flex; gap: 1rem;">
                 <div style="position: relative; width: 250px;">
+<<<<<<< HEAD
                     <i class="fas fa-search"
                         style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
                     <input type="text" class="input-field" id="citySearch" placeholder="Search city..."
@@ -95,10 +136,18 @@
                 </div>
                 <button class="btn btn-primary" onclick="refreshWeather()"><i class="fas fa-sync-alt"></i>
                     Refresh</button>
+=======
+                    <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="text" class="input-field" id="citySearch" placeholder="Search city..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
+                    <div id="cityDropdown" class="city-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);"></div>
+                </div>
+                <button class="btn btn-primary" onclick="refreshWeather()"><i class="fas fa-sync-alt"></i> Refresh</button>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </div>
         </div>
 
         <!-- Current Location Weather (Large Card) -->
+<<<<<<< HEAD
         <div id="mainWeatherCard" class="card-3d mirror-effect"
             style="padding: 2rem; margin-bottom: 2rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));">
             <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
@@ -106,23 +155,65 @@
                     <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
                     <h3 style="font-weight: 600;">Loading Weather Data...</h3>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">Please wait while we fetch real-time data</p>
+=======
+        <div class="card-3d mirror-effect" style="padding: 2rem; margin-bottom: 2rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;"><i class="fas fa-location-dot" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Karachi, Sindh</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Updated: <span id="lastUpdated">Just now</span></p>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-size: 3.5rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">32°C</div>
+                    <div style="color: var(--text-secondary);"><i class="fas fa-sun" style="color: #ffd600; margin-right: 0.5rem;"></i>Sunny</div>
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <div style="text-align: center;">
+                    <i class="fas fa-droplet" style="font-size: 1.5rem; color: var(--accent-primary); margin-bottom: 0.5rem;"></i>
+                    <div style="font-size: 1.25rem; font-weight: 700;">65%</div>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem;">Humidity</div>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fas fa-wind" style="font-size: 1.5rem; color: var(--accent-secondary); margin-bottom: 0.5rem;"></i>
+                    <div style="font-size: 1.25rem; font-weight: 700;">18 km/h</div>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem;">Wind Speed</div>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fas fa-eye" style="font-size: 1.5rem; color: var(--accent-tertiary); margin-bottom: 0.5rem;"></i>
+                    <div style="font-size: 1.25rem; font-weight: 700;">10 km</div>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem;">Visibility</div>
+                </div>
+                <div style="text-align: center;">
+                    <i class="fas fa-gauge-high" style="font-size: 1.5rem; color: #ff6d00; margin-bottom: 0.5rem;"></i>
+                    <div style="font-size: 1.25rem; font-weight: 700;">1012 hPa</div>
+                    <div style="color: var(--text-secondary); font-size: 0.85rem;">Pressure</div>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 </div>
             </div>
         </div>
 
         <!-- Major Cities Grid -->
+<<<<<<< HEAD
         <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-city"
                 style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Major Cities</h3>
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;"
             id="citiesGrid">
+=======
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-city" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Major Cities</h3>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;" id="citiesGrid">
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             <!-- Cities will be populated by JavaScript -->
         </div>
 
         <!-- All Cities Table -->
         <div class="card-3d">
             <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+<<<<<<< HEAD
                 <h3 style="font-size: 1.25rem; font-weight: 700;"><i class="fas fa-list"
                         style="color: var(--accent-primary); margin-right: 0.5rem;"></i>All Cities Weather</h3>
+=======
+                <h3 style="font-size: 1.25rem; font-weight: 700;"><i class="fas fa-list" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>All Cities Weather</h3>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </div>
             <div style="overflow-x: auto;">
                 <table class="data-table">
@@ -145,6 +236,7 @@
         </div>
     </main>
 
+<<<<<<< HEAD
     <!-- User Dropdown -->
     <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
         <div class="dropdown-header">
@@ -647,6 +739,34 @@
             const grid = document.getElementById('citiesGrid');
             const majorCities = weatherData.slice(0, 8);
 
+=======
+    <script>
+        // Weather data for Pakistani cities
+        const cities = [
+            { name: 'Karachi', province: 'Sindh', temp: 32, condition: 'Sunny', humidity: 65, wind: 18, alert: 'None', icon: 'fa-sun', color: '#ffd600' },
+            { name: 'Lahore', province: 'Punjab', temp: 28, condition: 'Partly Cloudy', humidity: 58, wind: 12, alert: 'None', icon: 'fa-cloud-sun', color: '#87CEEB' },
+            { name: 'Islamabad', province: 'ICT', temp: 26, condition: 'Cloudy', humidity: 62, wind: 15, alert: 'None', icon: 'fa-cloud', color: '#B0C4DE' },
+            { name: 'Rawalpindi', province: 'Punjab', temp: 27, condition: 'Cloudy', humidity: 60, wind: 14, alert: 'None', icon: 'fa-cloud', color: '#B0C4DE' },
+            { name: 'Peshawar', province: 'KP', temp: 30, condition: 'Sunny', humidity: 45, wind: 10, alert: 'Heat', icon: 'fa-sun', color: '#ffd600' },
+            { name: 'Quetta', province: 'Balochistan', temp: 22, condition: 'Clear', humidity: 35, wind: 20, alert: 'None', icon: 'fa-star', color: '#E0E0E0' },
+            { name: 'Multan', province: 'Punjab', temp: 35, condition: 'Hot', humidity: 40, wind: 8, alert: 'Heat', icon: 'fa-fire', color: '#ff6d00' },
+            { name: 'Faisalabad', province: 'Punjab', temp: 33, condition: 'Sunny', humidity: 50, wind: 11, alert: 'Heat', icon: 'fa-sun', color: '#ffd600' },
+            { name: 'Hyderabad', province: 'Sindh', temp: 34, condition: 'Hot', humidity: 55, wind: 13, alert: 'Heat', icon: 'fa-fire', color: '#ff6d00' },
+            { name: 'Sukkur', province: 'Sindh', temp: 36, condition: 'Very Hot', humidity: 42, wind: 9, alert: 'Heat', icon: 'fa-temperature-high', color: '#ff1744' },
+            { name: 'Larkana', province: 'Sindh', temp: 37, condition: 'Very Hot', humidity: 38, wind: 7, alert: 'Heat', icon: 'fa-temperature-high', color: '#ff1744' },
+            { name: 'Gujranwala', province: 'Punjab', temp: 29, condition: 'Partly Cloudy', humidity: 55, wind: 12, alert: 'None', icon: 'fa-cloud-sun', color: '#87CEEB' },
+            { name: 'Sialkot', province: 'Punjab', temp: 28, condition: 'Cloudy', humidity: 65, wind: 10, alert: 'None', icon: 'fa-cloud', color: '#B0C4DE' },
+            { name: 'Abbottabad', province: 'KP', temp: 24, condition: 'Rain', humidity: 80, wind: 8, alert: 'Rain', icon: 'fa-cloud-rain', color: '#4682B4' },
+            { name: 'Mingora', province: 'KP', temp: 25, condition: 'Thunderstorm', humidity: 85, wind: 25, alert: 'Storm', icon: 'fa-bolt', color: '#9370DB' },
+            { name: 'Nawabshah', province: 'Sindh', temp: 38, condition: 'Extreme Heat', humidity: 30, wind: 6, alert: 'Extreme', icon: 'fa-temperature-arrow-up', color: '#ff006e' },
+        ];
+
+        // Render major cities grid
+        function renderCitiesGrid() {
+            const grid = document.getElementById('citiesGrid');
+            const majorCities = cities.slice(0, 8);
+            
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             grid.innerHTML = majorCities.map(city => `
                 <div class="card-3d" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="selectCity('${city.name}')">
                     <h4 style="font-weight: 700; margin-bottom: 0.5rem;">${city.name}</h4>
@@ -663,7 +783,11 @@
         // Render weather table
         function renderWeatherTable() {
             const tbody = document.getElementById('weatherTableBody');
+<<<<<<< HEAD
             tbody.innerHTML = weatherData.map(city => `
+=======
+            tbody.innerHTML = cities.map(city => `
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <tr>
                     <td><strong>${city.name}</strong></td>
                     <td>${city.province}</td>
@@ -671,25 +795,40 @@
                     <td><i class="fas ${city.icon}" style="color: ${city.color}; margin-right: 0.5rem;"></i>${city.condition}</td>
                     <td>${city.humidity}%</td>
                     <td>${city.wind} km/h</td>
+<<<<<<< HEAD
                     <td>${city.alert !== 'None'
                     ? `<span class="risk-badge ${city.alert === 'Extreme' ? 'extreme' : city.alert === 'Storm' ? 'high' : 'moderate'}">${city.alert}</span>`
                     : '<span style="color: var(--risk-low);"><i class="fas fa-check"></i> Normal</span>'}</td>
+=======
+                    <td>${city.alert !== 'None' 
+                        ? `<span class="risk-badge ${city.alert === 'Extreme' ? 'extreme' : city.alert === 'Storm' ? 'high' : 'moderate'}">${city.alert}</span>` 
+                        : '<span style="color: var(--risk-low);"><i class="fas fa-check"></i> Normal</span>'}</td>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 </tr>
             `).join('');
         }
 
+<<<<<<< HEAD
         // City search functionality - searches local cities array
+=======
+        // City search functionality
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         function setupCitySearch() {
             const searchInput = document.getElementById('citySearch');
             const dropdown = document.getElementById('cityDropdown');
 
             searchInput.addEventListener('input', (e) => {
+<<<<<<< HEAD
                 const query = e.target.value.trim().toLowerCase();
+=======
+                const query = e.target.value.toLowerCase();
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 if (query.length < 2) {
                     dropdown.style.display = 'none';
                     return;
                 }
 
+<<<<<<< HEAD
                 // Search in deduplicated cities array
                 const matches = cities.filter(city => 
                     city.name.toLowerCase().includes(query) || 
@@ -703,10 +842,18 @@
                              onmouseout="this.style.background='transparent'"
                              onclick="selectCity('${c.name}', ${c.lat}, ${c.lng})">
                             <strong>${c.name}</strong> <span style="color: var(--text-muted); font-size: 0.85rem;">- ${c.province}</span>
+=======
+                const matches = cities.filter(c => c.name.toLowerCase().includes(query));
+                if (matches.length > 0) {
+                    dropdown.innerHTML = matches.map(c => `
+                        <div style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onclick="selectCity('${c.name}')">
+                            <strong>${c.name}</strong> - ${c.province} - ${c.temp}°C
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         </div>
                     `).join('');
                     dropdown.style.display = 'block';
                 } else {
+<<<<<<< HEAD
                     dropdown.innerHTML = '<div style="padding: 0.75rem; color: var(--text-muted);">No cities found</div>';
                     dropdown.style.display = 'block';
                 }
@@ -725,16 +872,24 @@
                         </div>
                     `).join('');
                     dropdown.style.display = 'block';
+=======
+                    dropdown.style.display = 'none';
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 }
             });
 
             document.addEventListener('click', (e) => {
+<<<<<<< HEAD
                 if (!e.target.closest('#citySearch') && !e.target.closest('#cityDropdown')) {
+=======
+                if (!e.target.closest('#citySearch')) {
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     dropdown.style.display = 'none';
                 }
             });
         }
 
+<<<<<<< HEAD
         // Select city from search
         function selectCity(cityName, lat, lng) {
             document.getElementById('citySearch').value = cityName;
@@ -816,11 +971,22 @@
                     icon: 'fa-exclamation-circle',
                     color: '#ff6d00'
                 });
+=======
+        // Select city
+        function selectCity(cityName) {
+            const city = cities.find(c => c.name === cityName);
+            if (city) {
+                document.getElementById('citySearch').value = cityName;
+                document.getElementById('cityDropdown').style.display = 'none';
+                // Update main card with selected city
+                updateMainCard(city);
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             }
         }
 
         // Update main weather card
         function updateMainCard(city) {
+<<<<<<< HEAD
             const mainCard = document.getElementById('mainWeatherCard');
             const province = city.province || 'Pakistan';
             const humidity = city.humidity !== '--' ? city.humidity + '%' : city.humidity;
@@ -830,6 +996,14 @@
                     <div>
                         <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;"><i class="fas fa-location-dot" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>${city.name}, ${province}</h2>
                         <p style="color: var(--text-secondary); font-size: 0.9rem;">Updated: <span id="lastUpdated">Just now</span></p>
+=======
+            const mainCard = document.querySelector('.card-3d.mirror-effect');
+            mainCard.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;"><i class="fas fa-location-dot" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>${city.name}, ${city.province}</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Updated: Just now</p>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     </div>
                     <div style="text-align: right;">
                         <div style="font-size: 3.5rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${city.temp}°C</div>
@@ -839,22 +1013,38 @@
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
                     <div style="text-align: center;">
                         <i class="fas fa-droplet" style="font-size: 1.5rem; color: var(--accent-primary); margin-bottom: 0.5rem;"></i>
+<<<<<<< HEAD
                         <div style="font-size: 1.25rem; font-weight: 700;">${humidity}</div>
+=======
+                        <div style="font-size: 1.25rem; font-weight: 700;">${city.humidity}%</div>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <div style="color: var(--text-secondary); font-size: 0.85rem;">Humidity</div>
                     </div>
                     <div style="text-align: center;">
                         <i class="fas fa-wind" style="font-size: 1.5rem; color: var(--accent-secondary); margin-bottom: 0.5rem;"></i>
+<<<<<<< HEAD
                         <div style="font-size: 1.25rem; font-weight: 700;">${wind}</div>
+=======
+                        <div style="font-size: 1.25rem; font-weight: 700;">${city.wind} km/h</div>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <div style="color: var(--text-secondary); font-size: 0.85rem;">Wind Speed</div>
                     </div>
                     <div style="text-align: center;">
                         <i class="fas fa-eye" style="font-size: 1.5rem; color: var(--accent-tertiary); margin-bottom: 0.5rem;"></i>
+<<<<<<< HEAD
                         <div style="font-size: 1.25rem; font-weight: 700;">${city.visibility || '--'}</div>
+=======
+                        <div style="font-size: 1.25rem; font-weight: 700;">10 km</div>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <div style="color: var(--text-secondary); font-size: 0.85rem;">Visibility</div>
                     </div>
                     <div style="text-align: center;">
                         <i class="fas fa-gauge-high" style="font-size: 1.5rem; color: #ff6d00; margin-bottom: 0.5rem;"></i>
+<<<<<<< HEAD
                         <div style="font-size: 1.25rem; font-weight: 700;">${city.pressure || '--'}</div>
+=======
+                        <div style="font-size: 1.25rem; font-weight: 700;">1012 hPa</div>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <div style="color: var(--text-secondary); font-size: 0.85rem;">Pressure</div>
                     </div>
                 </div>
@@ -863,6 +1053,7 @@
 
         // Refresh weather data
         function refreshWeather() {
+<<<<<<< HEAD
             // Fetch fresh data from API
             fetchWeatherData();
         }
@@ -883,6 +1074,21 @@
         
         // Load user name
         AuthManager.loadUserName();
+=======
+            // Simulate data refresh with slight variations
+            cities.forEach(city => {
+                city.temp += Math.floor(Math.random() * 3) - 1; // -1 to +1 variation
+            });
+            renderCitiesGrid();
+            renderWeatherTable();
+            document.getElementById('lastUpdated').textContent = new Date().toLocaleTimeString();
+        }
+
+        // Initialize
+        renderCitiesGrid();
+        renderWeatherTable();
+        setupCitySearch();
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 
         function toggleNotifications() {
             const dropdown = document.getElementById('notifDropdown');
@@ -899,6 +1105,7 @@
             const dropdown = document.getElementById('userDropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         }
+<<<<<<< HEAD
 
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
@@ -911,3 +1118,8 @@
 </body>
 
 </html>
+=======
+    </script>
+</body>
+</html>
+>>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
