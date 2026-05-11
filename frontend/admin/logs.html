@@ -1,31 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Logs - DisasterGuard Admin</title>
     <link rel="stylesheet" href="../css/styles.css">
-<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-=======
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <body>
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
     <nav class="navbar">
         <div class="navbar-content">
-<<<<<<< HEAD
             <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard <span
                     style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
             </a>
@@ -36,13 +26,6 @@
                 <div
                     style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
                     AD</div>
-=======
-            <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard <span style="font-size: 0.7em; background: var(--accent-tertiary); padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;">ADMIN</span></a>
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
-                <button class="btn btn-secondary" onclick="refreshLogs()"><i class="fas fa-sync-alt"></i> Refresh</button>
-                <button class="btn btn-primary" onclick="exportLogs()"><i class="fas fa-download"></i> Export</button>
-                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">AD</div>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </div>
         </div>
     </nav>
@@ -74,22 +57,14 @@
     <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
-<<<<<<< HEAD
                 <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-file-alt"
                         style="color: var(--accent-primary); margin-right: 0.75rem;"></i>System Logs</h1>
-=======
-                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-file-alt" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>System Logs</h1>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <p style="color: var(--text-secondary);">Application logs and error tracking</p>
             </div>
         </div>
         <div class="card-3d" style="padding: 1rem;">
-<<<<<<< HEAD
             <div style="background: #0d1117; border-radius: var(--radius-md); padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; max-height: 600px; overflow-y: auto;"
                 id="logContainer">
-=======
-            <div style="background: #0d1117; border-radius: var(--radius-md); padding: 1rem; font-family: 'Courier New', monospace; font-size: 0.85rem; max-height: 600px; overflow-y: auto;" id="logContainer">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <!-- Logs populated by JS -->
             </div>
         </div>
@@ -108,34 +83,21 @@
             'Flood risk threshold exceeded',
             'Earthquake data updated from USGS'
         ];
-<<<<<<< HEAD
 
         function generateLogs() {
             const container = document.getElementById('logContainer');
             container.innerHTML = '';
 
-=======
-        
-        function generateLogs() {
-            const container = document.getElementById('logContainer');
-            container.innerHTML = '';
-            
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             for (let i = 0; i < 50; i++) {
                 const time = new Date();
                 time.setSeconds(time.getSeconds() - i * 30);
                 const level = logLevels[Math.floor(Math.random() * logLevels.length)];
                 const message = logMessages[Math.floor(Math.random() * logMessages.length)];
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 let color = '#00d4ff';
                 if (level === 'WARN') color = '#ffbe0b';
                 if (level === 'ERROR') color = '#ff006e';
                 if (level === 'DEBUG') color = 'white';
-<<<<<<< HEAD
 
                 container.innerHTML += `<div style="margin-bottom: 0.5rem; color: ${color};">[${time.toISOString()}] [${level}] ${message}</div>`;
             }
@@ -149,21 +111,6 @@
             alert('Logs exported! (This would download logs in production)');
         }
 
-=======
-                
-                container.innerHTML += `<div style="margin-bottom: 0.5rem; color: ${color};">[${time.toISOString()}] [${level}] ${message}</div>`;
-            }
-        }
-        
-        function refreshLogs() {
-            generateLogs();
-        }
-        
-        function exportLogs() {
-            alert('Logs exported! (This would download logs in production)');
-        }
-        
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         generateLogs();
         setInterval(generateLogs, 10000);
 
@@ -182,7 +129,6 @@
             }
         }
         function logout() {
-<<<<<<< HEAD
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.clear();
                 window.location.href = 'index.html';
@@ -192,11 +138,3 @@
 </body>
 
 </html>
-=======
-            localStorage.removeItem('adminToken');
-            window.location.href = 'index.html';
-        }
-    </script>
-</body>
-</html>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5

@@ -34,12 +34,9 @@ GITHUB_CLIENT_ID = os.getenv('github_client_id', '')
 GITHUB_CLIENT_SECRET = os.getenv('github_client_secret', '')
 GITHUB_REDIRECT_URI = 'http://localhost:5000/api/auth/github/callback'
 
-<<<<<<< HEAD
 # Weather API
 OPENWEATHERMAP_API_KEY = os.getenv('openweathermap_api_key', '')
 
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 # SMTP Config
 SMTP_EMAIL = os.getenv('smtp_email', '')
 SMTP_PASSWORD = os.getenv('smtp_password', '')
@@ -88,17 +85,8 @@ def root():
     return {"message": "DisasterGuard API Running", "status": "ok"}
 
 @app.post("/api/auth/login")
-<<<<<<< HEAD
-async def login(data: LoginData, request: Request):
-    client_ip = request.client.host if request.client else ''
-    
-    if data.email and data.password:
-        # Update user IP on login
-        update_user(None, email=data.email, ip_address=client_ip)
-=======
 async def login(data: LoginData):
     if data.email and data.password:
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         return {"success": True, "message": "Login successful", "user": {"email": data.email}}
     return {"success": False, "message": "Invalid credentials"}, 401
 
@@ -212,21 +200,11 @@ async def google_login():
     return {"auth_url": auth_url}
 
 @app.get("/api/auth/google/callback")
-<<<<<<< HEAD
-async def google_callback(code: str, request: Request):
-=======
 async def google_callback(code: str):
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     if not code:
         return {"success": False, "message": "No code provided"}, 400
     
     try:
-<<<<<<< HEAD
-        client_ip = request.client.host if request.client else ''
-        
-        # Use the old redirect URI for token exchange (Google Console still has it)
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         token_response = requests.post(
             "https://oauth2.googleapis.com/token",
             data={
@@ -234,11 +212,7 @@ async def google_callback(code: str):
                 "client_secret": GOOGLE_CLIENT_SECRET,
                 "code": code,
                 "grant_type": "authorization_code",
-<<<<<<< HEAD
-                "redirect_uri": "http://localhost:5000/api/auth/google/callback"
-=======
-                "redirect_uri": GOOGLE_REDIRECT_URI
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
+"redirect_uri": GOOGLE_REDIRECT_URI
             }
         )
         token_json = token_response.json()
@@ -249,32 +223,19 @@ async def google_callback(code: str):
             headers={"Authorization": f"Bearer {access_token}"}
         ).json()
         
-<<<<<<< HEAD
-        # Save user to database
         email = userinfo.get("email")
         name = userinfo.get("name", email.split('@')[0])
         picture = userinfo.get("picture", "")
         
         if email:
-            create_user(name, email, None, 'user', '', '', client_ip, 'google', email, picture)
+            create_user(name, email, None, 'user', '', '', '', 'google', email, picture)
         
-        # Redirect to frontend callback with user info
-        from fastapi.responses import RedirectResponse
-        user_data = {"email": email, "name": name}
-        import urllib.parse
-        user_param = urllib.parse.urlencode(user_data)
-        return RedirectResponse(
-            url=f"http://localhost:8000/oauth-callback.html?provider=google&success=true&{user_param}",
-            status_code=302
-        )
-=======
         return {
             "success": True,
             "message": "Google login successful",
             "user": {"email": userinfo.get("email"), "name": userinfo.get("name")},
             "redirect": "dashboard.html"
         }
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     except Exception as e:
         return {"success": False, "message": f"Google auth failed: {str(e)}"}, 500
 
@@ -294,20 +255,11 @@ async def github_login():
     return {"auth_url": auth_url}
 
 @app.get("/api/auth/github/callback")
-<<<<<<< HEAD
-async def github_callback(code: str, request: Request):
-=======
 async def github_callback(code: str):
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     if not code:
         return {"success": False, "message": "No code provided"}, 400
     
     try:
-<<<<<<< HEAD
-        client_ip = request.client.host if request.client else ''
-        
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         token_response = requests.post(
             "https://github.com/login/oauth/access_token",
             data={
@@ -326,41 +278,20 @@ async def github_callback(code: str):
             headers={"Authorization": f"token {access_token}"}
         ).json()
         
-<<<<<<< HEAD
-        # Get email if not public
         email = user_data.get("email")
-        if not email:
-            emails_response = requests.get(
-                "https://api.github.com/user/emails",
-                headers={"Authorization": f"token {access_token}"}
-            ).json()
-            primary_email = next((e['email'] for e in emails_response if e.get('primary')), None)
-            email = primary_email or emails_response[0].get('email') if emails_response else None
-        
         name = user_data.get("name", email.split('@')[0]) if email else "GitHub User"
         picture = user_data.get("avatar_url", "")
         
         # Save user to database
         if email:
-            create_user(name, email, None, 'user', '', '', client_ip, 'github', str(user_data.get('id')), picture)
+            create_user(name, email, None, 'user', '', '', '', 'github', str(user_data.get('id')), picture)
         
-        # Redirect to frontend callback with user info
-        from fastapi.responses import RedirectResponse
-        import urllib.parse
-        user_data_redirect = {"email": email, "name": name}
-        user_param = urllib.parse.urlencode(user_data_redirect)
-        return RedirectResponse(
-            url=f"http://localhost:8000/oauth-callback.html?provider=github&success=true&{user_param}",
-            status_code=302
-        )
-=======
         return {
             "success": True,
             "message": "GitHub login successful",
             "user": {"email": user_data.get("email"), "name": user_data.get("name")},
             "redirect": "dashboard.html"
         }
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     except Exception as e:
         return {"success": False, "message": f"GitHub auth failed: {str(e)}"}, 500
 
@@ -408,102 +339,16 @@ async def get_predictions(location: str = "default"):
     }
 
 # Admin Routes
-<<<<<<< HEAD
-from db_users import get_all_users, get_user_by_id, create_user, update_user, delete_user, search_users, get_user_count
-
-@app.get("/api/admin/dashboard")
-async def admin_dashboard():
-    total_users = get_user_count()
-    users = get_all_users()
-    active_users = len([u for u in users if u.get('status') == 'active'])
-    
-    return {
-        "total_users": total_users,
-        "active_users": active_users,
-=======
 @app.get("/api/admin/dashboard")
 async def admin_dashboard():
     return {
         "total_users": 150,
         "active_users": 89,
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         "total_predictions": 1250,
         "system_health": "good"
     }
 
 @app.get("/api/admin/users")
-<<<<<<< HEAD
-async def get_users(page: int = 1, search: str = ""):
-    if search:
-        users = search_users(search)
-    else:
-        users = get_all_users()
-    
-    # Paginate
-    per_page = 20
-    start = (page - 1) * per_page
-    end = start + per_page
-    paginated_users = users[start:end]
-    
-    return {
-        "users": paginated_users,
-        "total": len(users),
-        "page": page,
-        "total_pages": (len(users) + per_page - 1) // per_page
-    }
-
-@app.get("/api/admin/users/{user_id}")
-async def get_user(user_id: int):
-    user = get_user_by_id(user_id)
-    if user:
-        return {"success": True, "user": user}
-    return {"success": False, "message": "User not found"}, 404
-
-@app.post("/api/admin/users")
-async def add_user(request: Request):
-    client_ip = request.client.host if request.client else ''
-    data = await request.json()
-    name = data.get('name')
-    email = data.get('email')
-    password = data.get('password')
-    role = data.get('role', 'user')
-    phone = data.get('phone', '')
-    location = data.get('location', '')
-    
-    success = create_user(name, email, password, role, phone, location, ip_address=client_ip, provider='local')
-    if success:
-        return {"success": True, "message": "User created successfully"}
-    return {"success": False, "message": "Failed to create user"}, 400
-
-@app.put("/api/admin/users/{user_id}")
-async def edit_user(user_id: int, request: Request):
-    data = await request.json()
-    success = update_user(
-        user_id,
-        name=data.get('name'),
-        email=data.get('email'),
-        role=data.get('role'),
-        phone=data.get('phone'),
-        location=data.get('location'),
-        status=data.get('status')
-    )
-    if success:
-        return {"success": True, "message": "User updated successfully"}
-    return {"success": False, "message": "Failed to update user"}, 400
-
-@app.delete("/api/admin/users/{user_id}")
-async def remove_user(user_id: int):
-    success = delete_user(user_id)
-    if success:
-        return {"success": True, "message": "User deleted successfully"}
-    return {"success": False, "message": "Failed to delete user"}, 400
-
-# Weather API Key endpoint
-@app.get("/api/weather/api-key")
-async def get_weather_api_key():
-    return {
-        "api_key": OPENWEATHERMAP_API_KEY
-=======
 async def get_users(page: int = 1):
     return {
         "users": [
@@ -511,7 +356,6 @@ async def get_users(page: int = 1):
         ],
         "total": 150,
         "page": page
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     }
 
 if __name__ == "__main__":

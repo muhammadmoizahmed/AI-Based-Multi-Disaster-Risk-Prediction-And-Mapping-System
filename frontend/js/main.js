@@ -138,11 +138,7 @@ class AuthManager {
     
     static getUser() {
         try {
-<<<<<<< HEAD
             return JSON.parse(localStorage.getItem('user_data') || localStorage.getItem('user') || '{}');
-=======
-            return JSON.parse(localStorage.getItem('user_data') || '{}');
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         } catch {
             return {};
         }
@@ -166,8 +162,6 @@ class AuthManager {
         localStorage.setItem('auth_token', token);
         localStorage.setItem('user_data', JSON.stringify(userData));
     }
-<<<<<<< HEAD
-    
     static loadUserName() {
         const user = this.getUser();
         const userName = user.name || 'User';
@@ -215,8 +209,6 @@ class AuthManager {
             el.textContent = initials;
         });
     }
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 }
 
 // Chart Manager for Data Visualization

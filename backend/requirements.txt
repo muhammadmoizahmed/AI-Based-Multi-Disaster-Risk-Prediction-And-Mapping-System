@@ -4,7 +4,4 @@ python-dotenv==1.0.0
 pydantic==2.5.0
 requests==2.31.0
 python-multipart==0.0.6
-<<<<<<< HEAD
 psycopg2-binary==2.9.9
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5

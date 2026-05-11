@@ -1,27 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </head>
 
-=======
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-</head>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <body>
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
@@ -29,24 +19,12 @@
         <div class="navbar-content">
             <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard</a>
             <div style="display: flex; align-items: center; gap: 1.5rem;">
-<<<<<<< HEAD
 
                 <!-- User Menu -->
                 <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
                     onclick="toggleUserMenu()">
                     <div
                         style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
-=======
-                <!-- Notifications -->
-                <button class="btn btn-secondary" style="position: relative;" onclick="toggleNotifications()">
-                    <i class="fas fa-bell"></i>
-                    <span id="notifBadge" style="position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background: var(--risk-extreme); border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
-                </button>
-                
-                <!-- User Menu -->
-                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;" onclick="toggleUserMenu()">
-                    <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <span id="userInitials">JD</span>
                     </div>
                     <span id="userName" style="font-weight: 600;">John Doe</span>
@@ -67,18 +45,12 @@
         <div class="sidebar-section">
             <p class="sidebar-title">Disaster Monitoring</p>
             <ul class="sidebar-menu">
-<<<<<<< HEAD
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a>
                 </li>
                 <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
                         Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
-=======
-                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a></li>
-                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
-                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
             </ul>
@@ -86,16 +58,11 @@
         <div class="sidebar-section">
             <p class="sidebar-title">Support</p>
             <ul class="sidebar-menu">
-<<<<<<< HEAD
                 <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live
                         Chat</a></li>
                 <li><a href="profile.html"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
                 <li><a href="settings.html" class="active"><i class="fas fa-cog"
                             style="color: var(--accent-primary);"></i> Settings</a></li>
-=======
-                <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live Chat</a></li>
-                <li><a href="settings.html" class="active"><i class="fas fa-cog" style="color: var(--accent-primary);"></i> Settings</a></li>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </ul>
         </div>
         <div class="sidebar-section">
@@ -108,81 +75,50 @@
     <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
-<<<<<<< HEAD
                 <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-cog"
                         style="color: var(--accent-primary); margin-right: 0.75rem;"></i>Settings</h1>
-=======
-                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-cog" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>Settings</h1>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <p style="color: var(--text-secondary);">Manage your preferences and alert thresholds</p>
             </div>
             <button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> Save Changes</button>
         </div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
-<<<<<<< HEAD
             <!-- Profile Settings removed - use Profile page instead -->
             <div class="card-3d" style="padding: 2rem;">
                 <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-bell"
                         style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Alert Thresholds</h3>
-=======
-            <div class="card-3d" style="padding: 2rem;">
-                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-bell" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Alert Thresholds</h3>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                     <div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                             <span>Flood Risk Threshold</span>
-<<<<<<< HEAD
                             <span id="floodThresholdVal"
                                 style="color: var(--accent-primary); font-weight: 600;">0.60</span>
                         </div>
                         <input type="range" min="0" max="1" step="0.05" value="0.6" class="input-field"
                             style="width: 100%;" oninput="updateThreshold('flood', this.value)">
-=======
-                            <span id="floodThresholdVal" style="color: var(--accent-primary); font-weight: 600;">0.60</span>
-                        </div>
-                        <input type="range" min="0" max="1" step="0.05" value="0.6" class="input-field" style="width: 100%;" oninput="updateThreshold('flood', this.value)">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     </div>
                     <div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                             <span>Earthquake Risk Threshold</span>
-<<<<<<< HEAD
                             <span id="quakeThresholdVal"
                                 style="color: var(--accent-secondary); font-weight: 600;">0.50</span>
                         </div>
                         <input type="range" min="0" max="1" step="0.05" value="0.5" class="input-field"
                             style="width: 100%;" oninput="updateThreshold('quake', this.value)">
-=======
-                            <span id="quakeThresholdVal" style="color: var(--accent-secondary); font-weight: 600;">0.50</span>
-                        </div>
-                        <input type="range" min="0" max="1" step="0.05" value="0.5" class="input-field" style="width: 100%;" oninput="updateThreshold('quake', this.value)">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     </div>
                     <div>
                         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                             <span>Wildfire Risk Threshold</span>
-<<<<<<< HEAD
                             <span id="fireThresholdVal"
                                 style="color: var(--accent-tertiary); font-weight: 600;">0.40</span>
                         </div>
                         <input type="range" min="0" max="1" step="0.05" value="0.4" class="input-field"
                             style="width: 100%;" oninput="updateThreshold('fire', this.value)">
-=======
-                            <span id="fireThresholdVal" style="color: var(--accent-tertiary); font-weight: 600;">0.40</span>
-                        </div>
-                        <input type="range" min="0" max="1" step="0.05" value="0.4" class="input-field" style="width: 100%;" oninput="updateThreshold('fire', this.value)">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     </div>
                 </div>
             </div>
             <div class="card-3d" style="padding: 2rem;">
-<<<<<<< HEAD
                 <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-envelope"
                         style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Notification Preferences</h3>
-=======
-                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-envelope" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Notification Preferences</h3>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <div style="display: flex; flex-direction: column; gap: 1rem;">
                     <label style="display: flex; align-items: center; gap: 1rem; cursor: pointer;">
                         <input type="checkbox" checked style="width: 20px; height: 20px;">
@@ -203,7 +139,6 @@
                 </div>
             </div>
             <div class="card-3d" style="padding: 2rem;">
-<<<<<<< HEAD
                 <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-map-marker-alt"
                         style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Default Location</h3>
                 <div style="position: relative; margin-bottom: 1rem;">
@@ -237,35 +172,6 @@
     </div>
 
     <script src="../js/main.js"></script>
-=======
-                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-user" style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Profile Settings</h3>
-                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                    <div class="input-group">
-                        <i class="fas fa-user input-icon"></i>
-                        <input type="text" class="input-field" value="John Doe" placeholder="Full Name">
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-envelope input-icon"></i>
-                        <input type="email" class="input-field" value="john@email.com" placeholder="Email">
-                    </div>
-                    <div class="input-group">
-                        <i class="fas fa-phone input-icon"></i>
-                        <input type="tel" class="input-field" placeholder="Phone Number">
-                    </div>
-                </div>
-            </div>
-            <div class="card-3d" style="padding: 2rem;">
-                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-map-marker-alt" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Default Location</h3>
-                <div style="position: relative; margin-bottom: 1rem;">
-                    <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
-                    <input type="text" class="input-field" id="defaultCity" value="Karachi, Sindh" placeholder="Search city..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
-                    <div id="cityDropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 200px; overflow-y: auto; z-index: 1000;"></div>
-                </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">This location will be used as default for all monitoring dashboards.</p>
-            </div>
-        </div>
-    </main>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     <script>
         function updateThreshold(type, value) {
             document.getElementById(type + 'ThresholdVal').textContent = parseFloat(value).toFixed(2);
@@ -287,7 +193,6 @@
             const dropdown = document.getElementById('userDropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         }
-<<<<<<< HEAD
 
         // Load user data
         document.addEventListener('DOMContentLoaded', () => {
@@ -332,8 +237,3 @@
 </body>
 
 </html>
-=======
-    </script>
-</body>
-</html>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5

@@ -1,27 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heatmap - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
-=======
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-</head>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <body>
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
@@ -29,7 +19,6 @@
         <div class="navbar-content">
             <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard</a>
             <div style="display: flex; align-items: center; gap: 1.5rem;">
-<<<<<<< HEAD
 
 
                 <!-- User Menu -->
@@ -37,17 +26,6 @@
                     onclick="toggleUserMenu()">
                     <div
                         style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
-=======
-                <!-- Notifications -->
-                <button class="btn btn-secondary" style="position: relative;" onclick="toggleNotifications()">
-                    <i class="fas fa-bell"></i>
-                    <span id="notifBadge" style="position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background: var(--risk-extreme); border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
-                </button>
-                
-                <!-- User Menu -->
-                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;" onclick="toggleUserMenu()">
-                    <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <span id="userInitials">JD</span>
                     </div>
                     <span id="userName" style="font-weight: 600;">John Doe</span>
@@ -68,18 +46,12 @@
         <div class="sidebar-section">
             <p class="sidebar-title">Disaster Monitoring</p>
             <ul class="sidebar-menu">
-<<<<<<< HEAD
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a>
                 </li>
                 <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
                         Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
-=======
-                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a></li>
-                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
-                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <li><a href="heatmap.html" class="active"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
             </ul>
@@ -87,13 +59,9 @@
         <div class="sidebar-section">
             <p class="sidebar-title">Support</p>
             <ul class="sidebar-menu">
-<<<<<<< HEAD
                 <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live
                         Chat</a></li>
                 <li><a href="profile.html"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
-=======
-                <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live Chat</a></li>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </div>
@@ -107,17 +75,12 @@
     <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
             <div>
-<<<<<<< HEAD
                 <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-map-marked-alt"
                         style="color: var(--accent-primary); margin-right: 0.75rem;"></i>Interactive Heatmap</h1>
-=======
-                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-map-marked-alt" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>Interactive Heatmap</h1>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <p style="color: var(--text-secondary);">View disaster risk zones across Pakistan</p>
             </div>
             <div style="display: flex; gap: 1rem; position: relative;">
                 <div style="position: relative; width: 250px;">
-<<<<<<< HEAD
                     <i class="fas fa-search"
                         style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
                     <input type="text" class="input-field" id="citySearch" placeholder="Search city..."
@@ -128,13 +91,6 @@
                 </div>
                 <select class="input-field" style="width: 140px; padding: 0.75rem 1rem;"
                     onchange="changeLayer(this.value)">
-=======
-                    <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
-                    <input type="text" class="input-field" id="citySearch" placeholder="Search city..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
-                    <div id="cityDropdown" class="city-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);"></div>
-                </div>
-                <select class="input-field" style="width: 140px; padding: 0.75rem 1rem;" onchange="changeLayer(this.value)">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     <option value="all">All Risks</option>
                     <option value="flood">Flood Only</option>
                     <option value="earthquake">Earthquake Only</option>
@@ -145,7 +101,6 @@
         </div>
         <div class="card-3d" style="padding: 1rem;">
             <div id="riskMap" style="height: 600px; border-radius: var(--radius-md);"></div>
-<<<<<<< HEAD
             <div
                 style="display: flex; gap: 2rem; padding: 1rem; justify-content: center; background: var(--bg-tertiary); border-radius: var(--radius-md); margin-top: 1rem;">
                 <div style="display: flex; align-items: center; gap: 0.5rem;"><span
@@ -187,21 +142,6 @@
         // Load user name
         AuthManager.loadUserName();
 
-=======
-            <div style="display: flex; gap: 2rem; padding: 1rem; justify-content: center; background: var(--bg-tertiary); border-radius: var(--radius-md); margin-top: 1rem;">
-                <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background: var(--risk-low); border-radius: 50%;"></span><span>Low (0-0.3)</span></div>
-                <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background: var(--risk-moderate); border-radius: 50%;"></span><span>Moderate (0.3-0.6)</span></div>
-                <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background: var(--risk-high); border-radius: 50%;"></span><span>High (0.6-0.8)</span></div>
-                <div style="display: flex; align-items: center; gap: 0.5rem;"><span style="width: 16px; height: 16px; background: var(--risk-extreme); border-radius: 50%;"></span><span>Extreme (0.8+)</span></div>
-            </div>
-        </div>
-    </main>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        const map = L.map('riskMap').setView([30.3753, 69.3451], 6);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(map);
-        
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         const cities = [
             // Major Cities
             { name: 'Karachi', lat: 24.8607, lng: 67.0011, flood: 0.73, quake: 0.25, fire: 0.15 },
@@ -261,29 +201,20 @@
             { name: 'Mirpur', lat: 33.1489, lng: 73.7516, flood: 0.35, quake: 0.70, fire: 0.18 },
             { name: 'Kotli', lat: 33.5188, lng: 73.9022, flood: 0.32, quake: 0.68, fire: 0.20 }
         ];
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         const colors = {
             low: '#00c853',
             moderate: '#ffd600',
             high: '#ff6d00',
             extreme: '#ff1744'
         };
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         function getRiskColor(score) {
             if (score < 0.3) return colors.low;
             if (score < 0.6) return colors.moderate;
             if (score < 0.8) return colors.high;
             return colors.extreme;
         }
-<<<<<<< HEAD
 
         function getOverallRisk(city) {
             return Math.max(city.flood, city.quake, city.fire);
@@ -304,28 +235,6 @@
                 else if (currentLayer === 'earthquake') { risk = city.quake; type = 'Earthquake'; }
                 else if (currentLayer === 'wildfire') { risk = city.fire; type = 'Wildfire'; }
 
-=======
-        
-        function getOverallRisk(city) {
-            return Math.max(city.flood, city.quake, city.fire);
-        }
-        
-        let currentLayer = 'all';
-        const markers = [];
-        
-        function renderMarkers() {
-            markers.forEach(m => map.removeLayer(m));
-            markers.length = 0;
-            
-            cities.forEach(city => {
-                let risk = getOverallRisk(city);
-                let type = 'Mixed';
-                
-                if (currentLayer === 'flood') { risk = city.flood; type = 'Flood'; }
-                else if (currentLayer === 'earthquake') { risk = city.quake; type = 'Earthquake'; }
-                else if (currentLayer === 'wildfire') { risk = city.fire; type = 'Wildfire'; }
-                
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 const marker = L.circleMarker([city.lat, city.lng], {
                     radius: 12 + (risk * 15),
                     fillColor: getRiskColor(risk),
@@ -333,33 +242,19 @@
                     weight: 2,
                     fillOpacity: 0.7
                 }).addTo(map);
-<<<<<<< HEAD
 
-=======
-                
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 marker.bindPopup(`<b>${city.name}</b><br>${type} Risk: ${risk.toFixed(2)}<br>Overall: ${getOverallRisk(city).toFixed(2)}`);
                 markers.push(marker);
             });
         }
-<<<<<<< HEAD
 
         renderMarkers();
 
-=======
-        
-        renderMarkers();
-        
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         function changeLayer(type) {
             currentLayer = type;
             renderMarkers();
         }
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         function refreshMap() {
             alert('Map data refreshed!');
         }
@@ -368,21 +263,12 @@
         const citySearch = document.getElementById('citySearch');
         const cityDropdown = document.getElementById('cityDropdown');
 
-<<<<<<< HEAD
         citySearch.addEventListener('input', function () {
             const value = this.value.toLowerCase();
             const filtered = cities.filter(c => c.name.toLowerCase().includes(value));
 
             if (filtered.length > 0 && value.length > 0) {
                 cityDropdown.innerHTML = filtered.map(city =>
-=======
-        citySearch.addEventListener('input', function() {
-            const value = this.value.toLowerCase();
-            const filtered = cities.filter(c => c.name.toLowerCase().includes(value));
-            
-            if (filtered.length > 0 && value.length > 0) {
-                cityDropdown.innerHTML = filtered.map(city => 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="focusCity('${city.name}', ${city.lat}, ${city.lng})">${city.name}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
@@ -391,26 +277,16 @@
             }
         });
 
-<<<<<<< HEAD
         citySearch.addEventListener('focus', function () {
             if (this.value === '') {
                 cityDropdown.innerHTML = cities.slice(0, 8).map(city =>
-=======
-        citySearch.addEventListener('focus', function() {
-            if (this.value === '') {
-                cityDropdown.innerHTML = cities.slice(0, 8).map(city => 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="focusCity('${city.name}', ${city.lat}, ${city.lng})">${city.name}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
             }
         });
 
-<<<<<<< HEAD
         document.addEventListener('click', function (e) {
-=======
-        document.addEventListener('click', function(e) {
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             if (!e.target.closest('#citySearch') && !e.target.closest('#cityDropdown')) {
                 cityDropdown.style.display = 'none';
             }
@@ -444,7 +320,6 @@
             const dropdown = document.getElementById('userDropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         }
-<<<<<<< HEAD
 
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
@@ -464,8 +339,3 @@
 </body>
 
 </html>
-=======
-    </script>
-</body>
-</html>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5

@@ -1,28 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Earthquake Monitoring - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
-=======
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<<<<<<< HEAD
 
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <body>
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
@@ -34,24 +24,12 @@
                 DisasterGuard
             </a>
             <div style="display: flex; align-items: center; gap: 1.5rem;">
-<<<<<<< HEAD
 
                 <!-- User Menu -->
                 <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
                     onclick="toggleUserMenu()">
                     <div
                         style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
-=======
-                <!-- Notifications -->
-                <button class="btn btn-secondary" style="position: relative;" onclick="toggleNotifications()">
-                    <i class="fas fa-bell"></i>
-                    <span id="notifBadge" style="position: absolute; top: -5px; right: -5px; width: 20px; height: 20px; background: var(--risk-extreme); border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">3</span>
-                </button>
-                
-                <!-- User Menu -->
-                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;" onclick="toggleUserMenu()">
-                    <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <span id="userInitials">JD</span>
                     </div>
                     <span id="userName" style="font-weight: 600;">John Doe</span>
@@ -73,7 +51,6 @@
         <div class="sidebar-section">
             <p class="sidebar-title">Disaster Monitoring</p>
             <ul class="sidebar-menu">
-<<<<<<< HEAD
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a>
                 </li>
                 <li><a href="earthquake.html" class="active"><i class="fas fa-globe-asia"
@@ -82,25 +59,15 @@
                         Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"
                             style="color: var(--accent-quaternary);"></i> Heatmap</a></li>
-=======
-                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a></li>
-                <li><a href="earthquake.html" class="active"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
-                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
-                <li><a href="heatmap.html"><i class="fas fa-map-marked-alt" style="color: var(--accent-quaternary);"></i> Heatmap</a></li>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
             <p class="sidebar-title">Support</p>
             <ul class="sidebar-menu">
-<<<<<<< HEAD
                 <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live
                         Chat</a></li>
                 <li><a href="profile.html"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
-=======
-                <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live Chat</a></li>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
             </ul>
         </div>
@@ -123,7 +90,6 @@
             </div>
             <div style="display: flex; gap: 1rem; position: relative;">
                 <div style="position: relative; width: 280px;">
-<<<<<<< HEAD
                     <i class="fas fa-search"
                         style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
                     <input type="text" class="input-field" id="citySearch" placeholder="Search any city..."
@@ -131,11 +97,6 @@
                     <div id="cityDropdown" class="city-dropdown"
                         style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
                     </div>
-=======
-                    <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
-                    <input type="text" class="input-field" id="citySearch" placeholder="Search any city..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
-                    <div id="cityDropdown" class="city-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);"></div>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 </div>
                 <button class="btn btn-primary" onclick="refreshData()">
                     <i class="fas fa-sync-alt" id="refreshIcon"></i>
@@ -145,7 +106,6 @@
         </div>
 
         <!-- Risk Score Card -->
-<<<<<<< HEAD
         <div class="card-3d"
             style="padding: 2rem; margin-bottom: 2rem; border-left: 4px solid var(--accent-secondary);">
             <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 3rem; align-items: center;">
@@ -153,13 +113,6 @@
                     <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">Seismic Risk Score</p>
                     <div style="font-size: 5rem; font-weight: 900; color: var(--accent-secondary); line-height: 1;">0.45
                     </div>
-=======
-        <div class="card-3d" style="padding: 2rem; margin-bottom: 2rem; border-left: 4px solid var(--accent-secondary);">
-            <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 3rem; align-items: center;">
-                <div style="text-align: center;">
-                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">Seismic Risk Score</p>
-                    <div style="font-size: 5rem; font-weight: 900; color: var(--accent-secondary); line-height: 1;">0.45</div>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     <span class="risk-badge moderate" style="margin-top: 1rem; display: inline-block;">MODERATE</span>
                 </div>
                 <div>
@@ -170,16 +123,11 @@
                                 <span style="font-size: 0.9rem;">Magnitude Activity</span>
                                 <span style="font-weight: 600;">4.2 ML</span>
                             </div>
-<<<<<<< HEAD
                             <div
                                 style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
                                 <div
                                     style="height: 100%; width: 45%; background: var(--accent-secondary); border-radius: 4px;">
                                 </div>
-=======
-                            <div style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
-                                <div style="height: 100%; width: 45%; background: var(--accent-secondary); border-radius: 4px;"></div>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             </div>
                         </div>
                         <div>
@@ -187,16 +135,11 @@
                                 <span style="font-size: 0.9rem;">Fault Line Proximity</span>
                                 <span style="font-weight: 600;">12 km</span>
                             </div>
-<<<<<<< HEAD
                             <div
                                 style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
                                 <div
                                     style="height: 100%; width: 60%; background: var(--accent-tertiary); border-radius: 4px;">
                                 </div>
-=======
-                            <div style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
-                                <div style="height: 100%; width: 60%; background: var(--accent-tertiary); border-radius: 4px;"></div>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             </div>
                         </div>
                         <div>
@@ -204,16 +147,11 @@
                                 <span style="font-size: 0.9rem;">Historical Activity</span>
                                 <span style="font-weight: 600;">Moderate</span>
                             </div>
-<<<<<<< HEAD
                             <div
                                 style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
                                 <div
                                     style="height: 100%; width: 40%; background: var(--accent-primary); border-radius: 4px;">
                                 </div>
-=======
-                            <div style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
-                                <div style="height: 100%; width: 40%; background: var(--accent-primary); border-radius: 4px;"></div>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             </div>
                         </div>
                     </div>
@@ -221,7 +159,6 @@
                 <div style="text-align: center;">
                     <p style="color: var(--text-secondary); margin-bottom: 1rem;">Recent Events</p>
                     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-<<<<<<< HEAD
                         <div
                             style="padding: 0.75rem; background: rgba(255, 23, 68, 0.1); border-radius: var(--radius-md);">
                             <span style="font-size: 0.85rem; color: var(--text-secondary);">M 4.2</span>
@@ -229,13 +166,6 @@
                         </div>
                         <div
                             style="padding: 0.75rem; background: rgba(255, 214, 0, 0.1); border-radius: var(--radius-md);">
-=======
-                        <div style="padding: 0.75rem; background: rgba(255, 23, 68, 0.1); border-radius: var(--radius-md);">
-                            <span style="font-size: 0.85rem; color: var(--text-secondary);">M 4.2</span>
-                            <p style="font-weight: 600;">12 min ago</p>
-                        </div>
-                        <div style="padding: 0.75rem; background: rgba(255, 214, 0, 0.1); border-radius: var(--radius-md);">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             <span style="font-size: 0.85rem; color: var(--text-secondary);">M 3.1</span>
                             <p style="font-weight: 600;">2 hours ago</p>
                         </div>
@@ -248,13 +178,9 @@
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
             <div class="card-3d">
                 <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-<<<<<<< HEAD
                     <h3 style="font-weight: 700;"><i class="fas fa-chart-line"
                             style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity (Last 24
                         Hours)</h3>
-=======
-                    <h3 style="font-weight: 700;"><i class="fas fa-chart-line" style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity (Last 24 Hours)</h3>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 </div>
                 <div style="padding: 1.5rem;">
                     <canvas id="seismicChart" height="250"></canvas>
@@ -271,12 +197,8 @@
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
             <div class="card-3d">
                 <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-<<<<<<< HEAD
                     <h3 style="font-weight: 700;"><i class="fas fa-map-marked-alt"
                             style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity Map</h3>
-=======
-                    <h3 style="font-weight: 700;"><i class="fas fa-map-marked-alt" style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity Map</h3>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 </div>
                 <div id="quakeMap" style="height: 400px; border-radius: 0 0 var(--radius-md) var(--radius-md);"></div>
             </div>
@@ -325,12 +247,8 @@
         <!-- Earthquake History Table -->
         <div class="card-3d">
             <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-<<<<<<< HEAD
                 <h3 style="font-weight: 700;"><i class="fas fa-history"
                         style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Earthquake History</h3>
-=======
-                <h3 style="font-weight: 700;"><i class="fas fa-history" style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Earthquake History</h3>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </div>
             <div style="overflow-x: auto;">
                 <table class="data-table">
@@ -375,7 +293,6 @@
         </div>
     </main>
 
-<<<<<<< HEAD
     <!-- User Dropdown -->
     <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
         <div class="dropdown-header">
@@ -396,10 +313,6 @@
         // Load user name
         AuthManager.loadUserName();
         
-=======
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         // Seismic Activity Chart
         new Chart(document.getElementById('seismicChart'), {
             type: 'line',
@@ -454,11 +367,7 @@
         quakes.forEach(q => {
             const size = q.mag * 3;
             const color = q.mag >= 4 ? '#ff1744' : q.mag >= 3 ? '#ff6d00' : '#ffd600';
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             L.circleMarker([q.lat, q.lng], {
                 radius: size,
                 fillColor: color,
@@ -549,21 +458,12 @@
 
         citySearch.value = selectedCity;
 
-<<<<<<< HEAD
         citySearch.addEventListener('input', function () {
             const value = this.value.toLowerCase();
             const filtered = pakistanCities.filter(city => city.toLowerCase().includes(value));
 
             if (filtered.length > 0 && value.length > 0) {
                 cityDropdown.innerHTML = filtered.map(city =>
-=======
-        citySearch.addEventListener('input', function() {
-            const value = this.value.toLowerCase();
-            const filtered = pakistanCities.filter(city => city.toLowerCase().includes(value));
-            
-            if (filtered.length > 0 && value.length > 0) {
-                cityDropdown.innerHTML = filtered.map(city => 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(123,44,191,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
@@ -572,26 +472,16 @@
             }
         });
 
-<<<<<<< HEAD
         citySearch.addEventListener('focus', function () {
             if (this.value === '') {
                 cityDropdown.innerHTML = pakistanCities.slice(0, 10).map(city =>
-=======
-        citySearch.addEventListener('focus', function() {
-            if (this.value === '') {
-                cityDropdown.innerHTML = pakistanCities.slice(0, 10).map(city => 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(123,44,191,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
             }
         });
 
-<<<<<<< HEAD
         document.addEventListener('click', function (e) {
-=======
-        document.addEventListener('click', function(e) {
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             if (!e.target.closest('#citySearch') && !e.target.closest('#cityDropdown')) {
                 cityDropdown.style.display = 'none';
             }
@@ -619,7 +509,6 @@
             const dropdown = document.getElementById('userDropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         }
-<<<<<<< HEAD
 
         // Close dropdown when clicking outside
         document.addEventListener('click', (e) => {
@@ -639,8 +528,3 @@
 </body>
 
 </html>
-=======
-    </script>
-</body>
-</html>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5

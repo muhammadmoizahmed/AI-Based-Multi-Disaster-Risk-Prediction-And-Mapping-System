@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - DisasterGuard</title>
     <link rel="stylesheet" href="css/styles.css">
-<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-=======
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <body>
     <!-- Background Effects -->
     <div class="bg-mesh"></div>
@@ -73,7 +64,6 @@
                         <input type="email" class="input-field" id="email" placeholder="Enter your email" required>
                     </div>
 
-<<<<<<< HEAD
                     <div class="input-group" style="position: relative;">
                         <i class="fas fa-lock input-icon"></i>
                         <input type="password" class="input-field" id="password" placeholder="Enter your password"
@@ -89,19 +79,6 @@
                         </label>
                         <a href="forgot-password.html"
                             style="color: var(--accent-primary); text-decoration: none; font-size: 0.9rem;">
-=======
-                    <div class="input-group">
-                        <i class="fas fa-lock input-icon"></i>
-                        <input type="password" class="input-field" id="password" placeholder="Enter your password" required>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                        <label class="toggle" style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                            <input type="checkbox" id="rememberMe">
-                            <span style="color: var(--text-secondary); font-size: 0.9rem;">Remember me</span>
-                        </label>
-                        <a href="forgot-password.html" style="color: var(--accent-primary); text-decoration: none; font-size: 0.9rem;">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             Forgot password?
                         </a>
                     </div>
@@ -120,19 +97,14 @@
     </div>
 
     <!-- Toast Notification -->
-<<<<<<< HEAD
     <div id="toast"
         style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 9999; box-shadow: var(--shadow-3d);">
-=======
-    <div id="toast" style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 9999; box-shadow: var(--shadow-3d);">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         <i id="toastIcon" class="fas fa-info-circle" style="color: var(--accent-primary);"></i>
         <span id="toastMessage">Notification</span>
     </div>
 
     <script src="js/main.js"></script>
     <script>
-<<<<<<< HEAD
         // Toggle password visibility
         function togglePassword(inputId, icon) {
             const input = document.getElementById(inputId);
@@ -190,24 +162,6 @@
                     localStorage.removeItem('saved_password');
                 }
 
-=======
-        function handleLogin(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
-            
-            // Demo validation (will be replaced with API call)
-            if (email && password) {
-                showToast('Login successful! Redirecting...', 'success');
-                
-                // Store auth state (demo only)
-                localStorage.setItem('auth_token', 'demo_token_' + Date.now());
-                localStorage.setItem('user_email', email);
-                localStorage.setItem('remember_me', rememberMe);
-                
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 // Redirect to dashboard after delay
                 setTimeout(() => {
                     window.location.href = 'dashboard.html';
@@ -222,11 +176,7 @@
                 try {
                     const response = await fetch('http://localhost:5000/api/auth/google');
                     const data = await response.json();
-<<<<<<< HEAD
 
-=======
-                    
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     if (data.auth_url) {
                         window.location.href = data.auth_url;
                     } else {
@@ -240,11 +190,7 @@
                 try {
                     const response = await fetch('http://localhost:5000/api/auth/github');
                     const data = await response.json();
-<<<<<<< HEAD
 
-=======
-                    
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     if (data.auth_url) {
                         window.location.href = data.auth_url;
                     } else {
@@ -261,45 +207,26 @@
             const toast = document.getElementById('toast');
             const toastIcon = document.getElementById('toastIcon');
             const toastMessage = document.getElementById('toastMessage');
-<<<<<<< HEAD
 
             toastMessage.textContent = message;
 
-=======
-            
-            toastMessage.textContent = message;
-            
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             const icons = {
                 success: 'fa-check-circle',
                 error: 'fa-exclamation-circle',
                 info: 'fa-info-circle'
             };
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             const colors = {
                 success: 'var(--risk-low)',
                 error: 'var(--risk-extreme)',
                 info: 'var(--accent-primary)'
             };
-<<<<<<< HEAD
 
             toastIcon.className = `fas ${icons[type]}`;
             toastIcon.style.color = colors[type];
 
             toast.style.display = 'flex';
 
-=======
-            
-            toastIcon.className = `fas ${icons[type]}`;
-            toastIcon.style.color = colors[type];
-            
-            toast.style.display = 'flex';
-            
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             setTimeout(() => {
                 toast.style.display = 'none';
             }, 3000);
@@ -314,9 +241,5 @@
         // });
     </script>
 </body>
-<<<<<<< HEAD
 
 </html>
-=======
-</html>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5

@@ -1,25 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
 
-=======
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit User - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-<<<<<<< HEAD
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-=======
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
 <body>
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
@@ -27,7 +18,6 @@
         <div class="navbar-content">
             <a href="../index.html" class="logo">
                 <i class="fas fa-shield-alt"></i>
-<<<<<<< HEAD
                 DisasterGuard <span
                     style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
             </a>
@@ -36,13 +26,6 @@
                 <div
                     style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
                     AD</div>
-=======
-                DisasterGuard <span style="font-size: 0.7em; background: var(--accent-tertiary); padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;">ADMIN</span>
-            </a>
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
-                <a href="users.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Users</a>
-                <div style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">AD</div>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             </div>
         </div>
     </nav>
@@ -75,12 +58,8 @@
     <main class="main-content" style="margin-top: 80px; margin-left: 280px; padding: 2rem; max-width: 900px;">
         <!-- Page Header -->
         <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
-<<<<<<< HEAD
             <div
                 style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
-=======
-            <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                 <i class="fas fa-user-edit" style="font-size: 1.5rem; color: white;"></i>
             </div>
             <div>
@@ -93,7 +72,6 @@
         <div class="card-3d" style="padding: 2rem;">
             <form id="editUserForm" onsubmit="saveUser(event)">
                 <!-- Profile Picture Section -->
-<<<<<<< HEAD
                 <div
                     style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
                     <div style="position: relative;">
@@ -113,21 +91,6 @@
                         <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">Upload a new avatar. JPG, PNG
                             or GIF. Max 2MB.</p>
                         <div id="providerInfo" style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);"></div>
-=======
-                <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
-                    <div style="position: relative;">
-                        <div id="profilePreview" style="width: 100px; height: 100px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; color: white;">
-                            JD
-                        </div>
-                        <label for="profilePic" style="position: absolute; bottom: 0; right: 0; width: 35px; height: 35px; background: var(--accent-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 3px solid var(--bg-dark);">
-                            <i class="fas fa-camera" style="font-size: 0.9rem; color: white;"></i>
-                        </label>
-                        <input type="file" id="profilePic" name="profilePic" accept="image/*" style="display: none;" onchange="previewImage(event)">
-                    </div>
-                    <div>
-                        <h3 style="margin: 0 0 0.5rem 0;">Profile Picture</h3>
-                        <p style="color: var(--text-muted); margin: 0; font-size: 0.9rem;">Upload a new avatar. JPG, PNG or GIF. Max 2MB.</p>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     </div>
                 </div>
 
@@ -135,7 +98,6 @@
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
                     <!-- First Name -->
                     <div>
-<<<<<<< HEAD
                         <label
                             style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
                             <i class="fas fa-user" style="margin-right: 0.5rem; color: var(--accent-primary);"></i>First
@@ -144,20 +106,11 @@
                         <input type="text" id="firstName" name="firstName" value="John" required
                             style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s ease;"
                             onfocus="this.style.borderColor='var(--accent-primary)'"
-=======
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
-                            <i class="fas fa-user" style="margin-right: 0.5rem; color: var(--accent-primary);"></i>First Name
-                        </label>
-                        <input type="text" id="firstName" name="firstName" value="John" required
-                            style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s ease;"
-                            onfocus="this.style.borderColor='var(--accent-primary)'" 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
                     </div>
 
                     <!-- Last Name -->
                     <div>
-<<<<<<< HEAD
                         <label
                             style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
                             <i class="fas fa-user" style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Last
@@ -166,20 +119,11 @@
                         <input type="text" id="lastName" name="lastName" value="Doe" required
                             style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s ease;"
                             onfocus="this.style.borderColor='var(--accent-primary)'"
-=======
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
-                            <i class="fas fa-user" style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Last Name
-                        </label>
-                        <input type="text" id="lastName" name="lastName" value="Doe" required
-                            style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s ease;"
-                            onfocus="this.style.borderColor='var(--accent-primary)'" 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
                     </div>
 
                     <!-- Email -->
                     <div>
-<<<<<<< HEAD
                         <label
                             style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
                             <i class="fas fa-envelope"
@@ -188,20 +132,11 @@
                         <input type="email" id="email" name="email" value="john.doe@example.com" required
                             style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s ease;"
                             onfocus="this.style.borderColor='var(--accent-primary)'"
-=======
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
-                            <i class="fas fa-envelope" style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Email Address
-                        </label>
-                        <input type="email" id="email" name="email" value="john.doe@example.com" required
-                            style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s ease;"
-                            onfocus="this.style.borderColor='var(--accent-primary)'" 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
                     </div>
 
                     <!-- Phone -->
                     <div>
-<<<<<<< HEAD
                         <label
                             style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
                             <i class="fas fa-phone"
@@ -210,20 +145,11 @@
                         <input type="tel" id="phone" name="phone" value="+92 300 1234567"
                             style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s ease;"
                             onfocus="this.style.borderColor='var(--accent-primary)'"
-=======
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
-                            <i class="fas fa-phone" style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>Phone Number
-                        </label>
-                        <input type="tel" id="phone" name="phone" value="+92 300 1234567"
-                            style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; transition: all 0.3s ease;"
-                            onfocus="this.style.borderColor='var(--accent-primary)'" 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
                     </div>
 
                     <!-- Role -->
                     <div>
-<<<<<<< HEAD
                         <label
                             style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
                             <i class="fas fa-user-tag"
@@ -232,14 +158,6 @@
                         <select id="role" name="role" required
                             style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; cursor: pointer; transition: all 0.3s ease;"
                             onfocus="this.style.borderColor='var(--accent-primary)'"
-=======
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
-                            <i class="fas fa-user-tag" style="margin-right: 0.5rem; color: var(--accent-quaternary);"></i>User Role
-                        </label>
-                        <select id="role" name="role" required
-                            style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; cursor: pointer; transition: all 0.3s ease;"
-                            onfocus="this.style.borderColor='var(--accent-primary)'" 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
                             <option value="user">User</option>
                             <option value="moderator">Moderator</option>
@@ -249,7 +167,6 @@
 
                     <!-- Status -->
                     <div>
-<<<<<<< HEAD
                         <label
                             style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
                             <i class="fas fa-toggle-on"
@@ -258,14 +175,6 @@
                         <select id="status" name="status" required
                             style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; cursor: pointer; transition: all 0.3s ease;"
                             onfocus="this.style.borderColor='var(--accent-primary)'"
-=======
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
-                            <i class="fas fa-toggle-on" style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Account Status
-                        </label>
-                        <select id="status" name="status" required
-                            style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; cursor: pointer; transition: all 0.3s ease;"
-                            onfocus="this.style.borderColor='var(--accent-primary)'" 
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                             onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
                             <option value="active" selected>Active</option>
                             <option value="inactive">Inactive</option>
@@ -274,7 +183,6 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
                 <!-- Location -->
                 <div style="margin-bottom: 1.5rem;">
                     <label
@@ -297,25 +205,6 @@
                     </a>
                     <button type="submit" class="btn btn-primary"
                         style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
-=======
-                <!-- Additional Info -->
-                <div style="margin-bottom: 1.5rem;">
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--text-secondary);">
-                        <i class="fas fa-sticky-note" style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>Notes (Optional)
-                    </label>
-                    <textarea id="notes" name="notes" rows="3" placeholder="Add any additional notes about this user..."
-                        style="width: 100%; padding: 0.875rem 1rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: var(--text-primary); font-size: 1rem; resize: vertical; transition: all 0.3s ease;"
-                        onfocus="this.style.borderColor='var(--accent-primary)'" 
-                        onblur="this.style.borderColor='rgba(255,255,255,0.1)'"></textarea>
-                </div>
-
-                <!-- Action Buttons -->
-                <div style="display: flex; gap: 1rem; justify-content: flex-end; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                    <a href="users.html" class="btn btn-secondary" style="padding: 0.75rem 1.5rem;">
-                        <i class="fas fa-times" style="margin-right: 0.5rem;"></i>Cancel
-                    </a>
-                    <button type="submit" class="btn btn-primary" style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem;">
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                         <i class="fas fa-save"></i>Save Changes
                     </button>
                 </div>
@@ -330,17 +219,11 @@
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <p style="margin: 0; font-weight: 600;">Delete User Account</p>
-<<<<<<< HEAD
                     <p style="margin: 0.25rem 0 0 0; color: var(--text-muted); font-size: 0.9rem;">Once deleted, this
                         action cannot be undone. All user data will be permanently removed.</p>
                 </div>
                 <button onclick="deleteUser()"
                     style="padding: 0.75rem 1.5rem; background: rgba(255, 71, 87, 0.2); border: 1px solid #ff4757; border-radius: 8px; color: #ff4757; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;"
-=======
-                    <p style="margin: 0.25rem 0 0 0; color: var(--text-muted); font-size: 0.9rem;">Once deleted, this action cannot be undone. All user data will be permanently removed.</p>
-                </div>
-                <button onclick="deleteUser()" style="padding: 0.75rem 1.5rem; background: rgba(255, 71, 87, 0.2); border: 1px solid #ff4757; border-radius: 8px; color: #ff4757; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;"
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     onmouseover="this.style.background='#ff4757'; this.style.color='white';"
                     onmouseout="this.style.background='rgba(255, 71, 87, 0.2)'; this.style.color='#ff4757';">
                     <i class="fas fa-trash-alt"></i>Delete User
@@ -355,11 +238,7 @@
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-<<<<<<< HEAD
                 reader.onload = function (e) {
-=======
-                reader.onload = function(e) {
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
                     const preview = document.getElementById('profilePreview');
                     preview.style.backgroundImage = `url(${e.target.result})`;
                     preview.style.backgroundSize = 'cover';
@@ -373,11 +252,7 @@
         // Save user changes
         function saveUser(event) {
             event.preventDefault();
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             // Get form data
             const formData = {
                 firstName: document.getElementById('firstName').value,
@@ -399,11 +274,7 @@
             // Simulate saving
             console.log('Saving user data:', formData);
             alert('User information saved successfully!');
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
             // Redirect back to users list
             window.location.href = 'users.html';
         }
@@ -427,7 +298,6 @@
         }
 
         // Load user data on page load
-<<<<<<< HEAD
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search);
             const userId = urlParams.get('id');
@@ -568,20 +438,6 @@
             }
         }
 
-=======
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get user ID from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const userId = urlParams.get('id');
-            
-            if (userId) {
-                console.log('Editing user ID:', userId);
-                // Here you would typically fetch user data from backend
-                // For demo, we're using default values
-            }
-        });
-
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
         function toggleUserMenu() {
             const dropdown = document.getElementById('userDropdown');
             dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
@@ -597,7 +453,6 @@
             }
         }
         function logout() {
-<<<<<<< HEAD
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.clear();
                 window.location.href = 'index.html';
@@ -607,11 +462,3 @@
 </body>
 
 </html>
-=======
-            localStorage.removeItem('adminToken');
-            window.location.href = 'index.html';
-        }
-    </script>
-</body>
-</html>
->>>>>>> 54eb8c39576a142daf942a984d8a43e7443341d5
