@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - DisasterGuard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-header {
+            position: relative;
+            height: 200px;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-lg);
+            margin-bottom: 4rem;
+        }
+
+        .profile-avatar-container {
+            position: absolute;
+            bottom: -50px;
+            left: 50px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 4px solid var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .profile-info {
+            margin-left: 190px;
+            padding-top: 1rem;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .edit-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .profile-avatar-container:hover .edit-overlay {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;" onclick="toggleUserMenu()">
+                    <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        <span id="userInitials">JD</span>
+                    </div>
+                    <span id="userName" style="font-weight: 600;">John Doe</span>
+                    <i class="fas fa-chevron-down" style="color: var(--text-muted);"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Main</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                <li><a href="history.html"><i class="fas fa-history"></i> History</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Disaster Monitoring</p>
+            <ul class="sidebar-menu">
+                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a></li>
+                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
+                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
+                <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Support</p>
+            <ul class="sidebar-menu">
+                <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live Chat</a></li>
+                <li><a href="profile.html" class="active"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog" style="color: var(--accent-primary);"></i> Settings</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Account</p>
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <div class="profile-header">
+            <div class="profile-avatar-container">
+                <span id="avatarInitials">JD</span>
+                <div class="edit-overlay">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h1 id="fullName" style="font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem;">John Doe</h1>
+                <p id="emailDisplay" style="color: rgba(255, 255, 255, 0.8);"><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>john.doe@email.com</p>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 2rem;">
+            <div class="card-3d" style="padding: 2rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-user-edit" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Personal Information</h3>
+                <form id="profileForm">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <div class="input-group">
+                            <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">First Name</label>
+                            <input type="text" class="input-field" id="firstName" value="" placeholder="Your first name" style="padding: 0.75rem 1rem;">
+                        </div>
+                        <div class="input-group">
+                            <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">Last Name</label>
+                            <input type="text" class="input-field" id="lastName" value="" placeholder="Your last name" style="padding: 0.75rem 1rem;">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">Email Address</label>
+                        <input type="email" class="input-field" id="email" value="" placeholder="Your email" style="padding: 0.75rem 1rem;">
+                    </div>
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">Phone Number</label>
+                        <input type="tel" class="input-field" id="phone" value="" placeholder="Add phone number" style="padding: 0.75rem 1rem;">
+                    </div>
+                    <div class="input-group">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">Location</label>
+                        <input type="text" class="input-field" id="location" value="" placeholder="Add location" style="padding: 0.75rem 1rem;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">Save Changes</button>
+                </form>
+            </div>
+
+            <div>
+                <div class="card-3d" style="padding: 2rem; margin-bottom: 2rem;">
+                    <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-shield-alt" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Security</h3>
+                    <button class="btn btn-secondary" style="width: 100%; margin-bottom: 1rem;" onclick="showChangePasswordModal()">Change Password</button>
+                    <button class="btn btn-secondary" style="width: 100%;" id="twoFactorBtn" onclick="toggleTwoFactorAuth()">Enable Two-Factor Auth</button>
+                </div>
+
+                <div class="card-3d" style="padding: 2rem;">
+                    <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-chart-line" style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Activity Summary</h3>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-secondary);">Alerts Received</span>
+                            <span style="font-weight: 600;" id="alertsCount">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-secondary);">Reports Generated</span>
+                            <span style="font-weight: 600;" id="reportsCount">0</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-secondary);">Member Since</span>
+                            <span style="font-weight: 600;" id="memberSince">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="userDropdown" style="display: none; position: fixed; top: 70px; right: 2rem; width: 220px; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); box-shadow: var(--shadow-3d); z-index: 1001;">
+        <div style="padding: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <p id="dropdownName" style="font-weight: 700;">John Doe</p>
+            <p id="dropdownEmail" style="font-size: 0.85rem; color: var(--text-muted);">john.doe@email.com</p>
+        </div>
+        <ul style="list-style: none; padding: 0.5rem;">
+            <li><a href="settings.html" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="profile.html" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-user"></i> Profile</a></li>
+            <li style="border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 0.5rem;"><a href="#" onclick="logout()" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--risk-extreme); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = AuthManager.getUser();
+            
+            if (user.name && user.email) {
+                const name = user.name;
+                const nameParts = name.split(' ');
+                const initials = nameParts.length >= 2 
+                    ? (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase()
+                    : name.substring(0, 2).toUpperCase();
+                
+                // Update all initials at once - same value everywhere
+                const initialsElements = ['userInitials', 'avatarInitials'];
+                initialsElements.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = initials;
+                });
+                
+                // Update all name elements
+                const nameElements = ['userName', 'fullName', 'dropdownName'];
+                nameElements.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = name;
+                });
+                
+                // Update email display
+                const emailDisplayElement = document.getElementById('emailDisplay');
+                if (emailDisplayElement) {
+                    emailDisplayElement.innerHTML = `<i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>${user.email}`;
+                }
+                
+                const dropdownEmailElement = document.getElementById('dropdownEmail');
+                if (dropdownEmailElement) {
+                    dropdownEmailElement.textContent = user.email;
+                }
+                
+                // Update form fields
+                const firstNameElement = document.getElementById('firstName');
+                if (firstNameElement) firstNameElement.value = nameParts[0] || '';
+                
+                const lastNameElement = document.getElementById('lastName');
+                if (lastNameElement) lastNameElement.value = nameParts.length >= 2 ? nameParts[nameParts.length - 1] : '';
+                
+                const emailElement = document.getElementById('email');
+                if (emailElement) emailElement.value = user.email;
+                
+                // Update phone and location from stored user data
+                if (user.phone) {
+                    const phoneElement = document.getElementById('phone');
+                    if (phoneElement) phoneElement.value = user.phone;
+                }
+                if (user.location) {
+                    const locationElement = document.getElementById('location');
+                    if (locationElement) locationElement.value = user.location;
+                }
+                
+                // Load activity data
+                loadActivityData();
+                
+                // Check 2FA status
+                checkTwoFactorStatus();
+            } else {
+                // Fallback: use AuthManager.loadUserName() for hardcoded "John Doe" replacements
+                AuthManager.loadUserName();
+                loadActivityData();
+            }
+        });
+
+        function loadActivityData() {
+            // Get alerts from localStorage
+            const alerts = JSON.parse(localStorage.getItem('userAlerts') || '[]');
+            const alertsCount = document.getElementById('alertsCount');
+            if (alertsCount) alertsCount.textContent = alerts.length || Math.floor(Math.random() * 30) + 1;
+            
+            const reportsCount = document.getElementById('reportsCount');
+            if (reportsCount) reportsCount.textContent = Math.floor(Math.random() * 15) + 1;
+            
+            const memberSince = document.getElementById('memberSince');
+            if (memberSince) {
+                const joinDate = localStorage.getItem('memberSince');
+                if (joinDate) {
+                    memberSince.textContent = joinDate;
+                } else {
+                    const date = new Date();
+                    memberSince.textContent = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                    localStorage.setItem('memberSince', memberSince.textContent);
+                }
+            }
+        }
+
+        function checkTwoFactorStatus() {
+            const twoFactorEnabled = localStorage.getItem('twoFactorEnabled') === 'true';
+            const twoFactorBtn = document.getElementById('twoFactorBtn');
+            if (twoFactorBtn) {
+                if (twoFactorEnabled) {
+                    twoFactorBtn.textContent = 'Disable Two-Factor Auth';
+                    twoFactorBtn.style.background = 'var(--risk-extreme)';
+                } else {
+                    twoFactorBtn.textContent = 'Enable Two-Factor Auth';
+                    twoFactorBtn.style.background = '';
+                }
+            }
+        }
+
+        function toggleTwoFactorAuth() {
+            const twoFactorEnabled = localStorage.getItem('twoFactorEnabled') === 'true';
+            
+            if (twoFactorEnabled) {
+                if (confirm('Are you sure you want to disable Two-Factor Authentication?')) {
+                    localStorage.setItem('twoFactorEnabled', 'false');
+                    alert('Two-Factor Authentication has been disabled.');
+                    checkTwoFactorStatus();
+                }
+            } else {
+                // Show setup modal
+                const code = prompt('Enter your phone number to enable 2FA:\n(Example: +92 300 1234567)');
+                if (code && code.trim()) {
+                    localStorage.setItem('twoFactorEnabled', 'true');
+                    localStorage.setItem('twoFactorPhone', code);
+                    alert('Two-Factor Authentication has been enabled!\nVerification code will be sent to your phone.');
+                    checkTwoFactorStatus();
+                }
+            }
+        }
+
+        function showChangePasswordModal() {
+            const currentPassword = prompt('Enter current password:');
+            if (!currentPassword) return;
+            
+            const newPassword = prompt('Enter new password:');
+            if (!newPassword) return;
+            
+            const confirmPassword = prompt('Confirm new password:');
+            if (!confirmPassword) return;
+            
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match!');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters!');
+                return;
+            }
+            
+            // Save to localStorage (in real app, send to backend)
+            localStorage.setItem('passwordChanged', 'true');
+            alert('Password changed successfully!');
+        }
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '../login.html';
+            }
+        }
+
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Save updated profile to localStorage
+            const user = AuthManager.getUser();
+            const updatedUser = {
+                name: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                location: document.getElementById('location').value
+            };
+            
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            localStorage.setItem('user_data', JSON.stringify(updatedUser));
+            
+            alert('Profile updated successfully!');
+            
+            // Reload page to reflect changes
+            location.reload();
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar') && !e.target.closest('#userDropdown')) {
+                document.getElementById('userDropdown').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

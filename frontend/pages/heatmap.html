@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heatmap - DisasterGuard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+
+
+                <!-- User Menu -->
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
+                    onclick="toggleUserMenu()">
+                    <div
+                        style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        <span id="userInitials">JD</span>
+                    </div>
+                    <span id="userName" style="font-weight: 600;">John Doe</span>
+                    <i class="fas fa-chevron-down" style="color: var(--text-muted);"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Main</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                <li><a href="history.html"><i class="fas fa-history"></i> History</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Disaster Monitoring</p>
+            <ul class="sidebar-menu">
+                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a>
+                </li>
+                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
+                        Earthquake</a></li>
+                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
+                        Wildfire</a></li>
+                <li><a href="heatmap.html" class="active"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Support</p>
+            <ul class="sidebar-menu">
+                <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live
+                        Chat</a></li>
+                <li><a href="profile.html"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Account</p>
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-map-marked-alt"
+                        style="color: var(--accent-primary); margin-right: 0.75rem;"></i>Interactive Heatmap</h1>
+                <p style="color: var(--text-secondary);">View disaster risk zones across Pakistan</p>
+            </div>
+            <div style="display: flex; gap: 1rem; position: relative;">
+                <div style="position: relative; width: 250px;">
+                    <i class="fas fa-search"
+                        style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="text" class="input-field" id="citySearch" placeholder="Search city..."
+                        style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
+                    <div id="cityDropdown" class="city-dropdown"
+                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
+                    </div>
+                </div>
+                <select class="input-field" style="width: 140px; padding: 0.75rem 1rem;"
+                    onchange="changeLayer(this.value)">
+                    <option value="all">All Risks</option>
+                    <option value="flood">Flood Only</option>
+                    <option value="earthquake">Earthquake Only</option>
+                    <option value="wildfire">Wildfire Only</option>
+                </select>
+                <button class="btn btn-primary" onclick="refreshMap()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+        </div>
+        <div class="card-3d" style="padding: 1rem;">
+            <div id="riskMap" style="height: 600px; border-radius: var(--radius-md);"></div>
+            <div
+                style="display: flex; gap: 2rem; padding: 1rem; justify-content: center; background: var(--bg-tertiary); border-radius: var(--radius-md); margin-top: 1rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><span
+                        style="width: 16px; height: 16px; background: var(--risk-low); border-radius: 50%;"></span><span>Low
+                        (0-0.3)</span></div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><span
+                        style="width: 16px; height: 16px; background: var(--risk-moderate); border-radius: 50%;"></span><span>Moderate
+                        (0.3-0.6)</span></div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><span
+                        style="width: 16px; height: 16px; background: var(--risk-high); border-radius: 50%;"></span><span>High
+                        (0.6-0.8)</span></div>
+                <div style="display: flex; align-items: center; gap: 0.5rem;"><span
+                        style="width: 16px; height: 16px; background: var(--risk-extreme); border-radius: 50%;"></span><span>Extreme
+                        (0.8+)</span></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Dropdown -->
+    <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
+        <div class="dropdown-header">
+            <p id="dropdownName">User</p>
+            <p id="dropdownEmail">user@email.com</p>
+        </div>
+        <ul class="dropdown-list">
+            <li><a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a href="#" onclick="logout()" class="dropdown-item logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        const map = L.map('riskMap').setView([30.3753, 69.3451], 6);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}').addTo(map);
+
+        // Load user name
+        AuthManager.loadUserName();
+
+        const cities = [
+            // Major Cities
+            { name: 'Karachi', lat: 24.8607, lng: 67.0011, flood: 0.73, quake: 0.25, fire: 0.15 },
+            { name: 'Lahore', lat: 31.5497, lng: 74.3436, flood: 0.52, quake: 0.35, fire: 0.28 },
+            { name: 'Islamabad', lat: 33.6844, lng: 73.0479, flood: 0.35, quake: 0.45, fire: 0.12 },
+            { name: 'Peshawar', lat: 34.0151, lng: 71.5249, flood: 0.28, quake: 0.62, fire: 0.18 },
+            { name: 'Quetta', lat: 30.1798, lng: 66.9750, flood: 0.15, quake: 0.55, fire: 0.22 },
+            { name: 'Multan', lat: 30.1979, lng: 71.4725, flood: 0.48, quake: 0.20, fire: 0.35 },
+            { name: 'Faisalabad', lat: 31.4180, lng: 73.0791, flood: 0.42, quake: 0.18, fire: 0.40 },
+            { name: 'Rawalpindi', lat: 33.5984, lng: 73.0441, flood: 0.38, quake: 0.48, fire: 0.14 },
+            { name: 'Hyderabad', lat: 25.3960, lng: 68.3578, flood: 0.65, quake: 0.22, fire: 0.20 },
+            { name: 'Sialkot', lat: 32.5000, lng: 74.3333, flood: 0.45, quake: 0.30, fire: 0.25 },
+            { name: 'Gujranwala', lat: 32.1617, lng: 74.1945, flood: 0.40, quake: 0.25, fire: 0.30 },
+            { name: 'Abbottabad', lat: 34.1596, lng: 73.2207, flood: 0.32, quake: 0.58, fire: 0.45 },
+            // More Sindh Cities
+            { name: 'Sukkur', lat: 27.7135, lng: 68.8390, flood: 0.55, quake: 0.20, fire: 0.25 },
+            { name: 'Larkana', lat: 27.5617, lng: 68.2138, flood: 0.60, quake: 0.18, fire: 0.22 },
+            { name: 'Nawabshah', lat: 26.2443, lng: 68.4104, flood: 0.58, quake: 0.20, fire: 0.20 },
+            { name: 'Mirpur Khas', lat: 25.5259, lng: 69.0139, flood: 0.52, quake: 0.22, fire: 0.24 },
+            { name: 'Jacobabad', lat: 28.2810, lng: 68.4388, flood: 0.45, quake: 0.15, fire: 0.30 },
+            { name: 'Shikarpur', lat: 27.9577, lng: 68.6400, flood: 0.48, quake: 0.18, fire: 0.28 },
+            { name: 'Dadu', lat: 26.7323, lng: 67.7768, flood: 0.62, quake: 0.20, fire: 0.18 },
+            { name: 'Thatta', lat: 24.7460, lng: 67.9245, flood: 0.70, quake: 0.18, fire: 0.15 },
+            { name: 'Badin', lat: 24.6567, lng: 68.8383, flood: 0.68, quake: 0.18, fire: 0.16 },
+            { name: 'Khairpur', lat: 27.5296, lng: 68.7617, flood: 0.50, quake: 0.18, fire: 0.24 },
+            // More Punjab Cities
+            { name: 'Sargodha', lat: 32.0836, lng: 72.6711, flood: 0.35, quake: 0.28, fire: 0.32 },
+            { name: 'Bahawalpur', lat: 29.3544, lng: 71.6911, flood: 0.32, quake: 0.20, fire: 0.35 },
+            { name: 'Sheikhupura', lat: 31.7131, lng: 73.9783, flood: 0.48, quake: 0.25, fire: 0.28 },
+            { name: 'Rahim Yar Khan', lat: 28.4202, lng: 70.2951, flood: 0.30, quake: 0.18, fire: 0.38 },
+            { name: 'Jhang', lat: 31.2681, lng: 72.3186, flood: 0.45, quake: 0.22, fire: 0.30 },
+            { name: 'Kasur', lat: 31.1164, lng: 74.4467, flood: 0.50, quake: 0.25, fire: 0.25 },
+            { name: 'Okara', lat: 30.8081, lng: 73.4458, flood: 0.42, quake: 0.22, fire: 0.28 },
+            { name: 'Murree', lat: 33.9070, lng: 73.3930, flood: 0.25, quake: 0.48, fire: 0.20 },
+            { name: 'Mardan', lat: 34.1983, lng: 72.0402, flood: 0.28, quake: 0.55, fire: 0.18 },
+            // More KPK Cities
+            { name: 'Swat', lat: 35.2227, lng: 72.4258, flood: 0.35, quake: 0.52, fire: 0.15 },
+            { name: 'Kohat', lat: 33.5889, lng: 71.4423, flood: 0.30, quake: 0.58, fire: 0.20 },
+            { name: 'Bannu', lat: 32.9861, lng: 70.6048, flood: 0.32, quake: 0.48, fire: 0.28 },
+            { name: 'Charsadda', lat: 34.1469, lng: 71.7246, flood: 0.35, quake: 0.55, fire: 0.18 },
+            { name: 'Nowshera', lat: 34.0150, lng: 71.9750, flood: 0.38, quake: 0.52, fire: 0.20 },
+            { name: 'Mansehra', lat: 34.3306, lng: 73.2004, flood: 0.42, quake: 0.60, fire: 0.15 },
+            { name: 'Swabi', lat: 34.1200, lng: 72.4650, flood: 0.32, quake: 0.50, fire: 0.22 },
+            // More Balochistan Cities
+            { name: 'Khuzdar', lat: 27.7384, lng: 66.6344, flood: 0.15, quake: 0.48, fire: 0.25 },
+            { name: 'Turbat', lat: 26.0036, lng: 63.0479, flood: 0.12, quake: 0.40, fire: 0.30 },
+            { name: 'Chaman', lat: 30.9176, lng: 66.4512, flood: 0.20, quake: 0.52, fire: 0.20 },
+            { name: 'Gwadar', lat: 25.1264, lng: 62.3226, flood: 0.10, quake: 0.35, fire: 0.20 },
+            { name: 'Sibi', lat: 29.5436, lng: 67.8733, flood: 0.28, quake: 0.42, fire: 0.32 },
+            { name: 'Zhob', lat: 31.3419, lng: 69.4486, flood: 0.22, quake: 0.45, fire: 0.28 },
+            // Gilgit-Baltistan
+            { name: 'Gilgit', lat: 35.9208, lng: 74.3086, flood: 0.30, quake: 0.68, fire: 0.10 },
+            { name: 'Skardu', lat: 35.2961, lng: 75.6340, flood: 0.25, quake: 0.72, fire: 0.08 },
+            { name: 'Chilas', lat: 35.4122, lng: 74.1045, flood: 0.35, quake: 0.65, fire: 0.12 },
+            // AJK Cities
+            { name: 'Muzaffarabad', lat: 34.3598, lng: 73.4710, flood: 0.40, quake: 0.75, fire: 0.15 },
+            { name: 'Mirpur', lat: 33.1489, lng: 73.7516, flood: 0.35, quake: 0.70, fire: 0.18 },
+            { name: 'Kotli', lat: 33.5188, lng: 73.9022, flood: 0.32, quake: 0.68, fire: 0.20 }
+        ];
+
+        const colors = {
+            low: '#00c853',
+            moderate: '#ffd600',
+            high: '#ff6d00',
+            extreme: '#ff1744'
+        };
+
+        function getRiskColor(score) {
+            if (score < 0.3) return colors.low;
+            if (score < 0.6) return colors.moderate;
+            if (score < 0.8) return colors.high;
+            return colors.extreme;
+        }
+
+        function getOverallRisk(city) {
+            return Math.max(city.flood, city.quake, city.fire);
+        }
+
+        let currentLayer = 'all';
+        const markers = [];
+
+        function renderMarkers() {
+            markers.forEach(m => map.removeLayer(m));
+            markers.length = 0;
+
+            cities.forEach(city => {
+                let risk = getOverallRisk(city);
+                let type = 'Mixed';
+
+                if (currentLayer === 'flood') { risk = city.flood; type = 'Flood'; }
+                else if (currentLayer === 'earthquake') { risk = city.quake; type = 'Earthquake'; }
+                else if (currentLayer === 'wildfire') { risk = city.fire; type = 'Wildfire'; }
+
+                const marker = L.circleMarker([city.lat, city.lng], {
+                    radius: 12 + (risk * 15),
+                    fillColor: getRiskColor(risk),
+                    color: '#fff',
+                    weight: 2,
+                    fillOpacity: 0.7
+                }).addTo(map);
+
+                marker.bindPopup(`<b>${city.name}</b><br>${type} Risk: ${risk.toFixed(2)}<br>Overall: ${getOverallRisk(city).toFixed(2)}`);
+                markers.push(marker);
+            });
+        }
+
+        renderMarkers();
+
+        function changeLayer(type) {
+            currentLayer = type;
+            renderMarkers();
+        }
+
+        function refreshMap() {
+            alert('Map data refreshed!');
+        }
+
+        // City Search with Map Focus
+        const citySearch = document.getElementById('citySearch');
+        const cityDropdown = document.getElementById('cityDropdown');
+
+        citySearch.addEventListener('input', function () {
+            const value = this.value.toLowerCase();
+            const filtered = cities.filter(c => c.name.toLowerCase().includes(value));
+
+            if (filtered.length > 0 && value.length > 0) {
+                cityDropdown.innerHTML = filtered.map(city =>
+                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="focusCity('${city.name}', ${city.lat}, ${city.lng})">${city.name}</div>`
+                ).join('');
+                cityDropdown.style.display = 'block';
+            } else {
+                cityDropdown.style.display = 'none';
+            }
+        });
+
+        citySearch.addEventListener('focus', function () {
+            if (this.value === '') {
+                cityDropdown.innerHTML = cities.slice(0, 8).map(city =>
+                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="focusCity('${city.name}', ${city.lat}, ${city.lng})">${city.name}</div>`
+                ).join('');
+                cityDropdown.style.display = 'block';
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('#citySearch') && !e.target.closest('#cityDropdown')) {
+                cityDropdown.style.display = 'none';
+            }
+        });
+
+        function focusCity(name, lat, lng) {
+            citySearch.value = name;
+            cityDropdown.style.display = 'none';
+            map.setView([lat, lng], 10);
+            // Open popup for the city
+            markers.forEach(m => {
+                const markerLatLng = m.getLatLng();
+                if (Math.abs(markerLatLng.lat - lat) < 0.01 && Math.abs(markerLatLng.lng - lng) < 0.01) {
+                    m.openPopup();
+                }
+            });
+        }
+
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar') && !e.target.closest('#userDropdown')) {
+                const dropdown = document.getElementById('userDropdown');
+                if (dropdown) dropdown.style.display = 'none';
+            }
+        });
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '../login.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

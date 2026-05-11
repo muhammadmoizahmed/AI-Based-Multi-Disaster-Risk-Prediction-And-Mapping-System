@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - DisasterGuard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard <span
+                    style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <a href="dashboard.html" class="btn btn-secondary">Back to Admin</a>
+                <div
+                    style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                    AD</div>
+            </div>
+        </div>
+    </nav>
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Overview</p>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="users.html" class="active"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="api-monitor.html"><i class="fas fa-network-wired"></i> API Monitor</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">System</p>
+            <ul class="sidebar-menu">
+                <li><a href="models.html"><i class="fas fa-brain"></i> Model Management</a></li>
+                <li><a href="config.html"><i class="fas fa-cog"></i> Alert Config</a></li>
+                <li><a href="logs.html"><i class="fas fa-file-alt"></i> System Logs</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Quick Actions</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-user"></i> User View</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-users"
+                        style="color: var(--accent-primary); margin-right: 0.75rem;"></i>User Management</h1>
+                <p style="color: var(--text-secondary);">Manage registered users and their permissions</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <input type="text" class="input-field" placeholder="Search users..."
+                    style="width: 250px; padding: 0.75rem 1rem;">
+                <button class="btn btn-primary"><i class="fas fa-user-plus"></i>
+                    <Search>Search User</Search>
+                </button>
+            </div>
+        </div>
+        <div class="card-3d">
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Provider</th>
+                            <th>IP Address</th>
+                            <th>Role</th>
+                            <th>Joined</th>
+                            <th>Last Active</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr>
+                            <td colspan="9" style="text-align: center; padding: 2rem;">
+                                <i class="fas fa-spinner fa-spin" style="font-size: 1.5rem; color: var(--accent-primary);"></i>
+                                <p style="margin-top: 1rem; color: var(--text-muted);">Loading users...</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script>
+        let currentPage = 1;
+        let searchQuery = '';
+
+        // Fetch users from database
+        async function fetchUsers() {
+            try {
+                const url = searchQuery 
+                    ? `http://localhost:5000/api/admin/users?page=${currentPage}&search=${encodeURIComponent(searchQuery)}`
+                    : `http://localhost:5000/api/admin/users?page=${currentPage}`;
+                
+                console.log('Fetching users from:', url);
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                console.log('API Response:', JSON.stringify(data, null, 2));
+                renderUsers(data.users || []);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                document.getElementById('usersTableBody').innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 2rem; color: var(--risk-extreme);">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p style="margin-top: 0.5rem;">Error loading users. Make sure backend is running.</p>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // Render users table
+        function renderUsers(users) {
+            const tbody = document.getElementById('usersTableBody');
+            
+            if (users.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                            No users found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = users.map(user => {
+                const initials = getInitials(user.name);
+                const roleClass = user.role === 'admin' ? 'critical' : 'active';
+                const statusClass = user.status === 'active' ? 'active' : 'inactive';
+                const joinedDate = user.created_at ? new Date(user.created_at).toLocaleDateString() : 'N/A';
+                const lastActive = user.last_active ? formatLastActive(user.last_active) : 'Never';
+                
+                // Provider icon and color
+                let providerIcon = 'fa-user';
+                let providerColor = 'var(--text-muted)';
+                let providerName = user.provider || 'local';
+                if (user.provider === 'google') {
+                    providerIcon = 'fa-google';
+                    providerColor = '#4285F4';
+                } else if (user.provider === 'github') {
+                    providerIcon = 'fa-github';
+                    providerColor = '#fff';
+                }
+
+                return `
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 32px; height: 32px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">
+                                    ${initials}
+                                </div>
+                                <span>${user.name}</span>
+                            </div>
+                        </td>
+                        <td>${user.email}</td>
+                        <td><i class="fas ${providerIcon}" style="color: ${providerColor}; margin-right: 0.5rem;"></i>${providerName}</td>
+                        <td style="font-family: monospace; font-size: 0.85rem;">${user.ip_address || '-'}</td>
+                        <td><span class="status-badge ${roleClass}">${user.role || 'user'}</span></td>
+                        <td>${joinedDate}</td>
+                        <td>${lastActive}</td>
+                        <td><span class="status-badge ${statusClass}">${user.status || 'active'}</span></td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="editUser(${user.id})">
+                                <i class="fas fa-edit"></i> Edit
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Get initials from name
+        function getInitials(name) {
+            if (!name) return '??';
+            const parts = name.split(' ');
+            if (parts.length >= 2) {
+                return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+            }
+            return name.substring(0, 2).toUpperCase();
+        }
+
+        // Format last active time
+        function formatLastActive(dateStr) {
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diff = now - date;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            
+            if (hours < 1) return 'Just now';
+            if (hours < 24) return `${hours} hours ago`;
+            const days = Math.floor(hours / 24);
+            if (days < 7) return `${days} days ago`;
+            return date.toLocaleDateString();
+        }
+
+        // Edit user
+        function editUser(userId) {
+            window.location.href = `edit-user.html?id=${userId}`;
+        }
+
+        // Search functionality
+        document.querySelector('input[placeholder="Search users..."]').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            currentPage = 1;
+            fetchUsers();
+        });
+
+        // Load users on page load
+        fetchUsers();
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

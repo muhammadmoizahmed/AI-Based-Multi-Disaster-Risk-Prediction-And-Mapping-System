@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DisasterGuard - Pakistan Disaster Prediction System</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="login.html" class="btn btn-secondary">Login</a></li>
+                <li><a href="register.html" class="btn btn-primary">Get Started</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text slide-in">
+                <h1>DisasterGuard: Predicting Disasters <span>Before They Strike</span></h1>
+                <p>AI-powered flood, earthquake, and wildfire prediction system for Pakistan. Real-time monitoring, risk assessment, and early warnings to save lives.</p>
+                <div class="hero-buttons">
+                    <a href="register.html" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i>
+                        Get Started
+                    </a>
+                    <a href="#demo" class="btn btn-secondary">
+                        <i class="fas fa-play"></i>
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual slide-in">
+                <div class="globe-3d"></div>
+                <!-- Floating Cards -->
+                <div class="floating-card" style="position: absolute; top: 10%; left: -10%; animation: float 4s ease-in-out infinite;">
+                    <div class="card-3d" style="padding: 1rem;">
+                        <div class="risk-badge extreme">High Risk</div>
+                        <div style="font-size: 1.5rem; font-weight: 800; margin-top: 0.5rem;">0.82</div>
+                        <small style="color: var(--text-secondary);">Flood Risk</small>
+                    </div>
+                </div>
+                <div class="floating-card" style="position: absolute; bottom: 20%; right: -5%; animation: float 5s ease-in-out infinite 0.5s;">
+                    <div class="card-3d" style="padding: 1rem;">
+                        <i class="fas fa-bell" style="color: var(--accent-tertiary); font-size: 1.5rem;"></i>
+                        <div style="margin-top: 0.5rem; font-weight: 600;">12 Alerts</div>
+                        <small style="color: var(--text-secondary);">Active Now</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Stats Section -->
+    <section class="features" style="padding: 3rem 2rem; background: var(--bg-primary);">
+        <div class="stats-grid" style="max-width: 1400px; margin: 0 auto;">
+            <div class="card-3d stat-card">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Real-time Monitoring</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Disaster Types</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div class="stat-value">95%</div>
+                <div class="stat-label">Prediction Accuracy</div>
+            </div>
+            <div class="card-3d stat-card">
+                <div class="stat-value">50K+</div>
+                <div class="stat-label">Lives Protected</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <h2>Comprehensive Disaster Protection</h2>
+            <p>Advanced AI models analyze satellite data, weather patterns, and seismic activity to predict disasters before they occur.</p>
+        </div>
+        <div class="features-grid">
+            <!-- Flood Prediction -->
+            <div class="card-3d feature-card">
+                <div class="feature-icon" style="background: rgba(0, 212, 255, 0.1);">
+                    <i class="fas fa-water" style="color: var(--accent-primary);"></i>
+                </div>
+                <h3>Flood Prediction</h3>
+                <p>LSTM-based rainfall analysis and river level monitoring for accurate flood forecasting with 72-hour advance warning.</p>
+                <ul style="list-style: none; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                    <li><i class="fas fa-check" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Rainfall prediction</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>River monitoring</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Risk zone mapping</li>
+                </ul>
+            </div>
+
+            <!-- Earthquake Prediction -->
+            <div class="card-3d feature-card">
+                <div class="feature-icon" style="background: rgba(123, 44, 191, 0.1);">
+                    <i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
+                </div>
+                <h3>Earthquake Prediction</h3>
+                <p>Seismic activity analysis using USGS data and geological patterns to identify high-risk zones across Pakistan.</p>
+                <ul style="list-style: none; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                    <li><i class="fas fa-check" style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Seismic monitoring</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Fault line analysis</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Intensity prediction</li>
+                </ul>
+            </div>
+
+            <!-- Wildfire Detection -->
+            <div class="card-3d feature-card">
+                <div class="feature-icon" style="background: rgba(255, 0, 110, 0.1);">
+                    <i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
+                </div>
+                <h3>Wildfire Detection</h3>
+                <p>Satellite-based fire hotspot detection using NASA FIRMS and thermal anomaly detection for rapid response.</p>
+                <ul style="list-style: none; margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                    <li><i class="fas fa-check" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Satellite monitoring</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Hotspot detection</li>
+                    <li><i class="fas fa-check" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Spread prediction</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview Section -->
+    <section class="features" id="demo">
+        <div class="section-header">
+            <h2>Powerful Dashboard Interface</h2>
+            <p>Real-time risk assessment with interactive maps, detailed analytics, and instant alerts.</p>
+        </div>
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div class="card-3d" style="padding: 2rem;">
+                <!-- Mock Dashboard -->
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="card-3d risk-card" style="border-left: 4px solid var(--risk-high);">
+                        <div class="risk-header">
+                            <span class="risk-title"><i class="fas fa-water" style="margin-right: 0.5rem;"></i>Flood Risk</span>
+                            <span class="risk-badge high">High</span>
+                        </div>
+                        <div class="risk-score" style="color: var(--risk-high);">0.73</div>
+                        <div class="risk-bar">
+                            <div class="risk-bar-fill high" style="width: 73%;"></div>
+                        </div>
+                        <small style="color: var(--text-secondary);">Karachi, Sindh</small>
+                    </div>
+                    <div class="card-3d risk-card" style="border-left: 4px solid var(--risk-moderate);">
+                        <div class="risk-header">
+                            <span class="risk-title"><i class="fas fa-globe-asia" style="margin-right: 0.5rem;"></i>Earthquake Risk</span>
+                            <span class="risk-badge moderate">Moderate</span>
+                        </div>
+                        <div class="risk-score" style="color: var(--risk-moderate);">0.45</div>
+                        <div class="risk-bar">
+                            <div class="risk-bar-fill moderate" style="width: 45%;"></div>
+                        </div>
+                        <small style="color: var(--text-secondary);">Islamabad Region</small>
+                    </div>
+                    <div class="card-3d risk-card" style="border-left: 4px solid var(--risk-low);">
+                        <div class="risk-header">
+                            <span class="risk-title"><i class="fas fa-fire" style="margin-right: 0.5rem;"></i>Wildfire Risk</span>
+                            <span class="risk-badge low">Low</span>
+                        </div>
+                        <div class="risk-score" style="color: var(--risk-low);">0.12</div>
+                        <div class="risk-bar">
+                            <div class="risk-bar-fill low" style="width: 12%;"></div>
+                        </div>
+                        <small style="color: var(--text-secondary);">Punjab Region</small>
+                    </div>
+                </div>
+                <!-- Mock Map -->
+                <div class="map-container">
+                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a25 0%, #12121a 100%); display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                        <p style="color: var(--text-secondary);">Interactive Map with Risk Zones</p>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                            <span class="status-badge critical">Critical Zones</span>
+                            <span class="status-badge warning">Warning Zones</span>
+                            <span class="status-badge active">Safe Zones</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="features" style="background: var(--bg-primary);">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Four simple steps to comprehensive disaster protection</p>
+        </div>
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;">
+            <div class="card-3d" style="text-align: center; padding: 2rem;">
+                <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 800;">1</div>
+                <h3>Data Collection</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Real-time data from NASA, USGS, and OpenWeather APIs</p>
+            </div>
+            <div class="card-3d" style="text-align: center; padding: 2rem;">
+                <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 800;">2</div>
+                <h3>AI Analysis</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">LSTM models process data and predict risk scores</p>
+            </div>
+            <div class="card-3d" style="text-align: center; padding: 2rem;">
+                <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 800;">3</div>
+                <h3>Risk Assessment</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Interactive maps show danger zones by city</p>
+            </div>
+            <div class="card-3d" style="text-align: center; padding: 2rem;">
+                <div style="width: 60px; height: 60px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; font-weight: 800;">4</div>
+                <h3>Early Alerts</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Instant notifications when risk thresholds cross</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="hero" style="min-height: auto; padding: 4rem 2rem;">
+        <div class="hero-content" style="text-align: center;">
+            <div class="hero-text" style="max-width: 600px; margin: 0 auto;">
+                <h2>Ready to Protect Your Community?</h2>
+                <p style="margin-bottom: 2rem;">Join thousands of users who trust DisasterGuard for early warning and disaster preparedness.</p>
+                <div class="hero-buttons" style="justify-content: center;">
+                    <a href="register.html" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                        <i class="fas fa-user-plus"></i>
+                        Create Free Account
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--bg-secondary); padding: 3rem 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+        <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;">
+            <div>
+                <a href="index.html" class="logo" style="font-size: 1.5rem; margin-bottom: 1rem; display: inline-block;">
+                    <i class="fas fa-shield-alt"></i>
+                    DisasterGuard
+                </a>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 1rem;">
+                    AI-powered disaster prediction system for Pakistan. Protecting communities through early warning and risk assessment.
+                </p>
+            </div>
+            <div>
+                <h4 style="font-weight: 600; margin-bottom: 1rem;">Product</h4>
+                <ul style="list-style: none; color: var(--text-secondary); font-size: 0.9rem;">
+                    <li style="margin-bottom: 0.5rem;"><a href="#features" style="color: var(--text-secondary); text-decoration: none;">Features</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#demo" style="color: var(--text-secondary); text-decoration: none;">Demo</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none;">API</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-weight: 600; margin-bottom: 1rem;">Company</h4>
+                <ul style="list-style: none; color: var(--text-secondary); font-size: 0.9rem;">
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none;">About</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none;">Contact</a></li>
+                    <li style="margin-bottom: 0.5rem;"><a href="#" style="color: var(--text-secondary); text-decoration: none;">Privacy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-weight: 600; margin-bottom: 1rem;">Connect</h4>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#" style="color: var(--text-secondary); font-size: 1.25rem;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" style="color: var(--text-secondary); font-size: 1.25rem;"><i class="fab fa-github"></i></a>
+                    <a href="#" style="color: var(--text-secondary); font-size: 1.25rem;"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div style="max-width: 1400px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+            © 2025 DisasterGuard. All rights reserved. | FYP Project Pakistan
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

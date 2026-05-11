@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Callback - DisasterGuard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 255, 255, 0.3);
+            border-top-color: #00ffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        h2 {
+            margin-bottom: 10px;
+            color: #00ffff;
+        }
+        p {
+            color: #a0a0a0;
+            margin-bottom: 20px;
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .success {
+            color: #51cf66;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h2 id="status">Processing OAuth...</h2>
+        <p id="message">Please wait while we complete your authentication.</p>
+    </div>
+
+    <script>
+        async function handleCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const provider = urlParams.get('provider') || 'google';
+            const error = urlParams.get('error');
+            const success = urlParams.get('success');
+            const email = urlParams.get('email');
+            const name = urlParams.get('name');
+
+            const statusEl = document.getElementById('status');
+            const messageEl = document.getElementById('message');
+
+            if (error) {
+                statusEl.textContent = 'Authentication Failed';
+                statusEl.className = 'error';
+                messageEl.textContent = 'Error: ' + error;
+                setTimeout(() => {
+                    window.location.href = '/login.html';
+                }, 3000);
+                return;
+            }
+
+            // Handle direct redirect from backend with user data
+            if (success === 'true' && email && name) {
+                statusEl.textContent = 'Authentication Successful!';
+                statusEl.className = 'success';
+                messageEl.textContent = `Welcome, ${name}! Redirecting to dashboard...`;
+                
+                // Store user info in localStorage with correct keys
+                localStorage.setItem('user', JSON.stringify({ email, name }));
+                localStorage.setItem('user_data', JSON.stringify({ email, name }));
+                localStorage.setItem('auth_token', 'oauth_token_' + Date.now());
+                localStorage.setItem('isLoggedIn', 'true');
+
+                setTimeout(() => {
+                    window.location.href = '/dashboard.html';
+                }, 1500);
+                return;
+            }
+
+            // Handle OAuth flow with code
+            if (!code) {
+                statusEl.textContent = 'Invalid Request';
+                statusEl.className = 'error';
+                messageEl.textContent = 'No authorization code received.';
+                setTimeout(() => {
+                    window.location.href = '/login.html';
+                }, 3000);
+                return;
+            }
+
+            try {
+                // Call backend callback endpoint
+                const response = await fetch(`http://localhost:5000/api/auth/${provider}/callback?code=${code}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    statusEl.textContent = 'Authentication Successful!';
+                    statusEl.className = 'success';
+                    messageEl.textContent = `Welcome, ${data.user.name}! Redirecting to dashboard...`;
+                    
+                    // Store user info in localStorage
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('isLoggedIn', 'true');
+
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/dashboard.html';
+                    }, 1500);
+                } else {
+                    statusEl.textContent = 'Authentication Failed';
+                    statusEl.className = 'error';
+                    messageEl.textContent = data.message || 'Authentication failed.';
+                    setTimeout(() => {
+                        window.location.href = '/login.html';
+                    }, 3000);
+                }
+            } catch (error) {
+                statusEl.textContent = 'Connection Error';
+                statusEl.className = 'error';
+                messageEl.textContent = 'Failed to connect to the server.';
+                console.error('OAuth callback error:', error);
+                setTimeout(() => {
+                    window.location.href = '/login.html';
+                }, 3000);
+            }
+        }
+
+        // Handle callback on page load
+        handleCallback();
+    </script>
+</body>
+</html>

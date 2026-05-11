@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Weather - DisasterGuard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+
+                <!-- User Menu -->
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
+                    onclick="toggleUserMenu()">
+                    <div
+                        style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        <span id="userInitials">JD</span>
+                    </div>
+                    <span id="userName" style="font-weight: 600;">John Doe</span>
+                    <i class="fas fa-chevron-down" style="color: var(--text-muted);"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Main</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                <li><a href="history.html"><i class="fas fa-history"></i> History</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Disaster Monitoring</p>
+            <ul class="sidebar-menu">
+                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood</a>
+                </li>
+                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
+                        Earthquake</a></li>
+                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
+                        Wildfire</a></li>
+                <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
+                <li><a href="weather.html" class="active"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i>
+                        Weather</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Support</p>
+            <ul class="sidebar-menu">
+                <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live
+                        Chat</a></li>
+                <li><a href="profile.html"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Account</p>
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">
+                    <i class="fas fa-cloud-sun" style="color: #ffd600; margin-right: 0.75rem;"></i>Current Weather
+                </h1>
+                <p style="color: var(--text-secondary);">Real-time weather conditions across Pakistan</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div style="position: relative; width: 250px;">
+                    <i class="fas fa-search"
+                        style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="text" class="input-field" id="citySearch" placeholder="Search city..."
+                        style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
+                    <div id="cityDropdown" class="city-dropdown"
+                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="refreshWeather()"><i class="fas fa-sync-alt"></i>
+                    Refresh</button>
+            </div>
+        </div>
+
+        <!-- Current Location Weather (Large Card) -->
+        <div id="mainWeatherCard" class="card-3d mirror-effect"
+            style="padding: 2rem; margin-bottom: 2rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));">
+            <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                <div style="text-align: center;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                    <h3 style="font-weight: 600;">Loading Weather Data...</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">Please wait while we fetch real-time data</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Major Cities Grid -->
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-city"
+                style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Major Cities</h3>
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;"
+            id="citiesGrid">
+            <!-- Cities will be populated by JavaScript -->
+        </div>
+
+        <!-- All Cities Table -->
+        <div class="card-3d">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                <h3 style="font-size: 1.25rem; font-weight: 700;"><i class="fas fa-list"
+                        style="color: var(--accent-primary); margin-right: 0.5rem;"></i>All Cities Weather</h3>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>City</th>
+                            <th>Province</th>
+                            <th>Temperature</th>
+                            <th>Condition</th>
+                            <th>Humidity</th>
+                            <th>Wind</th>
+                            <th>Alert</th>
+                        </tr>
+                    </thead>
+                    <tbody id="weatherTableBody">
+                        <!-- Table rows populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Dropdown -->
+    <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
+        <div class="dropdown-header">
+            <p id="dropdownName">User</p>
+            <p id="dropdownEmail">user@email.com</p>
+        </div>
+        <ul class="dropdown-list">
+            <li><a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a href="#" onclick="logout()" class="dropdown-item logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Load user name
+        AuthManager.loadUserName();
+        
+        // Pakistani cities with coordinates for real weather data
+        const cities = [
+            { name: 'Karachi', province: 'Sindh', lat: 24.8607, lng: 67.0011 },
+            { name: 'Lahore', province: 'Punjab', lat: 31.5497, lng: 74.3436 },
+            { name: 'Islamabad', province: 'ICT', lat: 33.6844, lng: 73.0479 },
+            { name: 'Rawalpindi', province: 'Punjab', lat: 33.5651, lng: 73.0169 },
+            { name: 'Peshawar', province: 'KP', lat: 34.0151, lng: 71.5249 },
+            { name: 'Quetta', province: 'Balochistan', lat: 30.1798, lng: 66.9750 },
+            { name: 'Multan', province: 'Punjab', lat: 30.1979, lng: 71.4725 },
+            { name: 'Faisalabad', province: 'Punjab', lat: 31.4180, lng: 73.0791 },
+            { name: 'Hyderabad', province: 'Sindh', lat: 25.3792, lng: 68.3667 },
+            { name: 'Sukkur', province: 'Sindh', lat: 27.7052, lng: 68.8574 },
+            { name: 'Gujranwala', province: 'Punjab', lat: 32.1877, lng: 74.1945 },
+            { name: 'Sialkot', province: 'Punjab', lat: 32.4946, lng: 74.5389 },
+            { name: 'Abbottabad', province: 'KP', lat: 34.1468, lng: 73.2146 },
+            { name: 'Mingora', province: 'KP', lat: 34.7795, lng: 72.3639 },
+            { name: 'Nawabshah', province: 'Sindh', lat: 26.2399, lng: 68.4030 },
+            { name: 'Sargodha', province: 'Punjab', lat: 32.0836, lng: 72.6711 },
+            { name: 'Mardan', province: 'KP', lat: 34.2000, lng: 72.0500 },
+            { name: 'Kohat', province: 'KP', lat: 33.5900, lng: 71.5400 },
+            { name: 'Dera Ismail Khan', province: 'KP', lat: 31.8333, lng: 70.9000 },
+            { name: 'Swabi', province: 'KP', lat: 34.1667, lng: 72.4667 },
+            { name: 'Bannu', province: 'KP', lat: 32.7333, lng: 70.7833 },
+            { name: 'Charsadda', province: 'KP', lat: 34.1500, lng: 71.7500 },
+            { name: 'Nowshera', province: 'KP', lat: 34.0167, lng: 71.9833 },
+            { name: 'Haripur', province: 'KP', lat: 34.0833, lng: 72.9333 },
+            { name: 'Mansehra', province: 'KP', lat: 34.3333, lng: 73.2000 },
+            { name: 'Chitral', province: 'KP', lat: 35.8500, lng: 71.7833 },
+            { name: 'Gilgit', province: 'Gilgit-Baltistan', lat: 35.9200, lng: 74.4700 },
+            { name: 'Skardu', province: 'Gilgit-Baltistan', lat: 35.2900, lng: 75.5500 },
+            { name: 'Hunza', province: 'Gilgit-Baltistan', lat: 36.3100, lng: 74.6500 },
+            { name: 'Ghizer', province: 'Gilgit-Baltistan', lat: 36.1500, lng: 73.3000 },
+            { name: 'Muzaffarabad', province: 'Azad Kashmir', lat: 34.3700, lng: 73.4700 },
+            { name: 'Mirpur', province: 'Azad Kashmir', lat: 33.1500, lng: 73.7500 },
+            { name: 'Kotli', province: 'Azad Kashmir', lat: 33.5100, lng: 73.9000 },
+            { name: 'Bhimber', province: 'Azad Kashmir', lat: 32.9500, lng: 74.0500 },
+            { name: 'Rawalakot', province: 'Azad Kashmir', lat: 33.8500, lng: 73.7500 },
+            { name: 'Bagh', province: 'Azad Kashmir', lat: 34.0500, lng: 73.7500 },
+            { name: 'Poonch', province: 'Azad Kashmir', lat: 33.7700, lng: 74.1000 },
+            { name: 'Larkana', province: 'Sindh', lat: 27.5500, lng: 68.9000 },
+            { name: 'Jacobabad', province: 'Sindh', lat: 28.2800, lng: 68.4400 },
+            { name: 'Shikarpur', province: 'Sindh', lat: 27.9500, lng: 68.6500 },
+            { name: 'Khairpur', province: 'Sindh', lat: 27.5300, lng: 68.7600 },
+            { name: 'Dadu', province: 'Sindh', lat: 26.7300, lng: 67.7700 },
+            { name: 'Thatta', province: 'Sindh', lat: 24.7400, lng: 67.9200 },
+            { name: 'Badin', province: 'Sindh', lat: 24.6500, lng: 68.8400 },
+            { name: 'Mirpur Khas', province: 'Sindh', lat: 25.5300, lng: 69.0300 },
+            { name: 'Umerkot', province: 'Sindh', lat: 25.3700, lng: 69.7400 },
+            { name: 'Tando Adam', province: 'Sindh', lat: 25.7700, lng: 68.6700 },
+            { name: 'Tando Allahyar', province: 'Sindh', lat: 25.4600, lng: 68.6400 },
+            { name: 'Sahiwal', province: 'Punjab', lat: 30.6700, lng: 73.1000 },
+            { name: 'Okara', province: 'Punjab', lat: 30.8100, lng: 73.4500 },
+            { name: 'Kasur', province: 'Punjab', lat: 31.1200, lng: 74.4500 },
+            { name: 'Sheikhupura', province: 'Punjab', lat: 31.7100, lng: 73.9800 },
+            { name: 'Gujrat', province: 'Punjab', lat: 32.5800, lng: 74.0700 },
+            { name: 'Jhelum', province: 'Punjab', lat: 32.9300, lng: 73.7300 },
+            { name: 'Sargodha', province: 'Punjab', lat: 32.0836, lng: 72.6711 },
+            { name: 'Mianwali', province: 'Punjab', lat: 32.5800, lng: 71.5400 },
+            { name: 'Bhakkar', province: 'Punjab', lat: 31.6200, lng: 71.0600 },
+            { name: 'Khanewal', province: 'Punjab', lat: 30.3000, lng: 71.9300 },
+            { name: 'Vehari', province: 'Punjab', lat: 30.0400, lng: 72.3500 },
+            { name: 'Bahawalpur', province: 'Punjab', lat: 29.3900, lng: 71.6700 },
+            { name: 'Rahim Yar Khan', province: 'Punjab', lat: 28.4200, lng: 70.3000 },
+            { name: 'Dera Ghazi Khan', province: 'Punjab', lat: 30.0500, lng: 70.6300 },
+            { name: 'Layyah', province: 'Punjab', lat: 30.9600, lng: 70.9400 },
+            { name: 'Muzaffargarh', province: 'Punjab', lat: 30.0700, lng: 71.1900 },
+            { name: 'Rajanpur', province: 'Punjab', lat: 29.1000, lng: 70.3200 },
+            { name: 'Lodhran', province: 'Punjab', lat: 29.5400, lng: 71.6300 },
+            { name: 'Khushab', province: 'Punjab', lat: 32.2900, lng: 72.3500 },
+            { name: 'Bhawalpur', province: 'Punjab', lat: 29.3900, lng: 71.6700 },
+            { name: 'Chiniot', province: 'Punjab', lat: 31.7200, lng: 72.9800 },
+            { name: 'Jhang', province: 'Punjab', lat: 31.2800, lng: 72.3200 },
+            { name: 'Toba Tek Singh', province: 'Punjab', lat: 30.9700, lng: 72.4800 },
+            { name: 'Pakpattan', province: 'Punjab', lat: 30.3400, lng: 73.3900 },
+            { name: 'Kamalia', province: 'Punjab', lat: 30.7300, lng: 73.5600 },
+            { name: 'Gojra', province: 'Punjab', lat: 31.1500, lng: 72.6700 },
+            { name: 'Samundri', province: 'Punjab', lat: 30.7000, lng: 73.0000 },
+            { name: 'Muridke', province: 'Punjab', lat: 31.8000, lng: 74.2500 },
+            { name: 'Narowal', province: 'Punjab', lat: 32.1000, lng: 74.8800 },
+            { name: 'Hafizabad', province: 'Punjab', lat: 32.0700, lng: 73.6800 },
+            { name: 'Mandi Bahauddin', province: 'Punjab', lat: 32.5800, lng: 73.5000 },
+            { name: 'Gujar Khan', province: 'Punjab', lat: 33.2600, lng: 73.3100 },
+            { name: 'Jhelum', province: 'Punjab', lat: 32.9300, lng: 73.7300 },
+            { name: 'Chakwal', province: 'Punjab', lat: 32.9300, lng: 72.8600 },
+            { name: 'Talagang', province: 'Punjab', lat: 32.9200, lng: 72.4200 },
+            { name: 'Attock', province: 'Punjab', lat: 33.7700, lng: 72.3700 },
+            { name: 'Taxila', province: 'Punjab', lat: 33.7500, lng: 72.8100 },
+            { name: 'Wah Cantonment', province: 'Punjab', lat: 33.7700, lng: 72.7100 },
+            { name: 'Hasan Abdal', province: 'Punjab', lat: 33.8000, lng: 72.6900 },
+            { name: 'Mian Channu', province: 'Punjab', lat: 30.4400, lng: 72.3600 },
+            { name: 'Kabirwala', province: 'Punjab', lat: 30.3300, lng: 71.7600 },
+            { name: 'Shorkot', province: 'Punjab', lat: 30.5000, lng: 72.0700 },
+            { name: 'Pir Mahal', province: 'Punjab', lat: 30.5300, lng: 72.4200 },
+            { name: 'Burewala', province: 'Punjab', lat: 30.1600, lng: 72.6400 },
+            { name: 'Arifwala', province: 'Punjab', lat: 30.2800, lng: 73.1000 },
+            { name: 'Haroonabad', province: 'Punjab', lat: 29.7900, lng: 73.1300 },
+            { name: 'Yazman', province: 'Punjab', lat: 29.1200, lng: 71.7700 },
+            { name: 'Ahmadpur East', province: 'Punjab', lat: 29.1300, lng: 71.2700 },
+            { name: 'Zahir Pir', province: 'Punjab', lat: 28.8200, lng: 70.5100 },
+            { name: 'Ghotki', province: 'Sindh', lat: 28.0200, lng: 69.3200 },
+            { name: 'Kashmore', province: 'Sindh', lat: 28.1700, lng: 69.5900 },
+            { name: 'Shikarpur', province: 'Sindh', lat: 27.9500, lng: 68.6500 },
+            { name: 'Jacobabad', province: 'Sindh', lat: 28.2800, lng: 68.4400 },
+            { name: 'Qambar', province: 'Sindh', lat: 27.8300, lng: 67.9500 },
+            { name: 'Larkana', province: 'Sindh', lat: 27.5500, lng: 68.9000 },
+            { name: 'Moro', province: 'Sindh', lat: 26.7900, lng: 68.3000 },
+            { name: 'Naushahro Feroze', province: 'Sindh', lat: 26.9700, lng: 68.2400 },
+            { name: 'Nawabshah', province: 'Sindh', lat: 26.2399, lng: 68.4030 },
+            { name: 'Sakrand', province: 'Sindh', lat: 26.0800, lng: 68.2700 },
+            { name: 'Dadu', province: 'Sindh', lat: 26.7300, lng: 67.7700 },
+            { name: 'Sehwan', province: 'Sindh', lat: 26.4200, lng: 67.8600 },
+            { name: 'Jamshoro', province: 'Sindh', lat: 25.4300, lng: 68.2600 },
+            { name: 'Kotri', province: 'Sindh', lat: 25.3700, lng: 68.3000 },
+            { name: 'Hyderabad', province: 'Sindh', lat: 25.3792, lng: 68.3667 },
+            { name: 'Tando Muhammad Khan', province: 'Sindh', lat: 25.1300, lng: 68.5400 },
+            { name: 'Matli', province: 'Sindh', lat: 24.9100, lng: 68.9400 },
+            { name: 'Tando Allahyar', province: 'Sindh', lat: 25.4600, lng: 68.6400 },
+            { name: 'Mirpur Khas', province: 'Sindh', lat: 25.5300, lng: 69.0300 },
+            { name: 'Umerkot', province: 'Sindh', lat: 25.3700, lng: 69.7400 },
+            { name: 'Sanghar', province: 'Sindh', lat: 25.5200, lng: 69.3500 },
+            { name: 'Khipro', province: 'Sindh', lat: 25.8300, lng: 69.5300 },
+            { name: 'Shahdadkot', province: 'Sindh', lat: 27.8400, lng: 67.9000 },
+            { name: 'Ratodero', province: 'Sindh', lat: 27.8000, lng: 68.2900 },
+            { name: 'Warah', province: 'Sindh', lat: 27.6200, lng: 67.9000 },
+            { name: 'Mehar', province: 'Sindh', lat: 27.3800, lng: 67.8900 },
+            { name: 'Khairpur Nathan Shah', province: 'Sindh', lat: 26.9700, lng: 67.7700 },
+            { name: 'Thatta', province: 'Sindh', lat: 24.7400, lng: 67.9200 },
+            { name: 'Sujawal', province: 'Sindh', lat: 24.6000, lng: 68.0000 },
+            { name: 'Jati', province: 'Sindh', lat: 24.5600, lng: 67.8800 },
+            { name: 'Keti Bandar', province: 'Sindh', lat: 24.1400, lng: 67.4200 },
+            { name: 'Badin', province: 'Sindh', lat: 24.6500, lng: 68.8400 },
+            { name: 'Tando Bago', province: 'Sindh', lat: 24.7200, lng: 68.9500 },
+            { name: 'Matli', province: 'Sindh', lat: 24.9100, lng: 68.9400 },
+            { name: 'Gharo', province: 'Sindh', lat: 24.8800, lng: 67.6200 },
+            { name: 'Thano Bula Khan', province: 'Sindh', lat: 25.5300, lng: 67.8900 },
+            { name: 'Jhirk', province: 'Sindh', lat: 25.1600, lng: 68.1200 },
+            { name: 'Kotri', province: 'Sindh', lat: 25.3700, lng: 68.3000 },
+            { name: 'Kandiaro', province: 'Sindh', lat: 27.3300, lng: 68.2500 },
+            { name: 'Nasirabad', province: 'Sindh', lat: 27.2700, lng: 68.2700 },
+            { name: 'Bhiria Road', province: 'Sindh', lat: 26.9300, lng: 68.1400 },
+            { name: 'Padidan', province: 'Sindh', lat: 26.8700, lng: 68.0800 },
+            { name: 'Moro', province: 'Sindh', lat: 26.7900, lng: 68.3000 },
+            { name: 'Hala', province: 'Sindh', lat: 25.8200, lng: 68.4700 },
+            { name: 'Tando Adam', province: 'Sindh', lat: 25.7700, lng: 68.6700 },
+            { name: 'Khipro', province: 'Sindh', lat: 25.8300, lng: 69.5300 },
+            { name: 'Sanghar', province: 'Sindh', lat: 25.5200, lng: 69.3500 },
+            { name: 'Shahdadpur', province: 'Sindh', lat: 26.0200, lng: 68.6300 },
+            { name: 'Sinjhoro', province: 'Sindh', lat: 26.0700, lng: 68.7700 },
+            { name: 'Mirpur Khas', province: 'Sindh', lat: 25.5300, lng: 69.0300 },
+            { name: 'Umerkot', province: 'Sindh', lat: 25.3700, lng: 69.7400 },
+            { name: 'Kunri', province: 'Sindh', lat: 25.2300, lng: 69.6000 },
+            { name: 'Naukot', province: 'Sindh', lat: 25.1500, lng: 69.4800 },
+            { name: 'Samaro', province: 'Sindh', lat: 25.0500, lng: 69.4700 },
+            { name: 'Chachro', province: 'Sindh', lat: 25.3800, lng: 70.0800 },
+            { name: 'Mithi', province: 'Sindh', lat: 24.7400, lng: 69.8000 },
+            { name: 'Islamkot', province: 'Sindh', lat: 24.6200, lng: 70.1000 },
+            { name: 'Nagarparkar', province: 'Sindh', lat: 24.3500, lng: 70.9700 },
+            { name: 'Chelhar', province: 'Sindh', lat: 24.3000, lng: 70.8500 },
+            { name: 'Kaloi', province: 'Sindh', lat: 24.5400, lng: 70.5800 },
+            { name: 'Diplo', province: 'Sindh', lat: 24.5000, lng: 70.4500 },
+            { name: 'Kapuno', province: 'Sindh', lat: 24.4200, lng: 70.3200 },
+            { name: 'Gharibabad', province: 'Sindh', lat: 24.3800, lng: 70.2800 },
+            { name: 'Jhudo', province: 'Sindh', lat: 25.0500, lng: 69.6300 },
+            { name: 'Bhalwal', province: 'Punjab', lat: 32.2600, lng: 73.2300 },
+            { name: 'Kot Moman', province: 'Punjab', lat: 32.5000, lng: 73.6000 },
+            { name: 'Pindi Bhattian', province: 'Punjab', lat: 32.5300, lng: 73.6900 },
+            { name: 'Qadirabad', province: 'Punjab', lat: 32.4200, lng: 73.8300 },
+            { name: 'Mandi Bahauddin', province: 'Punjab', lat: 32.5800, lng: 73.5000 },
+            { name: 'Phalia', province: 'Punjab', lat: 32.4300, lng: 73.6700 },
+            { name: 'Malakwal', province: 'Punjab', lat: 32.5600, lng: 73.4400 },
+            { name: 'Dinga', province: 'Punjab', lat: 32.9300, lng: 73.7300 },
+            { name: 'Kharian', province: 'Punjab', lat: 32.8100, lng: 73.8800 },
+            { name: 'Sarai Alamgir', province: 'Punjab', lat: 32.9000, lng: 73.7500 },
+            { name: 'Lalamusa', province: 'Punjab', lat: 32.8400, lng: 73.9600 },
+            { name: 'Gujrat', province: 'Punjab', lat: 32.5800, lng: 74.0700 },
+            { name: 'Wazirabad', province: 'Punjab', lat: 32.4500, lng: 74.1200 },
+            { name: 'Hafizabad', province: 'Punjab', lat: 32.0700, lng: 73.6800 },
+            { name: 'Pindi Bhattian', province: 'Punjab', lat: 32.5300, lng: 73.6900 },
+            { name: 'Sialkot', province: 'Punjab', lat: 32.4946, lng: 74.5389 },
+            { name: 'Daska', province: 'Punjab', lat: 32.3200, lng: 74.3500 },
+            { name: 'Pasrur', province: 'Punjab', lat: 32.2600, lng: 74.6600 },
+            { name: 'Zafarwal', province: 'Punjab', lat: 32.3400, lng: 74.9000 },
+            { name: 'Narowal', province: 'Punjab', lat: 32.1000, lng: 74.8800 },
+            { name: 'Shakargarh', province: 'Punjab', lat: 32.2600, lng: 75.1600 },
+            { name: 'Gujranwala', province: 'Punjab', lat: 32.1877, lng: 74.1945 },
+            { name: 'Kamoke', province: 'Punjab', lat: 32.2400, lng: 74.1500 },
+            { name: 'Wazirabad', province: 'Punjab', lat: 32.4500, lng: 74.1200 },
+            { name: 'Hafizabad', province: 'Punjab', lat: 32.0700, lng: 73.6800 },
+            { name: 'Faisalabad', province: 'Punjab', lat: 31.4180, lng: 73.0791 },
+            { name: 'Jaranwala', province: 'Punjab', lat: 31.3300, lng: 73.4300 },
+            { name: 'Samundri', province: 'Punjab', lat: 30.7000, lng: 73.0000 },
+            { name: 'Tandlianwala', province: 'Punjab', lat: 31.3000, lng: 73.1600 },
+            { name: 'Chiniot', province: 'Punjab', lat: 31.7200, lng: 72.9800 },
+            { name: 'Jhang', province: 'Punjab', lat: 31.2800, lng: 72.3200 },
+            { name: 'Shorkot', province: 'Punjab', lat: 30.5000, lng: 72.0700 },
+            { name: 'Ahmadpur Sial', province: 'Punjab', lat: 30.0300, lng: 72.0300 },
+            { name: 'Muzaffargarh', province: 'Punjab', lat: 30.0700, lng: 71.1900 },
+            { name: 'Alipur', province: 'Punjab', lat: 29.3800, lng: 70.9100 },
+            { name: 'Kot Addu', province: 'Punjab', lat: 30.1700, lng: 71.2700 },
+            { name: 'Mian Channu', province: 'Punjab', lat: 30.4400, lng: 72.3600 },
+            { name: 'Kabirwala', province: 'Punjab', lat: 30.3300, lng: 71.7600 },
+            { name: 'Khanewal', province: 'Punjab', lat: 30.3000, lng: 71.9300 },
+            { name: 'Jahania', province: 'Punjab', lat: 30.1000, lng: 71.7700 },
+            { name: 'Multan', province: 'Punjab', lat: 30.1979, lng: 71.4725 },
+            { name: 'Shujabad', province: 'Punjab', lat: 30.1600, lng: 71.6400 },
+            { name: 'Muzaffargarh', province: 'Punjab', lat: 30.0700, lng: 71.1900 },
+            { name: 'Liaqatpur', province: 'Punjab', lat: 29.1800, lng: 70.9600 },
+            { name: 'Rahim Yar Khan', province: 'Punjab', lat: 28.4200, lng: 70.3000 },
+            { name: 'Sadiqabad', province: 'Punjab', lat: 28.3100, lng: 70.1300 },
+            { name: 'Kot Sabzal', province: 'Punjab', lat: 28.5700, lng: 70.0700 },
+            { name: 'Ubaro', province: 'Sindh', lat: 24.7900, lng: 70.0400 },
+            { name: 'Kunri', province: 'Sindh', lat: 25.2300, lng: 69.6000 },
+            { name: 'Daharki', province: 'Sindh', lat: 28.5700, lng: 69.7700 },
+            { name: 'Ghotki', province: 'Sindh', lat: 28.0200, lng: 69.3200 },
+            { name: 'Mirpur Mathelo', province: 'Sindh', lat: 28.0300, lng: 69.5500 },
+            { name: 'Kashmore', province: 'Sindh', lat: 28.1700, lng: 69.5900 },
+            { name: 'Shikarpur', province: 'Sindh', lat: 27.9500, lng: 68.6500 },
+            { name: 'Jacobabad', province: 'Sindh', lat: 28.2800, lng: 68.4400 },
+            { name: 'Thul', province: 'Sindh', lat: 28.1600, lng: 68.2800 },
+            { name: 'Garhi Khairo', province: 'Balochistan', lat: 28.5800, lng: 68.1000 },
+            { name: 'Bolan', province: 'Balochistan', lat: 29.4300, lng: 67.6300 },
+            { name: 'Sibi', province: 'Balochistan', lat: 29.5500, lng: 67.8800 },
+            { name: 'Dhadar', province: 'Balochistan', lat: 29.4700, lng: 67.5500 },
+            { name: 'Mach', province: 'Balochistan', lat: 29.8600, lng: 67.5800 },
+            { name: 'Kachhi', province: 'Balochistan', lat: 29.3800, lng: 67.6700 },
+            { name: 'Bhag', province: 'Balochistan', lat: 28.4700, lng: 67.8800 },
+            { name: 'Jhal Magsi', province: 'Balochistan', lat: 28.2800, lng: 67.6700 },
+            { name: 'Gandava', province: 'Balochistan', lat: 28.1200, lng: 67.5800 },
+            { name: 'Sohbatpur', province: 'Balochistan', lat: 27.9700, lng: 67.4000 },
+            { name: 'Usta Muhammad', province: 'Balochistan', lat: 27.8800, lng: 67.8500 },
+            { name: 'Dera Murad Jamali', province: 'Balochistan', lat: 28.5600, lng: 68.2200 },
+            { name: 'Sohbatpur', province: 'Balochistan', lat: 27.9700, lng: 67.4000 },
+            { name: 'Jafarabad', province: 'Balochistan', lat: 27.8000, lng: 67.8500 },
+            { name: 'Belapat', province: 'Balochistan', lat: 27.6500, lng: 67.9200 },
+            { name: 'Usta Muhammad', province: 'Balochistan', lat: 27.8800, lng: 67.8500 },
+            { name: 'Sui', province: 'Balochistan', lat: 29.1300, lng: 68.8800 },
+            { name: 'Dera Bugti', province: 'Balochistan', lat: 29.0300, lng: 69.1700 },
+            { name: 'Pir Koh', province: 'Balochistan', lat: 29.3300, lng: 69.3000 },
+            { name: 'Loti', province: 'Balochistan', lat: 29.1000, lng: 69.0500 },
+            { name: 'Kohlu', province: 'Balochistan', lat: 29.9000, lng: 69.2500 },
+            { name: 'Barkhan', province: 'Balochistan', lat: 29.9000, lng: 69.5700 },
+            { name: 'Rakhni', province: 'Balochistan', lat: 30.0300, lng: 69.7700 },
+            { name: 'Musakhel', province: 'Balochistan', lat: 30.3700, lng: 69.8800 },
+            { name: 'Kingri', province: 'Balochistan', lat: 30.5000, lng: 69.8300 },
+            { name: 'Sherani', province: 'Balochistan', lat: 31.0300, lng: 70.0700 },
+            { name: 'Zhob', province: 'Balochistan', lat: 31.3400, lng: 69.4700 },
+            { name: 'Muslim Bagh', province: 'Balochistan', lat: 30.5700, lng: 67.9800 },
+            { name: 'Killa Saifullah', province: 'Balochistan', lat: 31.3500, lng: 68.3700 },
+            { name: 'Qilla Abdullah', province: 'Balochistan', lat: 30.9600, lng: 66.6200 },
+            { name: 'Chaman', province: 'Balochistan', lat: 30.9200, lng: 66.4500 },
+            { name: 'Spin Boldak', province: 'Balochistan', lat: 30.9200, lng: 66.4300 },
+            { name: 'Quetta', province: 'Balochistan', lat: 30.1798, lng: 66.9750 },
+            { name: 'Pishin', province: 'Balochistan', lat: 30.5800, lng: 66.9500 },
+            { name: 'Karezat', province: 'Balochistan', lat: 30.6800, lng: 66.9300 },
+            { name: 'Qilla Saifullah', province: 'Balochistan', lat: 31.3500, lng: 68.3700 },
+            { name: 'Loralai', province: 'Balochistan', lat: 30.3700, lng: 68.5900 },
+            { name: 'Duki', province: 'Balochistan', lat: 30.0500, lng: 68.8800 },
+            { name: 'Harnai', province: 'Balochistan', lat: 29.8000, lng: 68.3200 },
+            { name: 'Ziarat', province: 'Balochistan', lat: 30.3800, lng: 67.7300 },
+            { name: 'Sanjawi', province: 'Balochistan', lat: 30.2700, lng: 67.8300 },
+            { name: 'Mastung', province: 'Balochistan', lat: 29.8800, lng: 66.5800 },
+            { name: 'Kalat', province: 'Balochistan', lat: 29.8900, lng: 66.5900 },
+            { name: 'Surab', province: 'Balochistan', lat: 29.6700, lng: 66.5700 },
+            { name: 'Manguchar', province: 'Balochistan', lat: 29.5500, lng: 66.5300 },
+            { name: 'Khuzdar', province: 'Balochistan', lat: 27.8200, lng: 66.6100 },
+            { name: 'Wadh', province: 'Balochistan', lat: 27.4500, lng: 66.4500 },
+            { name: 'Nal', province: 'Balochistan', lat: 27.5200, lng: 66.6700 },
+            { name: 'Jhal Jao', province: 'Balochistan', lat: 27.3800, lng: 66.7800 },
+            { name: 'Belkhat', province: 'Balochistan', lat: 27.2800, lng: 66.9200 },
+            { name: 'Gandava', province: 'Balochistan', lat: 28.1200, lng: 67.5800 },
+            { name: 'Wangu', province: 'Balochistan', lat: 27.9700, lng: 67.4000 },
+            { name: 'Kharan', province: 'Balochistan', lat: 27.8500, lng: 65.4100 },
+            { name: 'Sarawan', province: 'Balochistan', lat: 27.9200, lng: 65.4800 },
+            { name: 'Basima', province: 'Balochistan', lat: 27.7500, lng: 65.5600 },
+            { name: 'Panjgur', province: 'Balochistan', lat: 26.9700, lng: 64.0800 },
+            { name: 'Gishkori', province: 'Balochistan', lat: 26.8800, lng: 64.1500 },
+            { name: 'Tasp', province: 'Balochistan', lat: 26.8200, lng: 64.2200 },
+            { name: 'Gwadar', province: 'Balochistan', lat: 25.1300, lng: 62.3200 },
+            { name: 'Jiwani', province: 'Balochistan', lat: 25.0500, lng: 61.7500 },
+            { name: 'Ormara', province: 'Balochistan', lat: 25.2200, lng: 64.5800 },
+            { name: 'Pasni', province: 'Balochistan', lat: 25.2700, lng: 63.5400 },
+            { name: 'Hingol', province: 'Balochistan', lat: 25.3300, lng: 64.4000 },
+            { name: 'Kund Malir', province: 'Balochistan', lat: 25.2800, lng: 66.1700 },
+            { name: 'Bela', province: 'Balochistan', lat: 25.9300, lng: 66.2500 },
+            { name: 'Lasbela', province: 'Balochistan', lat: 25.9300, lng: 66.2500 },
+            { name: 'Hub', province: 'Balochistan', lat: 25.0300, lng: 66.8600 },
+            { name: 'Sonmiani', province: 'Balochistan', lat: 25.0800, lng: 66.7700 },
+            { name: 'Uthal', province: 'Balochistan', lat: 25.7800, lng: 66.0200 },
+            { name: 'Winder', province: 'Balochistan', lat: 25.5900, lng: 66.5400 },
+            { name: 'Lak Pass', province: 'Balochistan', lat: 29.6700, lng: 66.5700 },
+            { name: 'Bolan Pass', province: 'Balochistan', lat: 29.4300, lng: 67.6300 },
+            { name: 'Harnai', province: 'Balochistan', lat: 29.8000, lng: 68.3200 },
+            { name: 'Kachhi', province: 'Balochistan', lat: 29.3800, lng: 67.6700 },
+            { name: 'Sibi', province: 'Balochistan', lat: 29.5500, lng: 67.8800 },
+            { name: 'Dhadar', province: 'Balochistan', lat: 29.4700, lng: 67.5500 },
+            { name: 'Mach', province: 'Balochistan', lat: 29.8600, lng: 67.5800 },
+            { name: 'Kohlu', province: 'Balochistan', lat: 29.9000, lng: 69.2500 },
+            { name: 'Barkhan', province: 'Balochistan', lat: 29.9000, lng: 69.5700 },
+            { name: 'Rakhni', province: 'Balochistan', lat: 30.0300, lng: 69.7700 },
+            { name: 'Musakhel', province: 'Balochistan', lat: 30.3700, lng: 69.8800 },
+            { name: 'Kingri', province: 'Balochistan', lat: 30.5000, lng: 69.8300 },
+            { name: 'Sherani', province: 'Balochistan', lat: 31.0300, lng: 70.0700 },
+            { name: 'Zhob', province: 'Balochistan', lat: 31.3400, lng: 69.4700 },
+            { name: 'Muslim Bagh', province: 'Balochistan', lat: 30.5700, lng: 67.9800 },
+            { name: 'Killa Saifullah', province: 'Balochistan', lat: 31.3500, lng: 68.3700 },
+            { name: 'Qilla Abdullah', province: 'Balochistan', lat: 30.9600, lng: 66.6200 },
+            { name: 'Chaman', province: 'Balochistan', lat: 30.9200, lng: 66.4500 },
+            { name: 'Quetta', province: 'Balochistan', lat: 30.1798, lng: 66.9750 },
+            { name: 'Pishin', province: 'Balochistan', lat: 30.5800, lng: 66.9500 },
+            { name: 'Karezat', province: 'Balochistan', lat: 30.6800, lng: 66.9300 },
+            { name: 'Loralai', province: 'Balochistan', lat: 30.3700, lng: 68.5900 },
+            { name: 'Duki', province: 'Balochistan', lat: 30.0500, lng: 68.8800 },
+            { name: 'Harnai', province: 'Balochistan', lat: 29.8000, lng: 68.3200 },
+            { name: 'Ziarat', province: 'Balochistan', lat: 30.3800, lng: 67.7300 },
+            { name: 'Sanjawi', province: 'Balochistan', lat: 30.2700, lng: 67.8300 },
+            { name: 'Mastung', province: 'Balochistan', lat: 29.8800, lng: 66.5800 },
+            { name: 'Kalat', province: 'Balochistan', lat: 29.8900, lng: 66.5900 },
+            { name: 'Surab', province: 'Balochistan', lat: 29.6700, lng: 66.5700 },
+            { name: 'Manguchar', province: 'Balochistan', lat: 29.5500, lng: 66.5300 },
+            { name: 'Khuzdar', province: 'Balochistan', lat: 27.8200, lng: 66.6100 },
+            { name: 'Wadh', province: 'Balochistan', lat: 27.4500, lng: 66.4500 },
+            { name: 'Nal', province: 'Balochistan', lat: 27.5200, lng: 66.6700 },
+            { name: 'Jhal Jao', province: 'Balochistan', lat: 27.3800, lng: 66.7800 },
+            { name: 'Belkhat', province: 'Balochistan', lat: 27.2800, lng: 66.9200 },
+            { name: 'Gandava', province: 'Balochistan', lat: 28.1200, lng: 67.5800 },
+            { name: 'Wangu', province: 'Balochistan', lat: 27.9700, lng: 67.4000 },
+            { name: 'Kharan', province: 'Balochistan', lat: 27.8500, lng: 65.4100 },
+            { name: 'Sarawan', province: 'Balochistan', lat: 27.9200, lng: 65.4800 },
+            { name: 'Basima', province: 'Balochistan', lat: 27.7500, lng: 65.5600 },
+            { name: 'Panjgur', province: 'Balochistan', lat: 26.9700, lng: 64.0800 },
+            { name: 'Gishkori', province: 'Balochistan', lat: 26.8800, lng: 64.1500 },
+            { name: 'Tasp', province: 'Balochistan', lat: 26.8200, lng: 64.2200 },
+            { name: 'Gwadar', province: 'Balochistan', lat: 25.1300, lng: 62.3200 },
+            { name: 'Jiwani', province: 'Balochistan', lat: 25.0500, lng: 61.7500 },
+            { name: 'Ormara', province: 'Balochistan', lat: 25.2200, lng: 64.5800 },
+            { name: 'Pasni', province: 'Balochistan', lat: 25.2700, lng: 63.5400 },
+            { name: 'Hingol', province: 'Balochistan', lat: 25.3300, lng: 64.4000 },
+            { name: 'Kund Malir', province: 'Balochistan', lat: 25.2800, lng: 66.1700 },
+            { name: 'Bela', province: 'Balochistan', lat: 25.9300, lng: 66.2500 },
+            { name: 'Lasbela', province: 'Balochistan', lat: 25.9300, lng: 66.2500 },
+            { name: 'Hub', province: 'Balochistan', lat: 25.0300, lng: 66.8600 },
+            { name: 'Sonmiani', province: 'Balochistan', lat: 25.0800, lng: 66.7700 },
+            { name: 'Uthal', province: 'Balochistan', lat: 25.7800, lng: 66.0200 },
+            { name: 'Winder', province: 'Balochistan', lat: 25.5900, lng: 66.5400 },
+            { name: 'Lak Pass', province: 'Balochistan', lat: 29.6700, lng: 66.5700 },
+            { name: 'Bolan Pass', province: 'Balochistan', lat: 29.4300, lng: 67.6300 },
+        ];
+
+        let weatherData = [];
+        let API_KEY = '';
+        
+        // Remove duplicate cities from array
+        const uniqueCities = [];
+        const seenNames = new Set();
+        for (const city of cities) {
+            if (!seenNames.has(city.name)) {
+                seenNames.add(city.name);
+                uniqueCities.push(city);
+            }
+        }
+        cities.length = 0;
+        cities.push(...uniqueCities);
+
+        // Fetch API key from backend
+        async function loadApiKey() {
+            try {
+                const response = await fetch('http://localhost:5000/api/weather/api-key');
+                const data = await response.json();
+                API_KEY = data.api_key;
+                if (!API_KEY) {
+                    console.error('No API key configured in backend');
+                }
+            } catch (error) {
+                console.error('Error loading API key:', error);
+            }
+        }
+
+        // Fetch real weather data from OpenWeatherMap API
+        async function fetchWeatherData() {
+            // Ensure API key is loaded
+            if (!API_KEY) await loadApiKey();
+            
+            if (!API_KEY) {
+                loadDemoData();
+                return;
+            }
+            
+            try {
+                const loadingEl = document.getElementById('lastUpdated');
+                if (loadingEl) loadingEl.textContent = 'Loading...';
+                
+                // Fetch weather for all cities
+                const weatherPromises = cities.map(async (city) => {
+                    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lng}&appid=${API_KEY}&units=metric`;
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    
+                    if (data.cod !== 200) return null;
+                    
+                    const temp = Math.round(data.main.temp);
+                    const humidity = data.main.humidity;
+                    const wind = Math.round(data.wind.speed * 3.6); // m/s to km/h
+                    const code = data.weather[0].id;
+                    const condition = data.weather[0].main;
+                    
+                    const weatherInfo = getWeatherInfo(code, condition);
+                    
+                    return {
+                        name: data.name,
+                        province: city.province,
+                        temp: temp,
+                        condition: weatherInfo.condition,
+                        humidity: humidity,
+                        wind: wind,
+                        visibility: data.visibility ? Math.round(data.visibility / 1000) + ' km' : '--',
+                        pressure: data.main.pressure ? data.main.pressure + ' hPa' : '--',
+                        alert: weatherInfo.alert,
+                        icon: weatherInfo.icon,
+                        color: weatherInfo.color
+                    };
+                });
+                
+                weatherData = await Promise.all(weatherPromises);
+                weatherData = weatherData.filter(c => c !== null);
+                
+                renderCitiesGrid();
+                renderWeatherTable();
+                
+                // Update main card with first city
+                if (weatherData.length > 0) {
+                    updateMainCard(weatherData[0]);
+                }
+                
+                const lastUpdated = document.getElementById('lastUpdated');
+                if (lastUpdated) lastUpdated.textContent = new Date().toLocaleTimeString();
+                
+            } catch (error) {
+                console.error('Error fetching weather data:', error);
+                loadDemoData();
+            }
+        }
+
+        function getWeatherInfo(code, condition) {
+            // OpenWeatherMap weather condition codes
+            if (code >= 200 && code < 300) return { condition: 'Thunderstorm', icon: 'fa-bolt', color: '#9370DB', alert: 'Storm' };
+            if (code >= 300 && code < 400) return { condition: 'Drizzle', icon: 'fa-cloud-rain', color: '#87CEEB', alert: 'None' };
+            if (code >= 500 && code < 600) return { condition: 'Rain', icon: 'fa-cloud-showers-heavy', color: '#4682B4', alert: 'Rain' };
+            if (code >= 600 && code < 700) return { condition: 'Snow', icon: 'fa-snowflake', color: '#E0FFFF', alert: 'None' };
+            if (code >= 700 && code < 800) return { condition: 'Atmosphere', icon: 'fa-smog', color: '#A9A9A9', alert: 'None' };
+            if (code === 800) return { condition: 'Clear', icon: 'fa-sun', color: '#ffd600', alert: 'None' };
+            if (code === 801) return { condition: 'Few Clouds', icon: 'fa-cloud-sun', color: '#87CEEB', alert: 'None' };
+            if (code === 802) return { condition: 'Cloudy', icon: 'fa-cloud', color: '#B0C4DE', alert: 'None' };
+            if (code >= 803) return { condition: 'Overcast', icon: 'fa-cloud', color: '#778899', alert: 'None' };
+            return { condition: condition, icon: 'fa-cloud', color: '#B0C4DE', alert: 'None' };
+        }
+
+        function loadDemoData() {
+            console.error('Weather API not configured. Please add openweathermap_api_key to .env file');
+            
+            // Show error in main card
+            const mainCard = document.getElementById('mainWeatherCard');
+            if (mainCard) {
+                mainCard.innerHTML = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--risk-extreme); margin-bottom: 1rem;"></i>
+                        <h3 style="font-weight: 600; color: var(--risk-extreme);">Weather API Not Configured</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">Please add openweathermap_api_key to .env file</p>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 1rem;">Get free API key at <a href="https://openweathermap.org/api" target="_blank" style="color: var(--accent-primary);">openweathermap.org</a></p>
+                    </div>
+                `;
+            }
+            
+            const grid = document.getElementById('citiesGrid');
+            const tbody = document.getElementById('weatherTableBody');
+            if (grid) grid.innerHTML = '<p style="color: var(--risk-extreme); text-align: center; padding: 2rem;">Weather API not configured</p>';
+            if (tbody) tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--risk-extreme);">Weather API not configured. Please add openweathermap_api_key to .env file</td></tr>';
+        }
+
+        // Render major cities grid
+        function renderCitiesGrid() {
+            const grid = document.getElementById('citiesGrid');
+            const majorCities = weatherData.slice(0, 8);
+
+            grid.innerHTML = majorCities.map(city => `
+                <div class="card-3d" style="padding: 1.5rem; text-align: center; cursor: pointer;" onclick="selectCity('${city.name}')">
+                    <h4 style="font-weight: 700; margin-bottom: 0.5rem;">${city.name}</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">${city.province}</p>
+                    <div style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">${city.temp}°C</div>
+                    <div style="color: var(--text-secondary); font-size: 0.9rem;">
+                        <i class="fas ${city.icon}" style="color: ${city.color}; margin-right: 0.5rem;"></i>${city.condition}
+                    </div>
+                    ${city.alert !== 'None' ? `<div class="risk-badge ${city.alert === 'Extreme' ? 'extreme' : city.alert === 'Storm' ? 'high' : 'moderate'}" style="margin-top: 0.75rem; display: inline-block;">${city.alert} Alert</div>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Render weather table
+        function renderWeatherTable() {
+            const tbody = document.getElementById('weatherTableBody');
+            tbody.innerHTML = weatherData.map(city => `
+                <tr>
+                    <td><strong>${city.name}</strong></td>
+                    <td>${city.province}</td>
+                    <td><span style="font-weight: 700; font-size: 1.1rem;">${city.temp}°C</span></td>
+                    <td><i class="fas ${city.icon}" style="color: ${city.color}; margin-right: 0.5rem;"></i>${city.condition}</td>
+                    <td>${city.humidity}%</td>
+                    <td>${city.wind} km/h</td>
+                    <td>${city.alert !== 'None'
+                    ? `<span class="risk-badge ${city.alert === 'Extreme' ? 'extreme' : city.alert === 'Storm' ? 'high' : 'moderate'}">${city.alert}</span>`
+                    : '<span style="color: var(--risk-low);"><i class="fas fa-check"></i> Normal</span>'}</td>
+                </tr>
+            `).join('');
+        }
+
+        // City search functionality - searches local cities array
+        function setupCitySearch() {
+            const searchInput = document.getElementById('citySearch');
+            const dropdown = document.getElementById('cityDropdown');
+
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim().toLowerCase();
+                if (query.length < 2) {
+                    dropdown.style.display = 'none';
+                    return;
+                }
+
+                // Search in deduplicated cities array
+                const matches = cities.filter(city => 
+                    city.name.toLowerCase().includes(query) || 
+                    city.province.toLowerCase().includes(query)
+                ).slice(0, 8);
+
+                if (matches.length > 0) {
+                    dropdown.innerHTML = matches.map(c => `
+                        <div style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); hover-background: rgba(255,255,255,0.05);" 
+                             onmouseover="this.style.background='rgba(255,255,255,0.05)'" 
+                             onmouseout="this.style.background='transparent'"
+                             onclick="selectCity('${c.name}', ${c.lat}, ${c.lng})">
+                            <strong>${c.name}</strong> <span style="color: var(--text-muted); font-size: 0.85rem;">- ${c.province}</span>
+                        </div>
+                    `).join('');
+                    dropdown.style.display = 'block';
+                } else {
+                    dropdown.innerHTML = '<div style="padding: 0.75rem; color: var(--text-muted);">No cities found</div>';
+                    dropdown.style.display = 'block';
+                }
+            });
+
+            // Show all cities when clicking on empty search box
+            searchInput.addEventListener('focus', () => {
+                if (searchInput.value.trim().length < 2) {
+                    const matches = cities.slice(0, 8);
+                    dropdown.innerHTML = matches.map(c => `
+                        <div style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" 
+                             onmouseover="this.style.background='rgba(255,255,255,0.05)'" 
+                             onmouseout="this.style.background='transparent'"
+                             onclick="selectCity('${c.name}', ${c.lat}, ${c.lng})">
+                            <strong>${c.name}</strong> <span style="color: var(--text-muted); font-size: 0.85rem;">- ${c.province}</span>
+                        </div>
+                    `).join('');
+                    dropdown.style.display = 'block';
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#citySearch') && !e.target.closest('#cityDropdown')) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        }
+
+        // Select city from search
+        function selectCity(cityName, lat, lng) {
+            document.getElementById('citySearch').value = cityName;
+            document.getElementById('cityDropdown').style.display = 'none';
+            
+            // Find city in local array
+            const city = cities.find(c => c.name === cityName);
+            if (city) {
+                // Show city info from local data
+                updateMainCard({
+                    name: city.name,
+                    province: city.province,
+                    temp: '--',
+                    condition: 'Loading...',
+                    humidity: '--',
+                    wind: '--',
+                    icon: 'fa-spinner fa-spin',
+                    color: '#ffd600'
+                });
+                
+                // Try to fetch weather if API key is available
+                if (API_KEY) {
+                    fetchCityWeather(cityName, lat, lng);
+                } else {
+                    // Show error if no API key
+                    updateMainCard({
+                        name: city.name,
+                        province: city.province,
+                        temp: '--',
+                        condition: 'API Key Required',
+                        humidity: '--',
+                        wind: '--',
+                        icon: 'fa-exclamation-triangle',
+                        color: '#ff1744'
+                    });
+                }
+            }
+        }
+
+        // Fetch weather for a specific city
+        async function fetchCityWeather(cityName, lat, lng) {
+            try {
+                const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.cod === 200) {
+                    const weatherInfo = getWeatherInfo(data.weather[0].id, data.weather[0].main);
+                    updateMainCard({
+                        name: data.name,
+                        temp: Math.round(data.main.temp),
+                        condition: weatherInfo.condition,
+                        humidity: data.main.humidity,
+                        wind: Math.round(data.wind.speed * 3.6),
+                        visibility: data.visibility ? Math.round(data.visibility / 1000) + ' km' : '--',
+                        pressure: data.main.pressure ? data.main.pressure + ' hPa' : '--',
+                        icon: weatherInfo.icon,
+                        color: weatherInfo.color
+                    });
+                } else {
+                    updateMainCard({
+                        name: cityName,
+                        temp: '--',
+                        condition: 'Weather unavailable',
+                        humidity: '--',
+                        wind: '--',
+                        icon: 'fa-exclamation-circle',
+                        color: '#ff6d00'
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching city weather:', error);
+                updateMainCard({
+                    name: cityName,
+                    temp: '--',
+                    condition: 'Weather unavailable',
+                    humidity: '--',
+                    wind: '--',
+                    icon: 'fa-exclamation-circle',
+                    color: '#ff6d00'
+                });
+            }
+        }
+
+        // Update main weather card
+        function updateMainCard(city) {
+            const mainCard = document.getElementById('mainWeatherCard');
+            const province = city.province || 'Pakistan';
+            const humidity = city.humidity !== '--' ? city.humidity + '%' : city.humidity;
+            const wind = city.wind !== '--' ? city.wind + ' km/h' : city.wind;
+            mainCard.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;"><i class="fas fa-location-dot" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>${city.name}, ${province}</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Updated: <span id="lastUpdated">Just now</span></p>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 3.5rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${city.temp}°C</div>
+                        <div style="color: var(--text-secondary);"><i class="fas ${city.icon}" style="color: ${city.color}; margin-right: 0.5rem;"></i>${city.condition}</div>
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="text-align: center;">
+                        <i class="fas fa-droplet" style="font-size: 1.5rem; color: var(--accent-primary); margin-bottom: 0.5rem;"></i>
+                        <div style="font-size: 1.25rem; font-weight: 700;">${humidity}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.85rem;">Humidity</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-wind" style="font-size: 1.5rem; color: var(--accent-secondary); margin-bottom: 0.5rem;"></i>
+                        <div style="font-size: 1.25rem; font-weight: 700;">${wind}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.85rem;">Wind Speed</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-eye" style="font-size: 1.5rem; color: var(--accent-tertiary); margin-bottom: 0.5rem;"></i>
+                        <div style="font-size: 1.25rem; font-weight: 700;">${city.visibility || '--'}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.85rem;">Visibility</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-gauge-high" style="font-size: 1.5rem; color: #ff6d00; margin-bottom: 0.5rem;"></i>
+                        <div style="font-size: 1.25rem; font-weight: 700;">${city.pressure || '--'}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.85rem;">Pressure</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Refresh weather data
+        function refreshWeather() {
+            // Fetch fresh data from API
+            fetchWeatherData();
+        }
+
+        // Logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '../login.html';
+            }
+        }
+
+        // Initialize - fetch real weather data
+        loadApiKey().then(() => {
+            fetchWeatherData();
+        });
+        setupCitySearch();
+        
+        // Load user name
+        AuthManager.loadUserName();
+
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifDropdown');
+            const badge = document.getElementById('notifBadge');
+            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                dropdown.style.display = 'block';
+                badge.style.display = 'none';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        }
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar') && !e.target.closest('#userDropdown')) {
+                const dropdown = document.getElementById('userDropdown');
+                if (dropdown) dropdown.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>

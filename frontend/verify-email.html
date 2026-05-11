@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification - DisasterGuard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="page-transition">
+    <!-- Background Effects -->
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard
+            </a>
+        </div>
+    </nav>
+
+    <!-- Auth Page -->
+    <div class="auth-page">
+        <div class="auth-container">
+            <!-- PIN Verification Form -->
+            <div id="pinView" class="card-3d mirror-effect auth-card">
+                <div class="auth-header">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 47, 247, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                        <i class="fas fa-lock" style="font-size: 2rem; color: var(--accent-primary);"></i>
+                    </div>
+                    <h2>Enter Verification PIN</h2>
+                    <p id="emailText" style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        We've sent a 6-digit PIN to your email
+                    </p>
+                </div>
+
+                <!-- PIN Input Fields -->
+                <div style="display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1.5rem;">
+                    <input type="text" id="pin1" maxlength="1" class="input-field" style="width: 45px; height: 55px; text-align: center; font-size: 1.5rem; letter-spacing: 5px;" oninput="moveToNext(this, 'pin2')" onkeyup="moveBack(event, 'pin1', this)">
+                    <input type="text" id="pin2" maxlength="1" class="input-field" style="width: 45px; height: 55px; text-align: center; font-size: 1.5rem; letter-spacing: 5px;" oninput="moveToNext(this, 'pin3')" onkeyup="moveBack(event, 'pin1', this)">
+                    <input type="text" id="pin3" maxlength="1" class="input-field" style="width: 45px; height: 55px; text-align: center; font-size: 1.5rem; letter-spacing: 5px;" oninput="moveToNext(this, 'pin4')" onkeyup="moveBack(event, 'pin2', this)">
+                    <input type="text" id="pin4" maxlength="1" class="input-field" style="width: 45px; height: 55px; text-align: center; font-size: 1.5rem; letter-spacing: 5px;" oninput="moveToNext(this, 'pin5')" onkeyup="moveBack(event, 'pin3', this)">
+                    <input type="text" id="pin5" maxlength="1" class="input-field" style="width: 45px; height: 55px; text-align: center; font-size: 1.5rem; letter-spacing: 5px;" oninput="moveToNext(this, 'pin6')" onkeyup="moveBack(event, 'pin4', this)">
+                    <input type="text" id="pin6" maxlength="1" class="input-field" style="width: 45px; height: 55px; text-align: center; font-size: 1.5rem; letter-spacing: 5px;" onkeyup="moveBack(event, 'pin5', this)">
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" onclick="verifyPIN()">
+                    <i class="fas fa-check"></i> Verify Email
+                </button>
+
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <button class="btn btn-secondary" onclick="resendPIN()" style="font-size: 0.85rem;">
+                        <i class="fas fa-redo"></i> Resend PIN
+                    </button>
+                    <a href="register.html" class="btn btn-outline" style="font-size: 0.85rem;">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                </div>
+
+                <p style="margin-top: 1.5rem; color: var(--text-muted); font-size: 0.8rem; text-align: center;">
+                    PIN valid for 10 minutes
+                </p>
+            </div>
+
+            <!-- Verification Success -->
+            <div id="successView" class="card-3d mirror-effect auth-card" style="display: none;">
+                <div class="auth-header">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, rgba(0, 200, 83, 0.2), rgba(0, 212, 255, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; animation: pulse 2s ease-in-out infinite;">
+                        <i class="fas fa-check" style="font-size: 3rem; color: var(--risk-low);"></i>
+                    </div>
+                    <h2>Email Verified!</h2>
+                    <p>Your email has been successfully verified. Your account is now active and ready to use.</p>
+                </div>
+
+                <div style="background: rgba(0, 200, 83, 0.05); border: 1px solid rgba(0, 200, 83, 0.2); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-user-check" style="font-size: 2rem; color: var(--risk-low);"></i>
+                        <div>
+                            <p style="font-weight: 600; color: var(--text-primary);">Account Activated</p>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary);">You now have full access to all features</p>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="dashboard.html" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+                    <i class="fas fa-rocket"></i>
+                    Go to Dashboard
+                </a>
+
+                <p style="text-align: center; margin-top: 1.5rem; color: var(--text-muted); font-size: 0.9rem;">
+                    Welcome to DisasterGuard! Stay safe and informed.
+                </p>
+            </div>
+
+            </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 9999; box-shadow: var(--shadow-3d);">
+        <i id="toastIcon" class="fas fa-info-circle" style="color: var(--accent-primary);"></i>
+        <span id="toastMessage">Notification</span>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        let userEmail = '';
+        
+        // Get email from URL parameters or session
+        function getEmailFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('email') || localStorage.getItem('pending_email') || '';
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            userEmail = getEmailFromURL();
+            if (userEmail) {
+                document.getElementById('emailText').innerHTML = `We've sent a 6-digit PIN to <strong>${userEmail}</strong>`;
+                localStorage.setItem('pending_email', userEmail);
+            }
+            
+            // Focus first PIN field
+            document.getElementById('pin1').focus();
+        });
+        
+        function verifyPIN() {
+            const pin = document.getElementById('pin1').value + 
+                       document.getElementById('pin2').value + 
+                       document.getElementById('pin3').value + 
+                       document.getElementById('pin4').value + 
+                       document.getElementById('pin5').value + 
+                       document.getElementById('pin6').value;
+            
+            if (pin.length !== 6) {
+                showToast('Please enter complete 6-digit PIN', 'error');
+                return;
+            }
+            
+            if (!userEmail) {
+                showToast('Email not found. Please register again.', 'error');
+                return;
+            }
+            
+            showToast('Verifying...', 'info');
+            
+            fetch('http://localhost:5000/api/auth/verify-pin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: userEmail, password: pin })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('Email verified successfully!', 'success');
+                    localStorage.removeItem('pending_email');
+                    
+                    // Store user data for dropdown
+                    const pendingEmail = localStorage.getItem('pending_email') || localStorage.getItem('user_email') || '';
+                    if (pendingEmail) {
+                        const userData = { name: pendingEmail.split('@')[0], email: pendingEmail };
+                        localStorage.setItem('user_data', JSON.stringify(userData));
+                        localStorage.setItem('auth_token', 'verified_token_' + Date.now());
+                    }
+                    
+                    // Show success view
+                    document.getElementById('pinView').style.display = 'none';
+                    document.getElementById('successView').style.display = 'block';
+                    
+                    // Redirect to dashboard after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                } else {
+                    showToast(data.message || 'Invalid PIN', 'error');
+                    clearPINInputs();
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                showToast('Verification failed. Try again.', 'error');
+            });
+        }
+        
+        function resendPIN() {
+            if (!userEmail) {
+                showToast('Email not found. Please register again.', 'error');
+                return;
+            }
+            
+            showToast('Sending new PIN...', 'info');
+            
+            fetch('http://localhost:5000/api/auth/resend-pin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: userEmail })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('New PIN sent to your email!', 'success');
+                    clearPINInputs();
+                } else {
+                    showToast(data.message || 'Failed to resend PIN', 'error');
+                }
+            })
+            .catch(err => {
+                showToast('Failed to resend PIN', 'error');
+            });
+        }
+        
+        function clearPINInputs() {
+            for (let i = 1; i <= 6; i++) {
+                document.getElementById('pin' + i).value = '';
+            }
+            document.getElementById('pin1').focus();
+        }
+        
+        function moveToNext(current, nextId) {
+            if (current.value.length === 1) {
+                document.getElementById(nextId).focus();
+            }
+        }
+        
+        function moveBack(event, prevId, current) {
+            if (event.key === 'Backspace' && current.value === '') {
+                document.getElementById(prevId).focus();
+            }
+        }
+        
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            // Set icon based on type
+            const icons = {
+                'success': 'fas fa-check-circle',
+                'error': 'fas fa-exclamation-circle',
+                'info': 'fas fa-info-circle',
+                'warning': 'fas fa-exclamation-triangle'
+            };
+            
+            const colors = {
+                'success': 'var(--risk-low)',
+                'error': 'var(--risk-high)',
+                'info': 'var(--accent-primary)',
+                'warning': 'var(--risk-medium)'
+            };
+            
+            toastIcon.className = icons[type] || icons.info;
+            toastIcon.style.color = colors[type] || colors.info;
+            toastMessage.textContent = message;
+            
+            toast.style.display = 'flex';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Allow Enter key to submit
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyPIN();
+            }
+        });
+    </script>
+</body>
+</html>
