@@ -147,7 +147,7 @@
             
             showToast('Verifying...', 'info');
             
-            fetch('http://localhost:5000/api/auth/verify-pin', {
+            fetch('http://localhost:5001/api/auth/verify-pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: userEmail, password: pin })
@@ -193,7 +193,7 @@
             
             showToast('Sending new PIN...', 'info');
             
-            fetch('http://localhost:5000/api/auth/resend-pin', {
+            fetch('http://localhost:5001/api/auth/resend-pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: userEmail })

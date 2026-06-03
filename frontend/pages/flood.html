@@ -63,6 +63,7 @@
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"
                             style="color: var(--accent-quaternary);"></i> Heatmap</a></li>
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
@@ -351,6 +352,12 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../js/main.js"></script>
     <script>
+        // Check authentication first
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!AuthManager.requireAuth()) {
+                return;
+            }
+        });
         // Load user name
         AuthManager.loadUserName();
         

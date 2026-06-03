@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- NO-CACHE METATAGS -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Dashboard - DisasterGuard</title>
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
@@ -11,6 +15,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="js/main.js"></script>
+    <!-- USER AUTH CHECK BEFORE ANYTHING ELSE -->
+    <script>
+        // Immediately check user auth
+        AuthManager.requireAuth();
+        
+        // Also check on DOM content loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            AuthManager.requireAuth();
+        });
+    </script>
 </head>
 
 <body>
@@ -66,7 +81,7 @@
             <p class="sidebar-title">Disaster Monitoring</p>
             <ul class="sidebar-menu">
                 <li><a href="pages/flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i>
-                        Flood</a></li>
+                        Flood/Rain</a></li>
                 <li><a href="pages/earthquake.html"><i class="fas fa-globe-asia"
                             style="color: var(--accent-secondary);"></i> Earthquake</a></li>
                 <li><a href="pages/wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
@@ -74,6 +89,7 @@
                 <li><a href="pages/heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="pages/weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a>
                 </li>
+                <li><a href="pages/forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
 
@@ -434,13 +450,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // Check authentication - DISABLED FOR PREVIEW
+        // Check authentication
         document.addEventListener('DOMContentLoaded', () => {
-            // const token = localStorage.getItem('auth_token');
-            // if (!token) {
-            //     window.location.href = 'login.html';
-            //     return;
-            // }
+            if (!AuthManager.requireAuth()) {
+                return;
+            }
 
             // Load user data from OAuth
             AuthManager.loadUserName();

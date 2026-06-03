@@ -63,15 +63,32 @@
         <p id="message">Please wait while we complete your authentication.</p>
     </div>
 
+    <script src="js/main.js"></script>
     <script>
         async function handleCallback() {
             const urlParams = new URLSearchParams(window.location.search);
             const code = urlParams.get('code');
             const provider = urlParams.get('provider') || 'google';
-            const error = urlParams.get('error');
+            let error = urlParams.get('error');
             const success = urlParams.get('success');
-            const email = urlParams.get('email');
-            const name = urlParams.get('name');
+            let email = urlParams.get('email');
+            let name = urlParams.get('name');
+            let token = urlParams.get('token');
+            
+            // Decode URL encoded parameters
+            function decodeParam(param) {
+                if (!param) return null;
+                try {
+                    return decodeURIComponent(param);
+                } catch {
+                    return param;
+                }
+            }
+            
+            email = decodeParam(email);
+            name = decodeParam(name);
+            error = decodeParam(error);
+            token = decodeParam(token);
 
             const statusEl = document.getElementById('status');
             const messageEl = document.getElementById('message');
@@ -81,25 +98,31 @@
                 statusEl.className = 'error';
                 messageEl.textContent = 'Error: ' + error;
                 setTimeout(() => {
-                    window.location.href = '/login.html';
+                    window.location.href = './login.html';
                 }, 3000);
                 return;
             }
 
-            // Handle direct redirect from backend with user data
-            if (success === 'true' && email && name) {
+            // Handle direct redirect from backend with user data and token
+            if (success === 'true' && email && name && token) {
                 statusEl.textContent = 'Authentication Successful!';
                 statusEl.className = 'success';
                 messageEl.textContent = `Welcome, ${name}! Redirecting to dashboard...`;
                 
-                // Store user info in localStorage with correct keys
-                localStorage.setItem('user', JSON.stringify({ email, name }));
-                localStorage.setItem('user_data', JSON.stringify({ email, name }));
-                localStorage.setItem('auth_token', 'oauth_token_' + Date.now());
-                localStorage.setItem('isLoggedIn', 'true');
+                // Get role from URL params or default to user
+                const role = urlParams.get('role') || 'user';
+                
+                // Store user info using AuthManager
+                const userData = { email, name, role };
+                AuthManager.setAuth(token, userData);
 
                 setTimeout(() => {
-                    window.location.href = '/dashboard.html';
+                    // Redirect based on role
+                    if (role === 'admin' || role === 'moderator') {
+                        window.location.href = './admin/dashboard.html';
+                    } else {
+                        window.location.href = './dashboard.html';
+                    }
                 }, 1500);
                 return;
             }
@@ -110,14 +133,14 @@
                 statusEl.className = 'error';
                 messageEl.textContent = 'No authorization code received.';
                 setTimeout(() => {
-                    window.location.href = '/login.html';
+                    window.location.href = './login.html';
                 }, 3000);
                 return;
             }
 
             try {
                 // Call backend callback endpoint
-                const response = await fetch(`http://localhost:5000/api/auth/${provider}/callback?code=${code}`, {
+                const response = await fetch(`http://localhost:5001/api/auth/${provider}/callback?code=${code}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -131,19 +154,25 @@
                     statusEl.className = 'success';
                     messageEl.textContent = `Welcome, ${data.user.name}! Redirecting to dashboard...`;
                     
-                    // Store user info in localStorage
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    localStorage.setItem('isLoggedIn', 'true');
+                    // Store user info using AuthManager
+                    AuthManager.setAuth(data.token, data.user);
 
+                    const userRole = data.user?.role || 'user';
+                    
                     setTimeout(() => {
-                        window.location.href = data.redirect || '/dashboard.html';
+                        // Redirect based on role
+                        if (userRole === 'admin' || userRole === 'moderator') {
+                            window.location.href = './admin/dashboard.html';
+                        } else {
+                            window.location.href = data.redirect || './dashboard.html';
+                        }
                     }, 1500);
                 } else {
                     statusEl.textContent = 'Authentication Failed';
                     statusEl.className = 'error';
                     messageEl.textContent = data.message || 'Authentication failed.';
                     setTimeout(() => {
-                        window.location.href = '/login.html';
+                        window.location.href = './login.html';
                     }, 3000);
                 }
             } catch (error) {
@@ -152,7 +181,7 @@
                 messageEl.textContent = 'Failed to connect to the server.';
                 console.error('OAuth callback error:', error);
                 setTimeout(() => {
-                    window.location.href = '/login.html';
+                    window.location.href = './login.html';
                 }, 3000);
             }
         }

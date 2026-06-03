@@ -54,6 +54,7 @@
                         Wildfire</a></li>
                 <li><a href="heatmap.html" class="active"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
@@ -136,11 +137,14 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../js/main.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!AuthManager.requireAuth()) {
+                return;
+            }
+            AuthManager.loadUserName();
+        });
         const map = L.map('riskMap').setView([30.3753, 69.3451], 6);
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}').addTo(map);
-
-        // Load user name
-        AuthManager.loadUserName();
 
         const cities = [
             // Major Cities

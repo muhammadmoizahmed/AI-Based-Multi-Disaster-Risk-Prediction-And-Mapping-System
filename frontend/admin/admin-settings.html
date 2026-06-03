@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- NO-CACHE METATAGS -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Admin Settings - DisasterGuard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- NO-CACHE METATAGS ONLY (DON'T CLEAR LOCALSTORAGE) -->
+    <script>
+        // No localStorage clearing - we need the auth token!
+    </script>
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+
+    <!-- Admin Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                DisasterGuard
+                <span
+                    style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
+                    onclick="toggleUserMenu()">
+                    <div
+                        style="width: 40px; height: 40px; background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-quaternary)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        AD</div>
+                    <span style="font-weight: 600;">Admin</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Overview</p>
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="users.html"><i class="fas fa-users"></i> User Management</a></li>
+                <li><a href="api-monitor.html"><i class="fas fa-network-wired"></i> API Monitor</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">System</p>
+            <ul class="sidebar-menu">
+                <li><a href="models.html"><i class="fas fa-brain"></i> Model Management</a></li>
+                <li><a href="config.html"><i class="fas fa-cog"></i> Alert Config</a></li>
+                <li><a href="logs.html"><i class="fas fa-clipboard-list"></i> Audit Logs</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Account</p>
+            <ul class="sidebar-menu">
+                <li><a href="admin-settings.html" class="active"><i class="fas fa-user-shield"></i> Admin Settings</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Quick Actions</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-user"></i> User View</a></li>
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <!-- Page Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">
+                    <i class="fas fa-user-shield" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>
+                    Admin Settings
+                </h1>
+                <p style="color: var(--text-secondary);">Manage your password and system moderators</p>
+            </div>
+        </div>
+
+        <!-- Password Change Section -->
+        <div class="card-3d" style="margin-bottom: 2rem;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <h3 style="font-weight: 700;"><i class="fas fa-key" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Change Password</h3>
+            </div>
+            <div style="padding: 1.5rem;">
+                <form id="passwordChangeForm" onsubmit="changePassword(event)">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Current Password</label>
+                            <input type="password" id="currentPassword" class="input-field" placeholder="Enter current password" required style="width: 100%; padding: 0.75rem 1rem;">
+                        </div>
+                        <div></div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">New Password</label>
+                            <input type="password" id="newPassword" class="input-field" placeholder="Enter new password" required style="width: 100%; padding: 0.75rem 1rem;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" class="input-field" placeholder="Confirm new password" required style="width: 100%; padding: 0.75rem 1rem;">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Update Password</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetPasswordForm()"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add Moderator Section -->
+        <div class="card-3d" style="margin-bottom: 2rem;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <h3 style="font-weight: 700;"><i class="fas fa-user-plus" style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Add Moderator</h3>
+            </div>
+            <div style="padding: 1.5rem;">
+                <form id="addModeratorForm" onsubmit="addModerator(event)">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Moderator Name</label>
+                            <input type="text" id="modName" class="input-field" placeholder="Enter full name" required style="width: 100%; padding: 0.75rem 1rem;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email Address</label>
+                            <input type="email" id="modEmail" class="input-field" placeholder="Enter email address" required style="width: 100%; padding: 0.75rem 1rem;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Password</label>
+                            <input type="password" id="modPassword" class="input-field" placeholder="Set password" required style="width: 100%; padding: 0.75rem 1rem;">
+                        </div>
+                        <div>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Confirm Password</label>
+                            <input type="password" id="modConfirmPassword" class="input-field" placeholder="Confirm password" required style="width: 100%; padding: 0.75rem 1rem;">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-user-plus"></i> Add Moderator</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetModeratorForm()"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Existing Moderators List -->
+        <div class="card-3d" style="margin-bottom: 2rem;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <h3 style="font-weight: 700;"><i class="fas fa-users-cog" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Existing Moderators</h3>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Added On</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="moderatorsTableBody">
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff006e, #ffbe0b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">HR</div>
+                                    <span>Hamid Raza</span>
+                                </div>
+                            </td>
+                            <td>hamid@email.com</td>
+                            <td>April 15, 2025</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="removeModerator(1)">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    <div style="width: 32px; height: 32px; background: var(--gradient-secondary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">SK</div>
+                                    <span>Sara Khan</span>
+                                </div>
+                            </td>
+                            <td>sara@email.com</td>
+                            <td>April 10, 2025</td>
+                            <td><span class="status-badge active">Active</span></td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="removeModerator(2)">
+                                    <i class="fas fa-trash"></i> Remove
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Permissions Documentation -->
+        <div class="card-3d" style="margin-bottom: 2rem;">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <h3 style="font-weight: 700;"><i class="fas fa-info-circle" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Role Permissions</h3>
+            </div>
+            <div style="padding: 1.5rem;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <!-- Admin Permissions -->
+                    <div style="padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: var(--radius-md);">
+                        <h4 style="font-weight: 700; margin-bottom: 1rem; color: var(--accent-primary);"><i class="fas fa-crown" style="margin-right: 0.5rem;"></i>Admin Capabilities</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Change own password
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Add and remove moderators
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Manage all users (edit, delete, ban)
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Configure system settings and alerts
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Manage ML models and training
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                View all system logs and audit trails
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Monitor API usage and performance
+                            </li>
+                            <li style="padding: 0.5rem 0;">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Full access to all disaster monitoring features
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Moderator Permissions -->
+                    <div style="padding: 1.5rem; background: rgba(123, 44, 191, 0.05); border: 1px solid rgba(123, 44, 191, 0.2); border-radius: var(--radius-md);">
+                        <h4 style="font-weight: 700; margin-bottom: 1rem; color: var(--accent-secondary);"><i class="fas fa-shield-alt" style="margin-right: 0.5rem;"></i>Moderator Capabilities</h4>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Change own password
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                View and manage regular users
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Configure alert thresholds and notifications
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                View system logs (read-only)
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Monitor API status
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
+                                Access all disaster monitoring features
+                            </li>
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <i class="fas fa-times-circle" style="color: var(--risk-extreme); margin-right: 0.5rem;"></i>
+                                Cannot add/remove other moderators
+                            </li>
+                            <li style="padding: 0.5rem 0;">
+                                <i class="fas fa-times-circle" style="color: var(--risk-extreme); margin-right: 0.5rem;"></i>
+                                Cannot manage ML models or system config
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Dropdown -->
+    <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
+        <div class="dropdown-header">
+            <p id="dropdownName">Admin</p>
+            <p id="dropdownEmail">admin@disasterguard.com</p>
+        </div>
+        <ul class="dropdown-list">
+            <li><a href="../pages/settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="../pages/profile.html" class="dropdown-item"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a href="#" onclick="logout()" class="dropdown-item logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <script>
+        // Change Password
+        function changePassword(event) {
+            event.preventDefault();
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match!');
+                return;
+            }
+
+            if (newPassword.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                return;
+            }
+
+            // API call to change password
+            fetch('http://localhost:5001/api/admin/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...APIManager.getHeaders()
+                },
+                body: JSON.stringify({
+                    currentPassword: currentPassword,
+                    newPassword: newPassword
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Password changed successfully!');
+                    resetPasswordForm();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error changing password. Please try again.');
+            });
+        }
+
+        // Reset Password Form
+        function resetPasswordForm() {
+            document.getElementById('passwordChangeForm').reset();
+        }
+
+        // Add Moderator
+        function addModerator(event) {
+            event.preventDefault();
+            const name = document.getElementById('modName').value;
+            const email = document.getElementById('modEmail').value;
+            const password = document.getElementById('modPassword').value;
+            const confirmPassword = document.getElementById('modConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                return;
+            }
+
+            // API call to add moderator
+            fetch('http://localhost:5001/api/admin/add-moderator', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...APIManager.getHeaders()
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Moderator added successfully!');
+                    resetModeratorForm();
+                    loadModerators();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error adding moderator. Please try again.');
+            });
+        }
+
+        // Reset Moderator Form
+        function resetModeratorForm() {
+            document.getElementById('addModeratorForm').reset();
+        }
+
+        // Remove Moderator
+        function removeModerator(id) {
+            if (confirm('Are you sure you want to remove this moderator?')) {
+                fetch(`http://localhost:5001/api/admin/remove-moderator/${id}`, {
+                    method: 'DELETE',
+                    headers: APIManager.getHeaders()
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Moderator removed successfully!');
+                        loadModerators();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error removing moderator. Please try again.');
+                });
+            }
+        }
+
+        // Load Moderators
+        function loadModerators() {
+            fetch('http://localhost:5001/api/admin/moderators', {
+                headers: APIManager.getHeaders()
+            })
+                .then(response => response.json())
+                .then(data => {
+                    renderModerators(data.moderators || []);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Render Moderators Table
+        function renderModerators(moderators) {
+            const tbody = document.getElementById('moderatorsTableBody');
+            
+            if (moderators.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                            No moderators found
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = moderators.map(mod => {
+                const initials = mod.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                const addedDate = new Date(mod.created_at).toLocaleDateString();
+                
+                return `
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff006e, #ffbe0b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">
+                                    ${initials}
+                                </div>
+                                <span>${mod.name}</span>
+                            </div>
+                        </td>
+                        <td>${mod.email}</td>
+                        <td>${addedDate}</td>
+                        <td><span class="status-badge active">Active</span></td>
+                        <td>
+                            <button class="btn btn-secondary" style="padding: 0.5rem 1rem;" onclick="removeModerator(${mod.id})">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown) dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar') && !e.target.closest('#userDropdown')) {
+                const dropdown = document.getElementById('userDropdown');
+                if (dropdown) dropdown.style.display = 'none';
+            }
+        });
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = 'admin-login.html';
+            }
+        }
+
+        // Load moderators on page load
+        loadModerators();
+    </script>
+</body>
+
+</html>

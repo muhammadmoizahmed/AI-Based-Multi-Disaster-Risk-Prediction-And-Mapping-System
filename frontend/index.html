@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
 <body>
     <!-- Background Effects -->
@@ -185,18 +186,8 @@
                         <small style="color: var(--text-secondary);">Punjab Region</small>
                     </div>
                 </div>
-                <!-- Mock Map -->
-                <div class="map-container">
-                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1a1a25 0%, #12121a 100%); display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                        <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
-                        <p style="color: var(--text-secondary);">Interactive Map with Risk Zones</p>
-                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                            <span class="status-badge critical">Critical Zones</span>
-                            <span class="status-badge warning">Warning Zones</span>
-                            <span class="status-badge active">Safe Zones</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- Interactive Map -->
+                <div class="map-container" id="map" style="width: 100%; height: 450px; border-radius: var(--radius-md);"></div>
             </div>
         </div>
     </section>
@@ -289,6 +280,58 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+        // Initialize the map centered on Pakistan
+        const map = L.map('map').setView([30.3753, 69.3451], 5);
+
+        // Add dark theme tiles (CartoDB Dark Matter)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Risk zone markers with colors
+        const riskZones = [
+            { lat: 24.8607, lng: 67.0011, city: 'Karachi', risk: 'critical', type: 'Flood' },
+            { lat: 31.5204, lng: 74.3587, city: 'Lahore', risk: 'warning', type: 'Flood' },
+            { lat: 33.6844, lng: 73.0479, city: 'Islamabad', risk: 'warning', type: 'Earthquake' },
+            { lat: 34.0151, lng: 71.5249, city: 'Peshawar', risk: 'warning', type: 'Earthquake' },
+            { lat: 25.3816, lng: 68.3614, city: 'Hyderabad', risk: 'critical', type: 'Flood' },
+            { lat: 24.8830, lng: 67.0769, city: 'Thatta', risk: 'critical', type: 'Flood' },
+            { lat: 33.5651, lng: 73.0169, city: 'Rawalpindi', risk: 'warning', type: 'Earthquake' },
+            { lat: 32.5016, lng: 74.5361, city: 'Gujranwala', risk: 'warning', type: 'Flood' },
+            { lat: 29.3957, lng: 71.6833, city: 'Bahawalpur', risk: 'safe', type: 'None' },
+            { lat: 30.1575, lng: 71.5249, city: 'Multan', risk: 'safe', type: 'None' }
+        ];
+
+        // Define marker colors based on risk
+        const riskColors = {
+            critical: '#ff006e',
+            warning: '#ffbe0b',
+            safe: '#10b981'
+        };
+
+        // Add markers to map
+        riskZones.forEach(zone => {
+            const marker = L.circleMarker([zone.lat, zone.lng], {
+                radius: 12,
+                fillColor: riskColors[zone.risk],
+                color: riskColors[zone.risk],
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.7
+            }).addTo(map);
+
+            marker.bindPopup(`
+                <div style="text-align: center;">
+                    <h4 style="margin: 0 0 0.5rem 0; color: #1a1a25;">${zone.city}</h4>
+                    <p style="margin: 0; color: #555;">Risk: <strong style="color: ${riskColors[zone.risk]};">${zone.risk.toUpperCase()}</strong></p>
+                    <p style="margin: 0.25rem 0 0 0; color: #777;">Type: ${zone.type}</p>
+                </div>
+            `);
+        });
+    </script>
     <script src="js/main.js"></script>
 </body>
 </html>

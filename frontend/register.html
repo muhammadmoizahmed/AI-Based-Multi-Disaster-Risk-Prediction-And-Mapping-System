@@ -44,12 +44,12 @@
                 <div class="social-login">
                     <button class="social-btn" onclick="socialLogin('google')">
                         <i class="fab fa-google"></i>
-                        Google
+                        Sign In With Google
                     </button>
-                    <button class="social-btn" onclick="socialLogin('github')">
+                    <!-- <button class="social-btn" onclick="socialLogin('github')">
                         <i class="fab fa-github"></i>
                         GitHub
-                    </button>
+                    </button> -->
                 </div>
 
                 <div class="divider">or register with email</div>
@@ -195,7 +195,7 @@
             showToast('Sending verification PIN...', 'info');
             
             // Call API to send PIN
-            fetch('http://localhost:5000/api/auth/register', {
+            fetch('http://localhost:5001/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: firstName + ' ' + lastName, email, password })
@@ -231,7 +231,7 @@
                 return;
             }
             
-            fetch('http://localhost:5000/api/auth/verify-pin', {
+            fetch('http://localhost:5001/api/auth/verify-pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: pendingEmail, password: pin })
@@ -253,7 +253,7 @@
         }
         
         function resendPIN() {
-            fetch('http://localhost:5000/api/auth/resend-pin', {
+            fetch('http://localhost:5001/api/auth/resend-pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: pendingEmail })
@@ -291,7 +291,7 @@
         async function socialLogin(provider) {
             if (provider === 'google') {
                 try {
-                    const response = await fetch('http://localhost:5000/api/auth/google');
+                    const response = await fetch('http://localhost:5001/api/auth/google');
                     const data = await response.json();
                     
                     if (data.auth_url) {
@@ -305,7 +305,7 @@
                 }
             } else if (provider === 'github') {
                 try {
-                    const response = await fetch('http://localhost:5000/api/auth/github');
+                    const response = await fetch('http://localhost:5001/api/auth/github');
                     const data = await response.json();
                     
                     if (data.auth_url) {

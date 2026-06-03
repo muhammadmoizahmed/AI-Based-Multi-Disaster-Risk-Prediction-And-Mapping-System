@@ -54,6 +54,7 @@
                         Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
@@ -255,24 +256,23 @@
 
     <script src="../js/main.js"></script>
     <script>
+        // Check authentication first
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!AuthManager.requireAuth()) {
+                return;
+            }
+        });
         // Load user name
         AuthManager.loadUserName();
         
         // Chat message storage
         let chatHistory = JSON.parse(localStorage.getItem('chatHistory')) || [];
 
-        // Load chat history on page load
+        // Load chat history on page load - skip old demo history
         window.onload = function () {
-            if (chatHistory.length > 0) {
-                chatHistory.forEach(msg => {
-                    if (msg.type === 'user') {
-                        addUserMessage(msg.content, false);
-                    } else {
-                        addBotMessage(msg.content, false);
-                    }
-                });
-                scrollToBottom();
-            }
+            // Clear old demo chat history to avoid confusion with new AI
+            localStorage.removeItem('chatHistory');
+            chatHistory = [];
         };
 
         // Send message function
@@ -374,31 +374,32 @@
             if (indicator) indicator.remove();
         }
 
-        // Get AI response (SIMULATED - Replace with actual Gemini API integration)
+        // Get AI response from Gemini API via backend
         async function getAIResponse(message) {
-            // Simulate API delay
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            try {
+                console.log("Sending message to backend:", message);
+                const response = await fetch('http://localhost:5001/api/ai/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
 
-            const lowerMsg = message.toLowerCase();
+                const data = await response.json();
+                console.log("Received data from backend:", data);
 
-            // Simple response logic (Replace with Gemini API call)
-            if (lowerMsg.includes('flood') && lowerMsg.includes('karachi')) {
-                return "Based on current data, Karachi has a **HIGH** flood risk (0.73) due to heavy rainfall of 145mm in the last 24 hours. The most affected areas include Saddar, Gulshan-e-Iqbal, and Korangi. I recommend staying indoors and avoiding low-lying areas. Would you like specific safety guidelines?";
-            }
-            else if (lowerMsg.includes('earthquake')) {
-                return "For earthquake safety:\n\n1. **DROP** to the ground\n2. Take **COVER** under sturdy furniture\n3. **HOLD ON** until shaking stops\n4. Stay away from windows and heavy objects\n5. If outdoors, move to open space\n\nPakistan lies on active seismic zones. Recent earthquake activity has been normal in most regions.";
-            }
-            else if (lowerMsg.includes('emergency') || lowerMsg.includes('helpline')) {
-                return "**Emergency Contact Numbers for Pakistan:**\n\n🚑 **Rescue 1122**: 1122 (24/7 Emergency Services)\n🚒 **Fire Brigade**: 16\n👮 **Police**: 15\n🚑 **Ambulance**: 115\n\n🌊 **PDMA Flood Helpline**: 1700\n🏔️ **NDMA**: 0800-111-222\n\nSave these numbers in your phone for quick access during emergencies!";
-            }
-            else if (lowerMsg.includes('weather') && lowerMsg.includes('lahore')) {
-                return "Current weather in Lahore:\n\n🌤️ **Condition**: Partly Cloudy\n🌡️ **Temperature**: 28°C\n💧 **Humidity**: 58%\n💨 **Wind**: 12 km/h\n\nNo extreme weather alerts for Lahore currently. It's a good day to be outdoors, but carry an umbrella just in case!";
-            }
-            else if (lowerMsg.includes('wildfire') || lowerMsg.includes('fire')) {
-                return "Currently, there are **no active wildfire alerts** in Pakistan. However, during summer months (May-August), forest areas in northern regions (Murree, Abbottabad, Mansehra) are at higher risk due to dry conditions.\n\nIf you spot a wildfire:\n1. Call **16** (Fire Brigade) immediately\n2. Evacuate the area\n3. Don't try to extinguish it yourself\n\nWould you like wildfire prevention tips?";
-            }
-            else {
-                return "I understand you're asking about: \"" + message + "\"\n\nI'm currently running in demo mode with simulated responses. Once integrated with Gemini API, I'll be able to provide:\n\n• Real-time disaster risk assessments\n• Personalized safety recommendations\n• Current weather and environmental data\n• Historical disaster analysis\n• Emergency preparedness guidance\n\n**Note for Developer**: Replace the `getAIResponse()` function with actual Gemini API integration for production use.";
+                if (data.response) {
+                    return data.response;
+                } else if (data.error) {
+                    console.error("Backend error:", data.error);
+                    return "Backend error: " + data.error;
+                } else {
+                    return "Sorry, I couldn't process your request right now. Please try again later.";
+                }
+            } catch (error) {
+                console.error("Error calling AI:", error);
+                return "Sorry, there was an error getting a response. Please check your connection and try again.";
             }
         }
 

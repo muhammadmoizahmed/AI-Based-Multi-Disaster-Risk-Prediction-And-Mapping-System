@@ -45,6 +45,7 @@
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt" style="color: var(--accent-quaternary);"></i> Heatmap</a></li>
                 <li><a href="weather.html" class="active"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
@@ -141,6 +142,12 @@
 
     <script src="../js/main.js"></script>
     <script>
+        // Check authentication first
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!AuthManager.requireAuth()) {
+                return;
+            }
+        });
         // Load user name
         AuthManager.loadUserName();
         
@@ -493,7 +500,6 @@
         ];
 
         let weatherData = [];
-        let API_KEY = '';
         
         // Remove duplicate cities from array
         const uniqueCities = [];
@@ -507,41 +513,31 @@
         cities.length = 0;
         cities.push(...uniqueCities);
 
-        // Fetch API key from backend
-        async function loadApiKey() {
-            try {
-                const response = await fetch('http://localhost:5000/api/weather/api-key');
-                const data = await response.json();
-                API_KEY = data.api_key;
-                if (!API_KEY) {
-                    console.error('No API key configured in backend');
-                }
-            } catch (error) {
-                console.error('Error loading API key:', error);
-            }
-        }
 
-        // Fetch real weather data from OpenWeatherMap API
+
+        // Top 20 major Pakistani cities for fast initial load
+        const majorCities = [
+            'Karachi', 'Lahore', 'Islamabad', 'Rawalpindi', 'Peshawar',
+            'Quetta', 'Multan', 'Faisalabad', 'Hyderabad', 'Sukkur',
+            'Gujranwala', 'Sialkot', 'Abbottabad', 'Gilgit', 'Muzaffarabad',
+            'Bahawalpur', 'Larkana', 'Rahim Yar Khan', 'Gwadar', 'Mardan'
+        ];
+
+        // Fetch real weather data from backend API
         async function fetchWeatherData() {
-            // Ensure API key is loaded
-            if (!API_KEY) await loadApiKey();
-            
-            if (!API_KEY) {
-                loadDemoData();
-                return;
-            }
-            
             try {
                 const loadingEl = document.getElementById('lastUpdated');
                 if (loadingEl) loadingEl.textContent = 'Loading...';
                 
-                // Fetch weather for all cities
-                const weatherPromises = cities.map(async (city) => {
-                    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lng}&appid=${API_KEY}&units=metric`;
+                // Fetch weather for top 20 major cities first
+                const citiesToFetch = cities.filter(city => majorCities.includes(city.name));
+                
+                const weatherPromises = citiesToFetch.map(async (city) => {
+                    const url = `http://localhost:5001/api/weather/current?lat=${city.lat}&lon=${city.lng}`;
                     const response = await fetch(url);
                     const data = await response.json();
                     
-                    if (data.cod !== 200) return null;
+                    if (data.error || !data.main) return null;
                     
                     const temp = Math.round(data.main.temp);
                     const humidity = data.main.humidity;
@@ -552,7 +548,7 @@
                     const weatherInfo = getWeatherInfo(code, condition);
                     
                     return {
-                        name: data.name,
+                        name: data.name || city.name,
                         province: city.province,
                         temp: temp,
                         condition: weatherInfo.condition,
@@ -569,11 +565,12 @@
                 weatherData = await Promise.all(weatherPromises);
                 weatherData = weatherData.filter(c => c !== null);
                 
-                renderCitiesGrid();
-                renderWeatherTable();
-                
-                // Update main card with first city
+                // If no weather data loaded, still render something instead of showing error
                 if (weatherData.length > 0) {
+                    renderCitiesGrid();
+                    renderWeatherTable();
+                    
+                    // Update main card with first city
                     updateMainCard(weatherData[0]);
                 }
                 
@@ -582,7 +579,7 @@
                 
             } catch (error) {
                 console.error('Error fetching weather data:', error);
-                loadDemoData();
+                // Don't show the error demo, just let it be
             }
         }
 
@@ -758,14 +755,15 @@
         // Fetch weather for a specific city
         async function fetchCityWeather(cityName, lat, lng) {
             try {
-                const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${API_KEY}&units=metric`;
+                const url = `http://localhost:5001/api/weather/current?lat=${lat}&lon=${lng}`;
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                if (data.cod === 200) {
+                if (data.main) {
                     const weatherInfo = getWeatherInfo(data.weather[0].id, data.weather[0].main);
                     updateMainCard({
-                        name: data.name,
+                        name: data.name || cityName,
+                        province: '',
                         temp: Math.round(data.main.temp),
                         condition: weatherInfo.condition,
                         humidity: data.main.humidity,
@@ -815,9 +813,7 @@
         }
 
         // Initialize - fetch real weather data
-        loadApiKey().then(() => {
-            fetchWeatherData();
-        });
+        fetchWeatherData();
         setupCitySearch();
         
         // Load user name

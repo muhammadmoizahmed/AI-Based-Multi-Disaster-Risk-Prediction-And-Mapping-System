@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast - DisasterGuard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    <div class="bg-grid"></div>
+    
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="../index.html" class="logo"><i class="fas fa-shield-alt"></i> DisasterGuard</a>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <!-- User Menu -->
+                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;" onclick="toggleUserMenu()">
+                    <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                        <span id="userInitials">JD</span>
+                    </div>
+                    <span id="userName" style="font-weight: 600;">John Doe</span>
+                    <i class="fas fa-chevron-down" style="color: var(--text-muted);"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <aside class="sidebar">
+        <div class="sidebar-section">
+            <p class="sidebar-title">Main</p>
+            <ul class="sidebar-menu">
+                <li><a href="../dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                <li><a href="history.html"><i class="fas fa-history"></i> History</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Disaster Monitoring</p>
+            <ul class="sidebar-menu">
+                <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood/Rain</a></li>
+                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
+                <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
+                <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="forecast.html" class="active"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Support</p>
+            <ul class="sidebar-menu">
+                <li><a href="live-chat.html"><i class="fas fa-comments" style="color: var(--accent-primary);"></i> Live Chat</a></li>
+                <li><a href="profile.html"><i class="fas fa-user" style="color: var(--accent-primary);"></i> Profile</a></li>
+                <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Account</p>
+            <ul class="sidebar-menu">
+                <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+    </aside>
+
+    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">
+                    <i class="fas fa-calendar-alt" style="color: var(--accent-primary); margin-right: 0.75rem;"></i>Weather Forecast
+                </h1>
+                <p style="color: var(--text-secondary);">7-day weather prediction for major cities in Pakistan</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <div style="position: relative; width: 250px;">
+                    <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
+                    <input type="text" class="input-field" id="citySearch" placeholder="Search city..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
+                    <div id="cityDropdown" class="city-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);"></div>
+                </div>
+                <button class="btn btn-primary" onclick="refreshForecast()"><i class="fas fa-sync-alt"></i> Refresh</button>
+            </div>
+        </div>
+
+        <!-- Selected City Forecast -->
+        <div id="selectedCityForecast" class="card-3d" style="padding: 2rem; margin-bottom: 2rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));">
+            <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                <div style="text-align: center;">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                    <h3 style="font-weight: 600;">Loading Forecast Data...</h3>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">Please wait while we fetch weather predictions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5-Day Forecast Cards -->
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-calendar-week" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>5-Day Forecast</h3>
+        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 2rem;" id="forecastGrid">
+            <!-- Forecast cards will be populated by JavaScript -->
+        </div>
+
+        <!-- Detailed Forecast Table -->
+        <div class="card-3d">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                <h3 style="font-size: 1.25rem; font-weight: 700;"><i class="fas fa-table" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Detailed Forecast</h3>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th>Date</th>
+                            <th>Condition</th>
+                            <th>High</th>
+                            <th>Low</th>
+                            <th>Humidity</th>
+                            <th>Wind</th>
+                            <th>Rain %</th>
+                            <th>Alert</th>
+                        </tr>
+                    </thead>
+                    <tbody id="forecastTableBody">
+                        <!-- Table rows populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- User Dropdown -->
+    <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
+        <div class="dropdown-header">
+            <p id="dropdownName">User</p>
+            <p id="dropdownEmail">user@email.com</p>
+        </div>
+        <ul class="dropdown-list">
+            <li><a href="settings.html" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="profile.html" class="dropdown-item"><i class="fas fa-user"></i> Profile</a></li>
+            <li class="dropdown-divider"></li>
+            <li><a href="#" onclick="logout()" class="dropdown-item logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+        </ul>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        // Check authentication first
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!AuthManager.requireAuth()) {
+                return;
+            }
+        });
+        // Load user name
+        AuthManager.loadUserName();
+        
+        // Pakistani cities with coordinates - full list from weather.html
+        const cities = [
+            { name: 'Karachi', province: 'Sindh', lat: 24.8607, lng: 67.0011 },
+            { name: 'Lahore', province: 'Punjab', lat: 31.5497, lng: 74.3436 },
+            { name: 'Islamabad', province: 'ICT', lat: 33.6844, lng: 73.0479 },
+            { name: 'Rawalpindi', province: 'Punjab', lat: 33.5651, lng: 73.0169 },
+            { name: 'Peshawar', province: 'KP', lat: 34.0151, lng: 71.5249 },
+            { name: 'Quetta', province: 'Balochistan', lat: 30.1798, lng: 66.9750 },
+            { name: 'Multan', province: 'Punjab', lat: 30.1979, lng: 71.4725 },
+            { name: 'Faisalabad', province: 'Punjab', lat: 31.4180, lng: 73.0791 },
+            { name: 'Hyderabad', province: 'Sindh', lat: 25.3792, lng: 68.3667 },
+            { name: 'Sukkur', province: 'Sindh', lat: 27.7052, lng: 68.8574 },
+            { name: 'Gujranwala', province: 'Punjab', lat: 32.1877, lng: 74.1945 },
+            { name: 'Sialkot', province: 'Punjab', lat: 32.4946, lng: 74.5389 },
+            { name: 'Abbottabad', province: 'KP', lat: 34.1468, lng: 73.2146 },
+            { name: 'Mingora', province: 'KP', lat: 34.7795, lng: 72.3639 },
+            { name: 'Nawabshah', province: 'Sindh', lat: 26.2399, lng: 68.4030 },
+            { name: 'Sargodha', province: 'Punjab', lat: 32.0836, lng: 72.6711 },
+            { name: 'Mardan', province: 'KP', lat: 34.2000, lng: 72.0500 },
+            { name: 'Kohat', province: 'KP', lat: 33.5900, lng: 71.5400 },
+            { name: 'Dera Ismail Khan', province: 'KP', lat: 31.8333, lng: 70.9000 },
+            { name: 'Swabi', province: 'KP', lat: 34.1667, lng: 72.4667 },
+            { name: 'Bannu', province: 'KP', lat: 32.7333, lng: 70.7833 },
+            { name: 'Charsadda', province: 'KP', lat: 34.1500, lng: 71.7500 },
+            { name: 'Nowshera', province: 'KP', lat: 34.0167, lng: 71.9833 },
+            { name: 'Haripur', province: 'KP', lat: 34.0833, lng: 72.9333 },
+            { name: 'Mansehra', province: 'KP', lat: 34.3333, lng: 73.2000 },
+            { name: 'Chitral', province: 'KP', lat: 35.8500, lng: 71.7833 },
+            { name: 'Gilgit', province: 'Gilgit-Baltistan', lat: 35.9200, lng: 74.4700 },
+            { name: 'Skardu', province: 'Gilgit-Baltistan', lat: 35.2900, lng: 75.5500 },
+            { name: 'Hunza', province: 'Gilgit-Baltistan', lat: 36.3100, lng: 74.6500 },
+            { name: 'Ghizer', province: 'Gilgit-Baltistan', lat: 36.1500, lng: 73.3000 },
+            { name: 'Muzaffarabad', province: 'Azad Kashmir', lat: 34.3700, lng: 73.4700 },
+            { name: 'Mirpur', province: 'Azad Kashmir', lat: 33.1500, lng: 73.7500 },
+            { name: 'Kotli', province: 'Azad Kashmir', lat: 33.5100, lng: 73.9000 },
+            { name: 'Bhimber', province: 'Azad Kashmir', lat: 32.9500, lng: 74.0500 },
+            { name: 'Rawalakot', province: 'Azad Kashmir', lat: 33.8500, lng: 73.7500 },
+            { name: 'Bagh', province: 'Azad Kashmir', lat: 34.0500, lng: 73.7500 },
+            { name: 'Poonch', province: 'Azad Kashmir', lat: 33.7700, lng: 74.1000 },
+            { name: 'Larkana', province: 'Sindh', lat: 27.5500, lng: 68.9000 },
+            { name: 'Jacobabad', province: 'Sindh', lat: 28.2800, lng: 68.4400 },
+            { name: 'Shikarpur', province: 'Sindh', lat: 27.9500, lng: 68.6500 },
+            { name: 'Khairpur', province: 'Sindh', lat: 27.5300, lng: 68.7600 },
+            { name: 'Dadu', province: 'Sindh', lat: 26.7300, lng: 67.7700 },
+            { name: 'Thatta', province: 'Sindh', lat: 24.7400, lng: 67.9200 },
+            { name: 'Badin', province: 'Sindh', lat: 24.6500, lng: 68.8400 },
+            { name: 'Mirpur Khas', province: 'Sindh', lat: 25.5300, lng: 69.0300 },
+            { name: 'Umerkot', province: 'Sindh', lat: 25.3700, lng: 69.7400 },
+            { name: 'Tando Adam', province: 'Sindh', lat: 25.7700, lng: 68.6700 },
+            { name: 'Tando Allahyar', province: 'Sindh', lat: 25.4600, lng: 68.6400 },
+            { name: 'Sahiwal', province: 'Punjab', lat: 30.6700, lng: 73.1000 },
+            { name: 'Okara', province: 'Punjab', lat: 30.8100, lng: 73.4500 },
+            { name: 'Kasur', province: 'Punjab', lat: 31.1200, lng: 74.4500 },
+            { name: 'Sheikhupura', province: 'Punjab', lat: 31.7100, lng: 73.9800 },
+            { name: 'Sialkot', province: 'Punjab', lat: 32.4946, lng: 74.5389 },
+            { name: 'Gujrat', province: 'Punjab', lat: 32.5700, lng: 74.1800 },
+            { name: 'Jhelum', province: 'Punjab', lat: 32.9400, lng: 73.7300 },
+            { name: 'Mianwali', province: 'Punjab', lat: 32.5800, lng: 71.5400 },
+            { name: 'Bhakkar', province: 'Punjab', lat: 31.6300, lng: 71.0700 },
+            { name: 'Khushab', province: 'Punjab', lat: 32.2800, lng: 72.3500 },
+            { name: 'Chiniot', province: 'Punjab', lat: 31.7200, lng: 72.9800 },
+            { name: 'Faisalabad', province: 'Punjab', lat: 31.4180, lng: 73.0791 },
+            { name: 'Toba Tek Singh', province: 'Punjab', lat: 30.9700, lng: 72.4900 },
+            { name: 'Jhang', province: 'Punjab', lat: 31.2900, lng: 72.3300 },
+            { name: 'Chakwal', province: 'Punjab', lat: 32.9300, lng: 72.8600 },
+            { name: 'Attock', province: 'Punjab', lat: 33.7700, lng: 72.3600 },
+            { name: 'Nowshera', province: 'KP', lat: 34.0167, lng: 71.9833 },
+            { name: 'Charsadda', province: 'KP', lat: 34.1500, lng: 71.7500 },
+            { name: 'Swabi', province: 'KP', lat: 34.1667, lng: 72.4667 },
+            { name: 'Mardan', province: 'KP', lat: 34.2000, lng: 72.0500 },
+            { name: 'Kohat', province: 'KP', lat: 33.5900, lng: 71.5400 },
+            { name: 'Bannu', province: 'KP', lat: 32.7333, lng: 70.7833 },
+            { name: 'Dera Ismail Khan', province: 'KP', lat: 31.8333, lng: 70.9000 },
+            { name: 'Lakki Marwat', province: 'KP', lat: 32.6200, lng: 70.9000 },
+            { name: 'Tank', province: 'KP', lat: 32.2200, lng: 70.5300 },
+            { name: 'Dera Ghazi Khan', province: 'Punjab', lat: 30.0500, lng: 70.6400 },
+            { name: 'Muzaffargarh', province: 'Punjab', lat: 30.0700, lng: 71.1900 },
+            { name: 'Liaquatpur', province: 'Punjab', lat: 29.1800, lng: 70.9600 },
+            { name: 'Rahim Yar Khan', province: 'Punjab', lat: 28.4200, lng: 70.3000 },
+            { name: 'Sadiqabad', province: 'Punjab', lat: 28.3100, lng: 70.1300 },
+            { name: 'Kot Sabzal', province: 'Punjab', lat: 28.5700, lng: 70.0700 },
+            { name: 'Ubaro', province: 'Sindh', lat: 24.7900, lng: 70.0400 },
+            { name: 'Kunri', province: 'Sindh', lat: 25.2300, lng: 69.6000 },
+            { name: 'Daharki', province: 'Sindh', lat: 28.5700, lng: 69.7700 },
+            { name: 'Ghotki', province: 'Sindh', lat: 28.0200, lng: 69.3200 },
+            { name: 'Mirpur Mathelo', province: 'Sindh', lat: 28.0300, lng: 69.5500 },
+            { name: 'Kashmore', province: 'Sindh', lat: 28.1700, lng: 69.5900 },
+            { name: 'Shikarpur', province: 'Sindh', lat: 27.9500, lng: 68.6500 },
+            { name: 'Jacobabad', province: 'Sindh', lat: 28.2800, lng: 68.4400 },
+            { name: 'Thul', province: 'Sindh', lat: 28.1600, lng: 68.2800 },
+            { name: 'Garhi Khairo', province: 'Balochistan', lat: 28.5800, lng: 68.1000 },
+            { name: 'Bolan', province: 'Balochistan', lat: 29.4300, lng: 67.6300 },
+            { name: 'Sibi', province: 'Balochistan', lat: 29.5500, lng: 67.8800 },
+            { name: 'Dhadar', province: 'Balochistan', lat: 29.4700, lng: 67.5500 },
+            { name: 'Mach', province: 'Balochistan', lat: 29.8600, lng: 67.5800 },
+            { name: 'Kachhi', province: 'Balochistan', lat: 29.3800, lng: 67.6700 },
+            { name: 'Bhag', province: 'Balochistan', lat: 28.4700, lng: 67.8800 },
+            { name: 'Jhal Magsi', province: 'Balochistan', lat: 28.2800, lng: 67.6700 },
+            { name: 'Gandava', province: 'Balochistan', lat: 28.1200, lng: 67.5800 },
+            { name: 'Sohbatpur', province: 'Balochistan', lat: 27.9700, lng: 67.4000 },
+            { name: 'Usta Muhammad', province: 'Balochistan', lat: 27.8800, lng: 67.8500 },
+            { name: 'Dera Murad Jamali', province: 'Balochistan', lat: 28.5600, lng: 68.2200 },
+            { name: 'Sui', province: 'Balochistan', lat: 29.1300, lng: 68.8800 },
+            { name: 'Dera Bugti', province: 'Balochistan', lat: 29.0300, lng: 69.1700 },
+            { name: 'Pir Koh', province: 'Balochistan', lat: 29.3300, lng: 69.3000 },
+            { name: 'Loti', province: 'Balochistan', lat: 29.1000, lng: 69.0500 },
+            { name: 'Kohlu', province: 'Balochistan', lat: 29.9000, lng: 69.2500 },
+            { name: 'Barkhan', province: 'Balochistan', lat: 29.9000, lng: 69.5700 },
+            { name: 'Rakhni', province: 'Balochistan', lat: 30.0300, lng: 69.7700 },
+            { name: 'Musakhel', province: 'Balochistan', lat: 30.3700, lng: 69.8800 },
+            { name: 'Kingri', province: 'Balochistan', lat: 30.5000, lng: 69.8300 },
+            { name: 'Sherani', province: 'Balochistan', lat: 31.0300, lng: 70.0700 },
+            { name: 'Zhob', province: 'Balochistan', lat: 31.3400, lng: 69.4700 },
+            { name: 'Muslim Bagh', province: 'Balochistan', lat: 30.5700, lng: 67.9800 },
+            { name: 'Killa Saifullah', province: 'Balochistan', lat: 31.3500, lng: 68.3700 },
+            { name: 'Qilla Abdullah', province: 'Balochistan', lat: 30.9600, lng: 66.6200 },
+            { name: 'Chaman', province: 'Balochistan', lat: 30.9200, lng: 66.4500 },
+            { name: 'Spin Boldak', province: 'Balochistan', lat: 30.9200, lng: 66.4300 },
+            { name: 'Quetta', province: 'Balochistan', lat: 30.1798, lng: 66.9750 },
+            { name: 'Pishin', province: 'Balochistan', lat: 30.5800, lng: 66.9500 },
+            { name: 'Karezat', province: 'Balochistan', lat: 30.6800, lng: 66.9300 },
+            { name: 'Loralai', province: 'Balochistan', lat: 30.3700, lng: 68.5900 },
+            { name: 'Duki', province: 'Balochistan', lat: 30.0500, lng: 68.8800 },
+            { name: 'Harnai', province: 'Balochistan', lat: 29.8000, lng: 68.3200 },
+            { name: 'Ziarat', province: 'Balochistan', lat: 30.3800, lng: 67.7300 },
+            { name: 'Sanjawi', province: 'Balochistan', lat: 30.2700, lng: 67.8300 },
+            { name: 'Mastung', province: 'Balochistan', lat: 29.8800, lng: 66.5800 },
+            { name: 'Kalat', province: 'Balochistan', lat: 29.8900, lng: 66.5900 },
+            { name: 'Surab', province: 'Balochistan', lat: 29.6700, lng: 66.5700 },
+            { name: 'Manguchar', province: 'Balochistan', lat: 29.5500, lng: 66.5300 },
+            { name: 'Khuzdar', province: 'Balochistan', lat: 27.8200, lng: 66.6100 },
+            { name: 'Wadh', province: 'Balochistan', lat: 27.4500, lng: 66.4500 },
+            { name: 'Nal', province: 'Balochistan', lat: 27.5200, lng: 66.6700 },
+            { name: 'Jhal Jao', province: 'Balochistan', lat: 27.3800, lng: 66.7800 },
+            { name: 'Belkhat', province: 'Balochistan', lat: 27.2800, lng: 66.9200 },
+            { name: 'Kharan', province: 'Balochistan', lat: 27.8500, lng: 65.4100 },
+            { name: 'Sarawan', province: 'Balochistan', lat: 27.9200, lng: 65.4800 },
+            { name: 'Basima', province: 'Balochistan', lat: 27.7500, lng: 65.5600 },
+            { name: 'Panjgur', province: 'Balochistan', lat: 26.9700, lng: 64.0800 },
+            { name: 'Gishkori', province: 'Balochistan', lat: 26.8800, lng: 64.1500 },
+            { name: 'Tasp', province: 'Balochistan', lat: 26.8200, lng: 64.2200 },
+            { name: 'Gwadar', province: 'Balochistan', lat: 25.1300, lng: 62.3200 },
+            { name: 'Jiwani', province: 'Balochistan', lat: 25.0500, lng: 61.7500 },
+            { name: 'Ormara', province: 'Balochistan', lat: 25.2200, lng: 64.5800 },
+            { name: 'Pasni', province: 'Balochistan', lat: 25.2700, lng: 63.5400 },
+            { name: 'Hingol', province: 'Balochistan', lat: 25.3300, lng: 64.4000 },
+            { name: 'Kund Malir', province: 'Balochistan', lat: 25.2800, lng: 66.1700 },
+            { name: 'Bela', province: 'Balochistan', lat: 25.9300, lng: 66.2500 },
+            { name: 'Lasbela', province: 'Balochistan', lat: 25.9300, lng: 66.2500 },
+            { name: 'Hub', province: 'Balochistan', lat: 25.0300, lng: 66.8600 },
+            { name: 'Sonmiani', province: 'Balochistan', lat: 25.0800, lng: 66.7700 },
+            { name: 'Uthal', province: 'Balochistan', lat: 25.7800, lng: 66.0200 },
+            { name: 'Winder', province: 'Balochistan', lat: 25.5900, lng: 66.5400 }
+        ];
+
+        // Remove duplicate cities
+        const uniqueCities = [];
+        const seenNames = new Set();
+        for (const city of cities) {
+            if (!seenNames.has(city.name)) {
+                seenNames.add(city.name);
+                uniqueCities.push(city);
+            }
+        }
+        cities.length = 0;
+        cities.push(...uniqueCities);
+
+        let selectedCity = cities[0]; // Default to Karachi
+
+        // Weather conditions mapping
+        const weatherConditions = {
+            'Clear': { icon: 'fa-sun', color: '#ffd600' },
+            'Sunny': { icon: 'fa-sun', color: '#ffd600' },
+            'Partly Cloudy': { icon: 'fa-cloud-sun', color: '#ffab00' },
+            'Cloudy': { icon: 'fa-cloud', color: '#90a4ae' },
+            'Overcast': { icon: 'fa-cloud', color: '#78909c' },
+            'Rain': { icon: 'fa-cloud-rain', color: '#00d4ff' },
+            'Light Rain': { icon: 'fa-cloud-rain', color: '#00d4ff' },
+            'Heavy Rain': { icon: 'fa-cloud-showers-heavy', color: '#0091ea' },
+            'Thunderstorm': { icon: 'fa-bolt', color: '#ff6d00' },
+            'Snow': { icon: 'fa-snowflake', color: '#ffffff' },
+            'Fog': { icon: 'fa-smog', color: '#b0bec5' },
+            'Haze': { icon: 'fa-smog', color: '#b0bec5' }
+        };
+
+        // Get weather condition text from OpenWeatherMap weather code
+        function getWeatherCondition(code) {
+            if (code >= 200 && code < 300) return 'Thunderstorm';
+            if (code >= 300 && code < 400) return 'Light Rain';
+            if (code >= 500 && code < 600) return 'Rain';
+            if (code >= 600 && code < 700) return 'Snow';
+            if (code >= 700 && code < 800) return 'Fog';
+            if (code === 800) return 'Clear';
+            if (code === 801) return 'Partly Cloudy';
+            if (code >= 802 && code <= 803) return 'Cloudy';
+            if (code >= 804) return 'Overcast';
+            return 'Cloudy';
+        }
+
+
+        
+        // Fetch real forecast data from backend API
+        async function fetchForecastData(city) {
+            try {
+                const url = `http://localhost:5001/api/weather/forecast?lat=${city.lat}&lon=${city.lng}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data.error || data.cod !== '200') {
+                    return generateMockData(city);
+                }
+                
+                // Process 3-hourly data into daily data
+                const forecast = [];
+                const today = new Date();
+                const dailyData = {};
+                
+                // Group by date
+                data.list.forEach(item => {
+                    const date = new Date(item.dt * 1000);
+                    const dateKey = date.toDateString();
+                    
+                    if (!dailyData[dateKey]) {
+                        dailyData[dateKey] = {
+                            temps: [],
+                            humidities: [],
+                            winds: [],
+                            conditions: [],
+                            pops: []
+                        };
+                    }
+                    
+                    dailyData[dateKey].temps.push(item.main.temp);
+                    dailyData[dateKey].humidities.push(item.main.humidity);
+                    dailyData[dateKey].winds.push(item.wind.speed);
+                    dailyData[dateKey].conditions.push(item.weather[0].id);
+                    dailyData[dateKey].pops.push(item.pop || 0);
+                });
+                
+                // Process daily data
+                const dates = Object.keys(dailyData).slice(0, 5);
+                dates.forEach((dateKey, index) => {
+                    const dayData = dailyData[dateKey];
+                    const date = new Date(dateKey);
+                    
+                    const conditionCode = dayData.conditions[Math.floor(dayData.conditions.length / 2)];
+                    const condition = getWeatherCondition(conditionCode);
+                    
+                    forecast.push({
+                        day: index === 0 ? 'Today' : index === 1 ? 'Tomorrow' : date.toLocaleDateString('en-US', { weekday: 'long' }),
+                        date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                        condition: condition,
+                        high: Math.round(Math.max(...dayData.temps)),
+                        low: Math.round(Math.min(...dayData.temps)),
+                        humidity: Math.round(dayData.humidities.reduce((a, b) => a + b, 0) / dayData.humidities.length),
+                        wind: Math.round(dayData.winds.reduce((a, b) => a + b, 0) / dayData.winds.length * 3.6), // km/h
+                        rainChance: Math.round(Math.max(...dayData.pops) * 100)
+                    });
+                });
+                
+                return forecast;
+            } catch (error) {
+                console.error('Error fetching forecast:', error);
+                return generateMockData(city);
+            }
+        }
+        
+        // Generate mock data as fallback
+        function generateMockData(city) {
+            const forecast = [];
+            const today = new Date();
+            
+            for (let i = 0; i < 5; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                
+                const conditions = ['Sunny', 'Partly Cloudy', 'Cloudy', 'Light Rain', 'Rain', 'Thunderstorm'];
+                const condition = conditions[Math.floor(Math.random() * conditions.length)];
+                const baseTemp = city.name === 'Karachi' ? 32 : city.name === 'Quetta' ? 25 : 28;
+                
+                forecast.push({
+                    day: i === 0 ? 'Today' : i === 1 ? 'Tomorrow' : date.toLocaleDateString('en-US', { weekday: 'long' }),
+                    date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+                    condition: condition,
+                    high: baseTemp + Math.floor(Math.random() * 8),
+                    low: baseTemp - Math.floor(Math.random() * 10),
+                    humidity: 40 + Math.floor(Math.random() * 40),
+                    wind: 5 + Math.floor(Math.random() * 25),
+                    rainChance: condition.includes('Rain') || condition === 'Thunderstorm' ? 60 + Math.floor(Math.random() * 40) : Math.floor(Math.random() * 30)
+                });
+            }
+            
+            return forecast;
+        }
+
+        // Render selected city forecast
+        function renderSelectedCityForecast(city) {
+            const container = document.getElementById('selectedCityForecast');
+            const forecast = generateMockData(city); // We'll replace with real data when it loads
+            const today = forecast[0];
+            const condition = weatherConditions[today.condition] || { icon: 'fa-question', color: '#fff' };
+            
+            container.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem;">${city.name}</h2>
+                        <p style="color: var(--text-secondary); font-size: 1.1rem;">${city.province}, Pakistan</p>
+                        <p style="color: var(--text-muted); margin-top: 0.5rem;">${today.day}, ${today.date}</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <i class="fas ${condition.icon}" style="font-size: 4rem; color: ${condition.color}; margin-bottom: 0.5rem;"></i>
+                        <div style="font-size: 3rem; font-weight: 800;">${today.high}°C</div>
+                        <div style="color: var(--text-secondary);">Low: ${today.low}°C</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div style="text-align: center;">
+                            <i class="fas fa-tint" style="color: var(--accent-primary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <div style="font-weight: 600;">${today.humidity}%</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">Humidity</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-wind" style="color: var(--accent-secondary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <div style="font-weight: 600;">${today.wind} km/h</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">Wind</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-umbrella" style="color: var(--accent-tertiary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <div style="font-weight: 600;">${today.rainChance}%</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">Rain Chance</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-thermometer-half" style="color: var(--accent-quaternary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <div style="font-weight: 600;">${today.condition}</div>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;">Condition</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render 5-day forecast grid
+        function renderForecastGrid(forecast) {
+            const grid = document.getElementById('forecastGrid');
+            
+            grid.innerHTML = forecast.map(day => {
+                const condition = weatherConditions[day.condition] || { icon: 'fa-question', color: '#fff' };
+                const alertLevel = day.rainChance > 70 ? 'var(--risk-extreme)' : day.rainChance > 50 ? 'var(--risk-moderate)' : 'transparent';
+                
+                return `
+                    <div class="card-3d" style="padding: 1rem; text-align: center; border-left: 4px solid ${alertLevel};">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">${day.day}</div>
+                        <div style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">${day.date}</div>
+                        <i class="fas ${condition.icon}" style="font-size: 2rem; color: ${condition.color}; margin: 0.5rem 0;"></i>
+                        <div style="font-size: 1.5rem; font-weight: 700;">${day.high}°</div>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">${day.low}°</div>
+                        <div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">${day.condition}</div>
+                        <div style="margin-top: 0.25rem; font-size: 0.8rem; color: ${day.rainChance > 50 ? 'var(--accent-primary)' : 'var(--text-muted)'};">
+                            <i class="fas fa-tint"></i> ${day.rainChance}%
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render detailed forecast table
+        function renderForecastTable(forecast) {
+            const tbody = document.getElementById('forecastTableBody');
+            
+            tbody.innerHTML = forecast.map(day => {
+                const condition = weatherConditions[day.condition] || { icon: 'fa-question', color: '#fff' };
+                let alertBadge = '';
+                if (day.rainChance > 70) {
+                    alertBadge = '<span class="status-badge critical">High Risk</span>';
+                } else if (day.rainChance > 50) {
+                    alertBadge = '<span class="status-badge warning">Moderate</span>';
+                } else {
+                    alertBadge = '<span class="status-badge active">Low Risk</span>';
+                }
+                
+                return `
+                    <tr>
+                        <td style="font-weight: 600;">${day.day}</td>
+                        <td>${day.date}</td>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas ${condition.icon}" style="color: ${condition.color};"></i>
+                                ${day.condition}
+                            </div>
+                        </td>
+                        <td style="font-weight: 600;">${day.high}°C</td>
+                        <td>${day.low}°C</td>
+                        <td>${day.humidity}%</td>
+                        <td>${day.wind} km/h</td>
+                        <td>${day.rainChance}%</td>
+                        <td>${alertBadge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Load forecast for selected city
+        async function loadForecast(city) {
+            selectedCity = city;
+            
+            // Show loading
+            const container = document.getElementById('selectedCityForecast');
+            container.innerHTML = `
+                <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
+                        <h3 style="font-weight: 600;">Loading Forecast Data...</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">Please wait while we fetch weather predictions</p>
+                    </div>
+                </div>
+            `;
+            
+            const forecast = await fetchForecastData(city);
+            
+            // Update renderSelectedCityForecast to use real data
+            const updatedRender = (c, f) => {
+                const cont = document.getElementById('selectedCityForecast');
+                const today = f[0];
+                const cond = weatherConditions[today.condition] || { icon: 'fa-question', color: '#fff' };
+                cont.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem;">${c.name}</h2>
+                            <p style="color: var(--text-secondary); font-size: 1.1rem;">${c.province}, Pakistan</p>
+                            <p style="color: var(--text-muted); margin-top: 0.5rem;">${today.day}, ${today.date}</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <i class="fas ${cond.icon}" style="font-size: 4rem; color: ${cond.color}; margin-bottom: 0.5rem;"></i>
+                            <div style="font-size: 3rem; font-weight: 800;">${today.high}°C</div>
+                            <div style="color: var(--text-secondary);">Low: ${today.low}°C</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                            <div style="text-align: center;">
+                                <i class="fas fa-tint" style="color: var(--accent-primary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                                <div style="font-weight: 600;">${today.humidity}%</div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Humidity</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <i class="fas fa-wind" style="color: var(--accent-secondary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                                <div style="font-weight: 600;">${today.wind} km/h</div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Wind</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <i class="fas fa-umbrella" style="color: var(--accent-tertiary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                                <div style="font-weight: 600;">${today.rainChance}%</div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Rain Chance</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <i class="fas fa-thermometer-half" style="color: var(--accent-quaternary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                                <div style="font-weight: 600;">${today.condition}</div>
+                                <div style="color: var(--text-secondary); font-size: 0.85rem;">Condition</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            };
+            
+            updatedRender(city, forecast);
+            renderForecastGrid(forecast);
+            renderForecastTable(forecast);
+        }
+
+        // Refresh forecast
+        async function refreshForecast() {
+            await loadForecast(selectedCity);
+        }
+
+        // City search functionality - same as weather.html
+        function setupCitySearch() {
+            const searchInput = document.getElementById('citySearch');
+            const dropdown = document.getElementById('cityDropdown');
+
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.trim().toLowerCase();
+                if (query.length < 2) {
+                    dropdown.style.display = 'none';
+                    return;
+                }
+
+                const filteredCities = cities.filter(city => 
+                    city.name.toLowerCase().includes(query) || 
+                    city.province.toLowerCase().includes(query)
+                ).slice(0, 10);
+
+                if (filteredCities.length > 0) {
+                    dropdown.innerHTML = filteredCities.map(c => `
+                        <div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" 
+                             onmouseover="this.style.background='rgba(0, 212, 255, 0.1)'" 
+                             onmouseout="this.style.background='transparent'"
+                             onclick="selectCity('${c.name}', ${c.lat}, ${c.lng})">
+                            <strong>${c.name}</strong> <span style="color: var(--text-muted); font-size: 0.85rem;">- ${c.province}</span>
+                        </div>
+                    `).join('');
+                    dropdown.style.display = 'block';
+                } else {
+                    dropdown.innerHTML = '<div style="padding: 0.75rem; color: var(--text-muted);">No cities found</div>';
+                    dropdown.style.display = 'block';
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#citySearch') && !e.target.closest('#cityDropdown')) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        }
+
+        // Select city from search
+        function selectCity(cityName, lat, lng) {
+            document.getElementById('citySearch').value = cityName;
+            document.getElementById('cityDropdown').style.display = 'none';
+            
+            if (lat && lng) {
+                const cityObj = { name: cityName, lat: lat, lng: lng, province: 'Pakistan' };
+                // Try to find the full city from our list first
+                const foundCity = cities.find(c => c.name === cityName);
+                if (foundCity) {
+                    loadForecast(foundCity);
+                } else {
+                    loadForecast(cityObj);
+                }
+            } else {
+                const city = cities.find(c => c.name === cityName);
+                if (city) loadForecast(city);
+            }
+        }
+
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navbar') && !e.target.closest('#userDropdown')) {
+                const dropdown = document.getElementById('userDropdown');
+                if (dropdown) dropdown.style.display = 'none';
+            }
+        });
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                window.location.href = '../login.html';
+            }
+        }
+
+        // Initialize
+        setupCitySearch();
+
+        // Load initial forecast
+        (async () => {
+            await loadForecast(selectedCity);
+        })();
+    </script>
+</body>
+</html>

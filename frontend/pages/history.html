@@ -52,6 +52,7 @@
                         Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
@@ -153,6 +154,12 @@
 
     <script src="../js/main.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!AuthManager.requireAuth()) {
+                return;
+            }
+            AuthManager.loadUserName();
+        });
         function toggleNotifications() {
             const dropdown = document.getElementById('notifDropdown');
             const badge = document.getElementById('notifBadge');

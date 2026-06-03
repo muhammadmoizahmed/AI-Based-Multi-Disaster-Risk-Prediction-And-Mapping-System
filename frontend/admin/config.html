@@ -4,11 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- NO-CACHE METATAGS -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Alert Config - DisasterGuard Admin</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- NO-CACHE METATAGS ONLY (DON'T CLEAR LOCALSTORAGE) -->
+    <script>
+        // No localStorage clearing - we need the auth token!
+    </script>
 </head>
 
 <body>
@@ -42,6 +50,12 @@
                 <li><a href="models.html"><i class="fas fa-brain"></i> Model Management</a></li>
                 <li><a href="config.html" class="active"><i class="fas fa-cog"></i> Alert Config</a></li>
                 <li><a href="logs.html"><i class="fas fa-file-alt"></i> System Logs</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <p class="sidebar-title">Account</p>
+            <ul class="sidebar-menu">
+                <li><a href="admin-settings.html"><i class="fas fa-user-shield"></i> Admin Settings</a></li>
             </ul>
         </div>
         <div class="sidebar-section">
@@ -175,22 +189,25 @@
         }
         function toggleUserMenu() {
             const dropdown = document.getElementById('userDropdown');
-            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            if (dropdown) dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
         }
         function toggleNotifications() {
             const dropdown = document.getElementById('notifDropdown');
             const badge = document.getElementById('notifBadge');
-            if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-                dropdown.style.display = 'block';
-                badge.style.display = 'none';
-            } else {
-                dropdown.style.display = 'none';
+            if (dropdown) {
+                if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+                    dropdown.style.display = 'block';
+                    badge.style.display = 'none';
+                } else {
+                    dropdown.style.display = 'none';
+                }
             }
         }
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 localStorage.clear();
-                window.location.href = 'index.html';
+                sessionStorage.clear();
+                window.location.href = 'admin-login.html';
             }
         }
     </script>

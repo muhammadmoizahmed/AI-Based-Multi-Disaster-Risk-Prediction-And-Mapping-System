@@ -67,9 +67,12 @@ class Toast {
 
 // API Manager (will connect to FastAPI backend)
 class APIManager {
-    constructor(baseURL = 'http://localhost:5000/api') {
+    constructor(baseURL = 'http://localhost:5001/api') {
         this.baseURL = baseURL;
-        this.headers = {
+    }
+    
+    getHeaders() {
+        return {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('auth_token') || ''}`
         };
@@ -79,7 +82,7 @@ class APIManager {
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 method: 'GET',
-                headers: this.headers
+                headers: this.getHeaders()
             });
             return await response.json();
         } catch (error) {
@@ -92,7 +95,7 @@ class APIManager {
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 method: 'POST',
-                headers: this.headers,
+                headers: this.getHeaders(),
                 body: JSON.stringify(data)
             });
             return await response.json();
@@ -106,7 +109,7 @@ class APIManager {
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 method: 'PUT',
-                headers: this.headers,
+                headers: this.getHeaders(),
                 body: JSON.stringify(data)
             });
             return await response.json();
@@ -120,7 +123,7 @@ class APIManager {
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 method: 'DELETE',
-                headers: this.headers
+                headers: this.getHeaders()
             });
             return await response.json();
         } catch (error) {
@@ -130,7 +133,7 @@ class APIManager {
     }
 }
 
-// Auth Manager
+// Auth Manager - Fully Updated with All Requirements!
 class AuthManager {
     static isAuthenticated() {
         return !!localStorage.getItem('auth_token');
@@ -144,10 +147,17 @@ class AuthManager {
         }
     }
     
+    static isAdminOrModerator() {
+        const user = this.getUser();
+        return user.role === 'admin' || user.role === 'moderator';
+    }
+    
     static logout() {
         localStorage.removeItem('auth_token');
         localStorage.removeItem('user_data');
-        window.location.href = '/login.html';
+        // Check if current URL has /admin in it
+        const isAdminPage = window.location.pathname.includes('/admin');
+        window.location.href = isAdminPage ? '/admin/login.html' : '/login.html';
     }
     
     static requireAuth() {
@@ -158,10 +168,51 @@ class AuthManager {
         return true;
     }
     
+    // CENTRALIZED ADMIN AUTH CHECK - REQUIRED FOR ALL ADMIN PAGES
+    static checkAdminAuth() {
+        // Case 1: Not authenticated at all → redirect to admin login
+        if (!this.isAuthenticated()) {
+            window.location.href = '/admin/login.html';
+            return false;
+        }
+        
+        // Case 2: Authenticated but NOT admin/moderator → show error and redirect
+        const user = this.getUser();
+        if (user.role !== 'admin' && user.role !== 'moderator') {
+            alert('Access Denied. Admin privileges required.');
+            window.location.href = '/dashboard.html';
+            return false;
+        }
+        
+        // Case 3: All good!
+        return true;
+    }
+    
+    static requireAdmin() {
+        return this.checkAdminAuth();
+    }
+    
+    // Handle /admin or /admin/ routing
+    static handleAdminIndex() {
+        if (this.isAuthenticated() && this.isAdminOrModerator()) {
+            window.location.href = '/admin/dashboard.html';
+        } else {
+            window.location.href = '/admin/login.html';
+        }
+    }
+    
+    // Handle admin login page (if already logged in as admin, skip login page)
+    static handleAdminLoginPage() {
+        if (this.isAuthenticated() && this.isAdminOrModerator()) {
+            window.location.href = '/admin/dashboard.html';
+        }
+    }
+    
     static setAuth(token, userData) {
         localStorage.setItem('auth_token', token);
         localStorage.setItem('user_data', JSON.stringify(userData));
     }
+    
     static loadUserName() {
         const user = this.getUser();
         const userName = user.name || 'User';
@@ -203,7 +254,7 @@ class AuthManager {
             el.textContent = userEmail;
         });
         
-        // Update all initials elements - SAME VALUE everywhere
+        // Update all initials elements
         const initialsElements = document.querySelectorAll('#userInitials, #avatarInitials');
         initialsElements.forEach(el => {
             el.textContent = initials;
@@ -214,13 +265,10 @@ class AuthManager {
 // Chart Manager for Data Visualization
 class ChartManager {
     static createRiskChart(canvasId, labels, data, type = 'line') {
-        // Placeholder for Chart.js integration
-        // Will be implemented when Chart.js is added
         console.log(`Creating ${type} chart on ${canvasId}`, { labels, data });
     }
     
     static updateChart(chart, newData) {
-        // Update chart with new data
         console.log('Updating chart with:', newData);
     }
 }
@@ -241,7 +289,7 @@ class MapManager {
         
         this.map = L.map(this.containerId).setView(center, zoom);
         
-        // Dark theme tiles
+        // Dark theme map tiles
         L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
             maxZoom: 19
         }).addTo(this.map);
@@ -284,7 +332,6 @@ class MapManager {
 // Risk Calculator
 class RiskCalculator {
     static calculateFloodRisk(rainfall, riverLevel, soilSaturation) {
-        // Simplified flood risk calculation (0-1 scale)
         const rainfallWeight = 0.4;
         const riverWeight = 0.35;
         const soilWeight = 0.25;
@@ -297,12 +344,11 @@ class RiskCalculator {
     }
     
     static calculateEarthquakeRisk(magnitude, depth, distance) {
-        // Simplified earthquake risk calculation
         const magWeight = 0.5;
         const depthWeight = 0.2;
         const distWeight = 0.3;
         
-        const normalizedDepth = 1 - (depth / 700); // Deeper = less risk
+        const normalizedDepth = 1 - (depth / 700);
         const normalizedDist = 1 / (1 + (distance / 100));
         
         const risk = (magnitude / 10 * magWeight) + 
@@ -313,7 +359,6 @@ class RiskCalculator {
     }
     
     static calculateWildfireRisk(temperature, humidity, windSpeed, vegetation) {
-        // Simplified wildfire risk calculation
         const tempWeight = 0.3;
         const humidityWeight = 0.25;
         const windWeight = 0.25;
@@ -414,7 +459,6 @@ class Validator {
     }
     
     static password(password) {
-        // At least 8 chars, 1 uppercase, 1 number, 1 special
         const re = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/;
         return re.test(password);
     }
@@ -559,7 +603,7 @@ document.head.appendChild(style);
 async function socialLogin(provider) {
     if (provider === 'google') {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/google');
+            const response = await fetch('http://localhost:5001/api/auth/google');
             const data = await response.json();
             
             if (data.auth_url) {
@@ -573,7 +617,7 @@ async function socialLogin(provider) {
         }
     } else if (provider === 'github') {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/github');
+            const response = await fetch('http://localhost:5001/api/auth/github');
             const data = await response.json();
             
             if (data.auth_url) {

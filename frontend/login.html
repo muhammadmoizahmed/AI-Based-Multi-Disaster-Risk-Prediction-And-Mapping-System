@@ -47,12 +47,12 @@
                 <div class="social-login">
                     <button class="social-btn" onclick="socialLogin('google')">
                         <i class="fab fa-google"></i>
-                        Google
+                        Sign In With Google
                     </button>
-                    <button class="social-btn" onclick="socialLogin('github')">
+                    <!-- <button class="social-btn" onclick="socialLogin('github')">
                         <i class="fab fa-github"></i>
                         GitHub
-                    </button>
+                    </button> -->
                 </div>
 
                 <div class="divider">or continue with email</div>
@@ -132,49 +132,62 @@
             }
         });
 
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const rememberMe = document.getElementById('rememberMe').checked;
 
-            // Demo validation (will be replaced with API call)
-            if (email && password) {
-                showToast('Login successful! Redirecting...', 'success');
+            try {
+                // Call backend login API
+                const response = await fetch('http://localhost:5001/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
 
-                // Store auth state
-                localStorage.setItem('auth_token', 'demo_token_' + Date.now());
-                localStorage.setItem('user_email', email);
-                
-                // Store user data for dropdown
-                const userData = { name: email.split('@')[0], email: email };
-                localStorage.setItem('user_data', JSON.stringify(userData));
-                
-                // Remember Me functionality
-                if (rememberMe) {
-                    localStorage.setItem('remember_me', 'true');
-                    localStorage.setItem('saved_email', email);
-                    localStorage.setItem('saved_password', password);
+                const data = await response.json();
+
+                if (data.success) {
+                    showToast('Login successful! Redirecting...', 'success');
+
+                    // Store auth state using AuthManager
+                    AuthManager.setAuth(data.token, data.user);
+                    
+                    // Remember Me functionality
+                    if (rememberMe) {
+                        localStorage.setItem('remember_me', 'true');
+                        localStorage.setItem('saved_email', email);
+                        localStorage.setItem('saved_password', password);
+                    } else {
+                        localStorage.setItem('remember_me', 'false');
+                        localStorage.removeItem('saved_email');
+                        localStorage.removeItem('saved_password');
+                    }
+
+                    // USER LOGIN ONLY: ALWAYS GO TO USER DASHBOARD
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
                 } else {
-                    localStorage.setItem('remember_me', 'false');
-                    localStorage.removeItem('saved_email');
-                    localStorage.removeItem('saved_password');
+                    showToast(data.message || 'Login failed!', 'error');
                 }
-
-                // Redirect to dashboard after delay
-                setTimeout(() => {
-                    window.location.href = 'dashboard.html';
-                }, 1500);
-            } else {
-                showToast('Please fill in all fields', 'error');
+            } catch (error) {
+                console.error('Login error:', error);
+                showToast('Error during login! Please try again.', 'error');
             }
         }
 
         async function socialLogin(provider) {
             if (provider === 'google') {
                 try {
-                    const response = await fetch('http://localhost:5000/api/auth/google');
+                    const response = await fetch('http://localhost:5001/api/auth/google');
                     const data = await response.json();
 
                     if (data.auth_url) {
@@ -188,7 +201,7 @@
                 }
             } else if (provider === 'github') {
                 try {
-                    const response = await fetch('http://localhost:5000/api/auth/github');
+                    const response = await fetch('http://localhost:5001/api/auth/github');
                     const data = await response.json();
 
                     if (data.auth_url) {
