@@ -1,6 +1,6 @@
 # DisasterGuard - Pakistan Disaster Prediction System
 
-![DisasterGuard Logo](frontend/assets/logo1.png)
+![DisasterGuard Logo](frontend/assets/logo2.png)
 
 An AI-powered disaster prediction and early warning system specifically designed for Pakistan. The system monitors floods, earthquakes, and wildfires using real-time data from NASA, USGS, NOAA, and other satellite sources.
 
