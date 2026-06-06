@@ -1,579 +1,577 @@
 # DisasterGuard - Pakistan Disaster Prediction System
 
-![DisasterGuard Logo](frontend/assets/logo.svg)
+![DisasterGuard Logo](frontend/assets/logo1.png)
 
 An AI-powered disaster prediction and early warning system specifically designed for Pakistan. The system monitors floods, earthquakes, and wildfires using real-time data from NASA, USGS, NOAA, and other satellite sources.
 
 ---
 
 ## Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [System Architecture](#system-architecture)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Frontend](#frontend)
-  - [Public Pages](#public-pages)
-  - [User Dashboard](#user-dashboard)
-  - [Admin Panel](#admin-panel)
-- [API Integration](#api-integration)
-- [Machine Learning Models](#machine-learning-models)
-- [Installation & Setup](#installation--setup)
-- [Screenshots](#screenshots)
-- [Future Enhancements](#future-enhancements)
+1. [Project Overview](#project-overview)
+2. [Tech Stack](#tech-stack)
+3. [Project Structure](#project-structure)
+4. [Frontend Pages & Features](#frontend-pages--features)
+5. [Backend API Documentation](#backend-api-detailed-documentation)
+6. [Data Sources & Integrations](#data-sources--integrations)
+7. [Services Layer](#services-layer-documentation)
+8. [Database Layer](#database-layer-documentation)
+9. [Setup & Installation](#setup--installation)
+10. [Running the Application](#running-the-application)
+11. [Incomplete Features](#incomplete-features)
+12. [Future Enhancements](#future-enhancements)
+13. [Contact](#contact)
 
 ---
 
-## Overview
+## Project Overview
 
-**DisasterGuard** is a comprehensive disaster prediction system that leverages artificial intelligence and real-time satellite data to predict natural disasters before they occur. The system focuses on three major disaster types affecting Pakistan:
+**DisasterGuard** is a comprehensive disaster prediction and management system for Pakistan. It integrates multiple real-time data sources, AI-powered chat assistance, user authentication, and admin management.
 
-- **Floods** - LSTM-based rainfall analysis and river level monitoring
-- **Earthquakes** - Seismic activity analysis using USGS data
-- **Wildfires** - Satellite-based fire hotspot detection using NASA FIRMS
+### What has been completed?
+- ✅ **Full Stack Architecture**: FastAPI backend with HTML/CSS/JS frontend
+- ✅ **User Authentication System**: Email/password, OAuth2 (Google/GitHub), email verification
+- ✅ **AI Chat Assistant**: Gemini-based chatbot for disaster management queries
+- ✅ **Weather Integration**: OpenWeatherMap integration for real-time weather/forecasts
+- ✅ **Admin Dashboard**: User management, API monitoring
+- ✅ **Static File Serving**: Frontend served directly by FastAPI
+- ✅ **Database Layer**: SQLite/PostgreSQL support for users
+- ✅ **API Testing Scripts**: Comprehensive testing of external data sources
+- ✅ **Email Service**: SMTP integration for verification/reset emails
 
----
-
-## Features
-
-### Core Features
-
-- **Real-time Monitoring** - 24/7 monitoring of disaster indicators across Pakistan
-- **AI-Powered Predictions** - Machine learning models for risk assessment
-- **Interactive Maps** - Leaflet.js powered risk heatmaps with city markers
-- **Early Warning System** - Instant alerts when risk thresholds are crossed
-- **Multi-Source Data** - Integration with NASA, USGS, OpenWeather, NOAA, and GDACS APIs
-
-### User Features
-
-- User registration and authentication with email verification
-- Personal dashboard with risk scores
-- City-specific disaster monitoring
-- Alert history and notifications
-- Report generation (PDF export)
-- Settings and preferences
-- Password visibility toggle in login/registration
-- Remember me functionality for auto-login
-- Weather data integration with OpenWeatherMap
-- User profile dropdown with logout functionality
-- Terms of Service and Privacy Policy pages
-
-### Admin Features
-
-- System health monitoring
-- User management with OAuth provider tracking
-- API usage analytics
-- Model management and retraining
-- Audit logs
-- Alert configuration
-- Debug mode
-- Password visibility toggle in admin login
-- Remember me functionality for admin credentials
-- Professional authentication styling
-
----
-
-## System Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      Frontend Layer                        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
-│  │ Public Site │  │ User Portal │  │    Admin Panel      │ │
-│  │  (Landing)  │  │  (Dashboard)│  │   (Management)      │ │
-│  └─────────────┘  └─────────────┘  └─────────────────────┘ │
-└─────────────────────────────────────────────────────────────┘
-                              │
-┌─────────────────────────────────────────────────────────────┐
-│                    Backend Services                        │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
-│  │   Auth API  │  │   ML API    │  │  Data Collection    │ │
-│  │  (JWT)      │  │ (Predictions)│  │   (API Integrations) │ │
-│  └─────────────┘  └─────────────┘  └─────────────────────┘ │
-└─────────────────────────────────────────────────────────────┘
-                              │
-┌─────────────────────────────────────────────────────────────┐
-│                  External Data Sources                     │
-│  ┌─────────┐ ┌─────────┐ ┌──────────┐ ┌─────────┐ ┌────────┐│
-│  │ NASA    │ │  USGS   │ │OpenWeather│ │  NOAA   │ │ GDACS  ││
-│  │ EONET   │ │Earthquake│ │  API     │ │Tsunami │ │   RSS  ││
-│  │ POWER   │ │  API    │ │          │ │        │ │  JSON  ││
-│  │ FIRMS   │ │         │ │          │ │        │ │        ││
-│  └─────────┘ └─────────┘ └──────────┘ └─────────┘ └────────┘│
-└─────────────────────────────────────────────────────────────┘
-```
+### What is incomplete?
+- ❌ **Machine Learning Models**: Flood/earthquake/wildfire prediction models not trained/deployed
+- ❌ **Redis Caching**: In-memory cache only, no Redis integration
+- ❌ **WebSocket Updates**: No real-time WebSocket push notifications
+- ❌ **PostgreSQL by Default**: SQLite not fully set up (USE_SQLITE flag in db_config)
+- ❌ **Mobile App**: No React Native or cross-platform app
+- ❌ **SMS Alerts**: No SMS integration for emergency alerts
+- ❌ **NDMA Integration**: No official NDMA data integration
 
 ---
 
 ## Tech Stack
 
 ### Frontend
-- **HTML5** - Semantic markup
-- **CSS3** - Custom styling with CSS variables
-- **JavaScript (ES6+)** - Interactive functionality
-- **Leaflet.js** - Interactive maps
-- **Chart.js** - Data visualization (Admin panel)
-- **Font Awesome** - Icons
-- **Google Fonts (Inter)** - Typography
-- **Weather API Integration** - OpenWeatherMap for real-time weather data
-- **User Authentication** - Login/registration with email verification
-- **Admin Panel** - Complete management system
+- **HTML5**: Semantic markup
+- **CSS3**: Custom styling with dark theme
+- **JavaScript (ES6+)**: Interactive functionality
+- **Leaflet.js**: Interactive maps (planned)
+- **Chart.js**: Data visualization (admin panel)
+- **Font Awesome**: Icons
+- **Google Fonts (Inter)**: Typography
 
-### Backend (Implemented)
-- **Python** - API integration scripts
-- **FastAPI** - REST API with async support
-- **SMTP Email** - PIN verification emails
-- **OAuth 2.0** - Google & GitHub social login
-- **PostgreSQL** - Database (to be implemented)
-
-### Machine Learning
-- **LSTM Neural Networks** - Flood prediction models
-- **Random Forest** - Earthquake risk assessment
-- **CNN** - Wildfire detection from satellite imagery
+### Backend
+- **FastAPI**: Modern, async web framework for APIs
+- **Python 3.8+**: Core backend language
+- **Pydantic**: Data validation
+- **python-dotenv**: Environment management
+- **requests**: HTTP client for external APIs
+- **uvicorn**: ASGI server
+- **smtplib**: Email sending
+- **jose**: JWT token handling
+- **psycopg2-binary**: PostgreSQL driver (optional)
 
 ### External APIs
-- NASA EONET API - Natural events tracking
-- NASA POWER API - Rainfall and climate data
-- USGS Earthquake API - Seismic activity
-- OpenWeather API - Weather forecasts
-- NOAA NGDC API - Tsunami data
-- GDACS RSS/JSON - Disaster alerts
+- **OpenWeatherMap**: Weather data & forecasts
+- **NASA EONET**: Natural event monitoring
+- **NASA POWER**: Rainfall & climate data
+- **USGS Earthquake API**: Seismic activity
+- **NOAA NGDC**: Tsunami historical data
+- **GDACS**: Disaster alerts (RSS/JSON)
+- **Google Gemini 2.5 Flash Lite**: AI chat assistant
+- **Google OAuth2**: Social login
+- **GitHub OAuth2**: Social login
+- **ipapi.co**: IP-based geolocation
 
 ---
 
 ## Project Structure
 
 ```
-fyp/
-├── frontend/
-│   ├── index.html              # Landing page
-│   ├── login.html              # User login with password toggle & remember me
-│   ├── register.html           # User registration with PIN verification
-│   ├── verify-email.html       # Email PIN verification
-│   ├── forgot-password.html    # Password recovery
-│   ├── dashboard.html          # User dashboard
-│   ├── terms.html              # Terms of Service page
-│   ├── privacy.html            # Privacy Policy page
-│   ├── css/
-│   │   └── styles.css          # Main stylesheet (dark theme)
-│   ├── js/
-│   │   └── main.js             # Main JavaScript file
-│   ├── pages/
-│   │   ├── alerts.html         # Alert notifications
-│   │   ├── flood.html          # Flood monitoring page
-│   │   ├── earthquake.html     # Earthquake monitoring page
-│   │   ├── wildfire.html       # Wildfire monitoring page
-│   │   ├── heatmap.html        # Risk heatmap view
-│   │   ├── history.html        # Activity history
-│   │   ├── live-chat.html      # AI chat assistant
-│   │   ├── profile.html        # User profile management
-│   │   ├── settings.html       # User settings
-│   │   └── weather.html        # Weather monitoring with API
-│   └── admin/
-│       ├── index.html          # Admin login with password toggle & remember me
-│       ├── dashboard.html      # Admin overview
-│       ├── users.html          # User management
-│       ├── edit-user.html      # User editing interface
-│       ├── config.html         # Alert configuration
-│       ├── logs.html           # System logs
-│       ├── models.html         # ML model management
-│       └── api-monitor.html    # API health monitoring
-├── api_testing.py             # Python script for API testing
-├── .env                       # Environment variables
-├── frontend_screenshort.pdf   # UI screenshots
-└── output api.pdf             # API test results
+fyp-master/
+├── backend/                          # Backend application
+│   ├── database/                     # Database layer
+│   │   ├── __init__.py
+│   │   ├── db_config.py              # Database configuration
+│   │   └── db_users.py               # User database operations
+│   ├── models/                       # Pydantic models
+│   │   ├── __init__.py
+│   │   ├── auth_models.py            # Auth request models
+│   │   └── user_models.py            # User models
+│   ├── routes/                       # API endpoints
+│   │   ├── __init__.py
+│   │   ├── auth.py                   # Authentication endpoints
+│   │   ├── weather.py                # Weather endpoints
+│   │   ├── ai.py                     # AI chat endpoints
+│   │   └── admin.py                  # Admin endpoints
+│   ├── services/                     # Business logic layer
+│   │   ├── __init__.py
+│   │   ├── email_service.py          # Email sending
+│   │   ├── gemini_service.py         # AI chat service
+│   │   ├── oauth_service.py          # OAuth2 integration
+│   │   └── weather_service.py        # Weather data service
+│   ├── utils/                        # Utility functions
+│   │   ├── __init__.py
+│   │   ├── dependencies.py           # Auth dependencies (admin_only)
+│   │   ├── helpers.py                # Helper functions
+│   │   └── security.py               # Security/hashing/JWT
+│   ├── add_test_users.py             # Add test users script
+│   ├── db_setup.sql                  # Database setup script
+│   ├── flood.py                      # Flood module
+│   ├── init_db.py                    # Database initialization
+│   ├── main.py                       # FastAPI application entry point
+│   ├── requirements.txt              # Python dependencies
+│   └── test_get_users.py             # User API test script
+├── frontend/                         # Frontend application
+│   ├── admin/                        # Admin pages
+│   │   ├── admin-login.html          # Admin login
+│   │   ├── admin-settings.html       # Admin settings
+│   │   ├── api-monitor.html          # API monitoring
+│   │   ├── config.html               # Alert config
+│   │   ├── dashboard.html            # Admin dashboard
+│   │   ├── index.html                # Admin index redirect
+│   │   ├── logs.html                 # System logs
+│   │   ├── models.html               # ML model management
+│   │   └── users.html                # User management
+│   ├── assets/                       # Static assets
+│   │   └── logo.svg
+│   ├── css/                          # Stylesheets
+│   │   └── styles.css                # Main styles
+│   ├── js/                           # JavaScript
+│   │   └── main.js                   # Main JS (APIManager, AuthManager)
+│   ├── pages/                        # User pages
+│   │   ├── alerts.html               # Alerts
+│   │   ├── earthquake.html           # Earthquake monitoring
+│   │   ├── flood.html                # Flood monitoring
+│   │   ├── forecast.html             # Weather forecast
+│   │   ├── heatmap.html              # Risk heatmap
+│   │   ├── history.html              # Activity history
+│   │   ├── live-chat.html            # AI live chat
+│   │   ├── profile.html              # User profile
+│   │   ├── settings.html             # Settings
+│   │   ├── weather.html              # Weather page
+│   │   └── wildfire.html             # Wildfire monitoring
+│   ├── dashboard.html                # User dashboard
+│   ├── forgot-password.html          # Forgot password
+│   ├── index.html                    # Landing page
+│   ├── login.html                    # Login page
+│   ├── oauth-callback.html           # OAuth callback
+│   ├── privacy.html                  # Privacy policy
+│   ├── register.html                 # Register page
+│   ├── terms.html                    # Terms of service
+│   └── verify-email.html             # Email verification
+├── datasets/                         # Datasets for ML
+│   ├── pakistan_cyclone_2020_2025.csv
+│   ├── pakistan_earthquake_2020_2025.csv
+│   ├── pakistan_flood_dataset_2020_2025 (1).csv
+│   ├── pakistan_heatwave_2020_2025.csv
+│   ├── pakistan_landslide_2020_2025.csv
+│   ├── pakistan_tsunami_2020_2025.csv
+│   └── pakistan_wildfire_2020_2025.csv
+├── api_testing.py                    # Comprehensive API testing script
+├── test_chatbot.py                   # Chatbot API test script
+├── frontend_screenshort.pdf          # UI screenshots
+├── output api.pdf                    # API test output
+├── .gitignore
+└── README.md                         # This file!
 ```
 
 ---
 
-## Frontend
+## Frontend Pages & Features
 
 ### Public Pages
+| Page | Path | Purpose |
+|------|------|---------|
+| Landing | `/index.html` | Hero section, features, stats, call to action |
+| Login | `/login.html` | Email/password login + social login (Google/GitHub) |
+| Register | `/register.html` | User registration with email verification PIN |
+| Verify Email | `/verify-email.html` | Enter PIN to verify email |
+| Forgot Password | `/forgot-password.html` | Password reset via PIN |
+| OAuth Callback | `/oauth-callback.html` | Handle OAuth2 redirects |
+| Terms | `/terms.html` | Terms of service |
+| Privacy | `/privacy.html` | Privacy policy |
 
-#### 1. Landing Page (`index.html`)
-- Hero section with 3D visual effects
-- Feature highlights (Flood, Earthquake, Wildfire prediction)
-- Live stats section
-- How it works section
-- Dashboard preview with mock risk cards
-- Call-to-action sections
+### User Pages (Auth Required)
+| Page | Path | Purpose |
+|------|------|---------|
+| Dashboard | `/dashboard.html` | User dashboard, risk scores, stats |
+| Weather | `/pages/weather.html` | Real-time weather & forecasts |
+| Flood | `/pages/flood.html` | Flood monitoring |
+| Earthquake | `/pages/earthquake.html` | Earthquake monitoring |
+| Wildfire | `/pages/wildfire.html` | Wildfire monitoring |
+| Alerts | `/pages/alerts.html` | Emergency alerts |
+| Forecast | `/pages/forecast.html` | Weather forecasts |
+| Heatmap | `/pages/heatmap.html` | Risk heatmap |
+| History | `/pages/history.html` | Activity history |
+| Live Chat | `/pages/live-chat.html` | AI disaster chat assistant |
+| Profile | `/pages/profile.html` | User profile management |
+| Settings | `/pages/settings.html` | User settings |
 
-#### 2. Authentication Pages
-- **Login Page** - Email/password login with social login options (Google, GitHub)
-- **Register Page** - User registration with 6-digit PIN email verification
-- **Verify Email** - PIN verification page with resend option
-- **Forgot Password** - Password recovery flow
-
-**PIN Verification Flow:**
-1. User registers with email/password
-2. 6-digit PIN sent to email via SMTP
-3. User enters PIN on verify-email.html
-4. On success, redirected to dashboard
-5. Social login (Google/GitHub) skips PIN verification
-
-### User Dashboard (`dashboard.html`)
-
-**Layout:**
-- Fixed top navigation bar
-- Sidebar navigation (280px width)
-- Main content area
-
-**Components:**
-- Risk score cards (Flood, Earthquake, Wildfire)
-- Interactive mini map (Leaflet.js)
-- Recent alerts feed
-- Statistics row (Cities monitored, API calls, Active alerts, Uptime)
-- Recent activity table
-- Notifications dropdown
-- User profile dropdown
-
-**Features:**
-- Live risk score updates (30-second intervals)
-- Toast notifications
-- Data refresh functionality
-- PDF report generation
-- Real-time map markers for Pakistani cities
-
-### Disaster Monitoring Pages
-
-#### Flood Monitoring (`pages/flood.html`)
-- LSTM rainfall prediction visualization
-- River level monitoring
-- Flood risk zone mapping
-- 72-hour advance warning system
-
-#### Earthquake Monitoring (`pages/earthquake.html`)
-- USGS seismic data integration
-- Fault line analysis
-- Magnitude and intensity prediction
-- Historical earthquake data
-
-#### Wildfire Monitoring (`pages/wildfire.html`)
-- NASA FIRMS hotspot detection
-- Satellite imagery analysis
-- Fire spread prediction
-- Active fire alerts
-
-#### Risk Heatmap (`pages/heatmap.html`)
-- Full-screen interactive map
-- Color-coded risk zones
-- City-wise risk overlay
-- Filter by disaster type
-
-### Admin Panel
-
-#### Admin Dashboard (`admin/dashboard.html`)
-- System statistics (Users, API calls, Uptime, Model version)
-- API usage charts (Chart.js)
-- API health status cards
-- Recent user registrations table
-- ML model status panel
-- System logs preview
-
-#### User Management (`admin/users.html`)
-- User list with search/filter
-- Role management (User/Admin)
-- Account status controls
-- Registration analytics
-
-#### Model Management (`admin/models.html`)
-- ML model version control
-- Training status monitoring
-- Accuracy metrics
-- Model retraining interface
-
-#### Alert Configuration (`admin/config.html`)
-- Threshold settings
-- Notification preferences
-- Alert routing rules
-- Email/SMS configuration
+### Admin Pages (Admin Role Required)
+| Page | Path | Purpose |
+|------|------|---------|
+| Admin Login | `/admin/admin-login.html` | Admin authentication |
+| Admin Dashboard | `/admin/dashboard.html` | System stats & overview |
+| User Management | `/admin/users.html` | Manage users (list, update, delete) |
+| Model Management | `/admin/models.html` | ML model management |
+| API Monitor | `/admin/api-monitor.html` | API health & usage |
+| Alert Config | `/admin/config.html` | Configure alerts |
+| Logs | `/admin/logs.html` | System logs |
+| Admin Settings | `/admin/admin-settings.html` | Admin settings |
 
 ---
 
-## API Integration
+## Backend API Detailed Documentation
 
-### Implemented APIs (`api_testing.py`)
+### Base URL
+**Local Development**: `http://localhost:5000`
 
-The `api_testing.py` script demonstrates integration with the following data sources:
+### Authentication Endpoints (`/api/auth`)
 
-| API | Purpose | Data Retrieved |
-|-----|---------|----------------|
-| NASA EONET | Natural events | Floods, wildfires, storms |
-| NASA POWER | Climate data | Rainfall, precipitation |
-| USGS Earthquake | Seismic data | Earthquake events in Pakistan |
-| OpenWeather | Weather data | Flood alerts, cyclones, heat waves |
-| NOAA NGDC | Tsunami data | Historical tsunami events |
-| GDACS | Disaster alerts | RSS and JSON feeds |
+| Method | Endpoint | Request Body/Params | Description | Response |
+|--------|----------|---------------------|-------------|----------|
+| `POST` | `/login` | `{ email, password }` | Login with email/password | `{ success, message, user, token }` |
+| `POST` | `/register` | `{ name, email, password }` | Register new user, send PIN | `{ success, message }` |
+| `POST` | `/verify-pin` | `{ email, pin }` | Verify email PIN | `{ success, message }` |
+| `POST` | `/forgot-password` | `{ email }` | Send password reset PIN | `{ success, message }` |
+| `GET` | `/google` | - | Get Google OAuth URL | `{ auth_url }` |
+| `GET` | `/google/callback` | `code` (query) | Google OAuth callback | Redirect to `/oauth-callback.html` |
+| `GET` | `/github` | - | Get GitHub OAuth URL | `{ auth_url }` |
+| `GET` | `/github/callback` | `code` (query) | GitHub OAuth callback | Redirect to `/oauth-callback.html` |
 
-### Pakistan Coverage
+### Weather Endpoints (`/api/weather`)
 
-The system monitors **12 major Pakistani cities**:
-- Karachi, Lahore, Islamabad, Rawalpindi
-- Faisalabad, Gujranwala, Multan, Peshawar
-- Quetta, Hyderabad, Sialkot, Bahawalpur
+| Method | Endpoint | Params | Description | Response |
+|--------|----------|--------|-------------|----------|
+| `GET` | `/api-key` | - | Get OpenWeather API key | `{ api_key }` |
+| `GET` | `/current` | `lat`, `lon` | Current weather for coordinates | OpenWeather current weather JSON |
+| `GET` | `/forecast` | `lat`, `lon` | 5-day forecast | OpenWeather forecast JSON |
+| `GET` | `/my-location` | - | Weather for user's IP location | `{ location, current, forecast }` |
+| `GET` | `/pakistan-cities` | - | Weather for major Pakistani cities | `{ cities: [...] }` |
+| `GET` | `/search` | `city` | Search weather for Pakistan city | `{ city, current, forecast }` |
+| `GET` | `/autocomplete` | `query` | City name autocomplete | `{ suggestions: [...] }` |
 
-### Data Processing
+### AI Endpoints (`/api/ai`)
 
-- Geographic bounding box filtering
-- Nearest city calculation
-- Risk score computation
-- Data deduplication
-- Time-based categorization (Current/Recent/Historical)
+| Method | Endpoint | Request Body | Description | Response |
+|--------|----------|--------------|-------------|----------|
+| `POST` | `/chat` | `{ message }` | Chat with DisasterGuard AI | `{ response }` |
 
----
+### Admin Endpoints (`/api/admin`)
 
-## Backend API Endpoints (`backend/main.py`)
+| Method | Endpoint | Params/Body | Auth? | Description | Response |
+|--------|----------|-------------|-------|-------------|----------|
+| `GET` | `/users` | `page`, `search` | Yes (Admin) | Get paginated users | `{ success, users, total_users, current_page, total_pages }` |
+| `GET` | `/users/{user_id}` | - | Yes (Admin) | Get single user by ID | `{ success, user }` |
+| `PUT` | `/users/{user_id}` | `{ name, email, role, phone, location, status }` | Yes (Admin) | Update user | `{ success }` |
+| `DELETE` | `/users/{user_id}` | - | Yes (Admin) | Delete user | `{ success }` |
 
-### Authentication Endpoints
+### General Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/auth/register` | POST | Register with email/password, sends 6-digit PIN |
-| `/api/auth/verify-pin` | POST | Verify email with PIN code |
-| `/api/auth/resend-pin` | POST | Resend new PIN to email |
-| `/api/auth/login` | POST | Email/password login |
-| `/api/auth/google` | GET | Initiate Google OAuth login |
-| `/api/auth/google/callback` | GET | Google OAuth callback (skips PIN) |
-| `/api/auth/github` | GET | Initiate GitHub OAuth login |
-| `/api/auth/github/callback` | GET | GitHub OAuth callback (skips PIN) |
-| `/api/auth/logout` | POST | User logout |
-| `/api/auth/forgot-password` | POST | Password reset request |
-
-### PIN Verification Flow
-- PIN is 6 digits, valid for 10 minutes
-- Stored temporarily in memory (use Redis in production)
-- Email sent via SMTP (Gmail configured)
-- Social login bypasses PIN verification
-
----
-
-## Machine Learning Models
-
-### Flood Prediction Model
-- **Algorithm:** LSTM (Long Short-Term Memory)
-- **Input:** Rainfall data, river levels, soil moisture
-- **Output:** Flood risk score (0-1)
-- **Accuracy:** 94.2%
-- **Features:**
-  - 72-hour advance prediction
-  - City-specific risk assessment
-  - Rainfall pattern analysis
-
-### Earthquake Prediction Model
-- **Algorithm:** Seismic pattern analysis
-- **Input:** USGS seismic data, fault line proximity
-- **Output:** Earthquake probability and intensity
-- **Accuracy:** 89.7%
-- **Features:**
-  - Magnitude prediction
-  - Location estimation
-  - Aftershock probability
-
-### Wildfire Detection Model
-- **Algorithm:** CNN for image analysis
-- **Input:** NASA FIRMS satellite data, thermal anomalies
-- **Output:** Fire detection confidence, spread prediction
-- **Status:** Model updating (75% complete)
-- **Features:**
-  - Hotspot detection
-  - Fire spread modeling
-  - Smoke dispersion prediction
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Redirect to `/index.html` |
+| `GET` | `/admin` | Redirect to `/admin/admin-login.html` |
+| `GET` | `/api/landing/info` | Get landing page info/stats |
+| `GET` | `/api/db/test` | Test database connection |
+| `GET` | `/{path}` | Serve static frontend files |
 
 ---
 
-## Installation & Setup
+## Data Sources & Integrations
+
+### What data comes from where?
+
+1. **User Authentication & Profiles**
+   - Stored locally in SQLite/PostgreSQL database
+   - OAuth user data from Google/GitHub APIs
+   - Emails sent via SMTP (configurable)
+
+2. **Weather & Forecast Data**
+   - **Source**: OpenWeatherMap API
+   - **Endpoints used**: Current Weather, 5-Day Forecast
+   - **Caching**: 5-minute in-memory cache
+   - **Request flow**:
+     ```
+     Frontend → /api/weather/current → weather_service.py → OpenWeatherMap API → Frontend
+     ```
+
+3. **AI Chat Responses**
+   - **Source**: Google Gemini 2.5 Flash Lite API
+   - **System prompt**: Specialized for Pakistan disaster management
+   - **Request flow**:
+     ```
+     Frontend → /api/ai/chat → gemini_service.py → Gemini API → Frontend
+     ```
+
+4. **Disaster Data (NASA, USGS, NOAA, GDACS)**
+   - **Used in**: `api_testing.py` script (not integrated into live API yet)
+   - **Sources**:
+     - NASA EONET (Natural events)
+     - NASA POWER (Rainfall)
+     - USGS Earthquake API
+     - NOAA NGDC (Tsunamis)
+     - GDACS (Disaster alerts)
+
+### API Request Flows
+
+#### 1. User Login Flow
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│   Frontend  │────────▶│ /api/auth/  │────────▶│ db_users.py │────────▶│  Database   │
+│  (login.js) │  POST   │   /login    │  Query  │  (verify)   │  Select  │  (users)    │
+└─────────────┘         └─────────────┘         └─────────────┘         └─────────────┘
+       │                       │
+       │◀──────────────────────┘
+       │  { success, token, user }
+       ▼
+  Store token in localStorage
+```
+
+#### 2. Weather Data Flow
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│   Frontend  │────────▶│ /api/weather│────────▶│   Weather   │────────▶│OpenWeather  │
+│(weather.js) │   GET   │  /current   │  Call   │  Service    │  HTTP    │    API      │
+└─────────────┘         └─────────────┘         └─────────────┘         └─────────────┘
+       │                       │                       │
+       │◀──────────────────────┘◀──────────────────────┘
+       │   { temperature, humidity, ... }
+       ▼
+   Display to user
+```
+
+#### 3. OAuth (Google) Flow
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│   Frontend  │────────▶│ /api/auth/  │────────▶│    Google   │
+│  (login.js) │   GET   │   /google   │  Redirect│   OAuth     │
+└─────────────┘         └─────────────┘         └─────────────┘
+       │                                               │
+       │◀──────────────────────────────────────────────┘
+       │          User grants permission
+       ▼
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│  Frontend   │◀────────│Google Callback│◀────────│  Get User   │
+│  (oauth-    │ Redirect│   Route     │  Fetch   │   Info      │
+│ callback)   │         └─────────────┘         └─────────────┘
+       │
+       ▼
+  Store user/token, login
+```
+
+#### 4. AI Chat Flow
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│   Frontend  │────────▶│ /api/ai/    │────────▶│   Gemini    │
+│(live-chat)  │  POST   │   /chat     │  HTTP    │    API      │
+└─────────────┘         └─────────────┘         └─────────────┘
+       │                       │                       │
+       │◀──────────────────────┘◀──────────────────────┘
+       │      { response: "AI message..." }
+       ▼
+  Display chat message
+```
+
+---
+
+## Services Layer Documentation
+
+| Service | File | Purpose | Key Functions |
+|---------|------|---------|---------------|
+| **Weather Service** | `services/weather_service.py` | Weather data from OpenWeatherMap | `get_current_weather()`, `get_weather_forecast()`, `get_pakistan_cities_weather()`, `search_city_weather()` |
+| **OAuth Service** | `services/oauth_service.py` | Google/GitHub OAuth2 | `get_google_auth_url()`, `get_google_user_info()`, `get_github_auth_url()`, `get_github_user_info()` |
+| **Gemini Service** | `services/gemini_service.py` | AI chat responses | `get_ai_response()` |
+| **Email Service** | `services/email_service.py` | Email sending | `send_email()`, `send_verification_email()`, `send_password_reset_email()` |
+
+---
+
+## Database Layer Documentation
+
+### Database Configuration
+- File: `database/db_config.py`
+- Default: **PostgreSQL** (USE_SQLITE = False)
+- SQLite option available (set USE_SQLITE = True)
+
+### User Table Schema
+| Column | Type | Description |
+|--------|------|-------------|
+| id | Integer | Primary key |
+| name | String | User's full name |
+| email | String | Unique email |
+| password | String | Hashed password (SHA256) |
+| role | String | 'user' or 'admin' |
+| phone | String | Phone number |
+| location | String | User location |
+| ip_address | String | Last login IP |
+| provider | String | 'local', 'google', 'github' |
+| provider_id | String | OAuth provider ID |
+| profile_picture | String | Profile picture URL |
+| status | String | Account status |
+| created_at | DateTime | Account creation date |
+| last_active | DateTime | Last activity timestamp |
+
+### User DB Functions (database/db_users.py)
+- `get_all_users()`: Get all users
+- `get_user_by_id(user_id)`: Get user by ID
+- `get_user_by_email(email)`: Get user by email
+- `verify_user(email, password)`: Verify user credentials
+- `create_user(...)`: Create new user
+- `update_user(...)`: Update user info
+- `delete_user(user_id)`: Delete user
+- `search_users(query)`: Search users by name/email
+- `get_user_count()`: Get total user count
+
+---
+
+## Setup & Installation
 
 ### Prerequisites
-- Python 3.8+
-- Modern web browser
-- API keys (NASA, OpenWeather)
+- Python 3.8 or higher
+- `pip` package manager
+- (Optional) PostgreSQL database
+- API keys for external services
 
-### Environment Variables
-
-Create a `.env` file in the project root:
+### 1. Environment Variables
+Create a `.env` file in the **root directory** of the project:
 
 ```env
-# API Keys
-nasaapi=YOUR_NASA_API_KEY
-open_weather_api=YOUR_OPENWEATHER_API_KEY
-firms_map_key=YOUR_FIRMS_MAP_KEY
+# OpenWeatherMap API (required for weather features)
+openweathermap_api_key=YOUR_OPENWEATHER_API_KEY
 
-# SMTP Email Configuration (for PIN verification)
-smtp_email=your-gmail@gmail.com
-smtp_password=your-app-password
-smtp_host=smtp.gmail.com
-smtp_port=587
+# Gemini AI API (required for chat)
+gemini_key=YOUR_GEMINI_API_KEY
 
-# OAuth Configuration
+# SMTP Email Configuration (required for email verification)
+SMTP_EMAIL=your-email@gmail.com
+SMTP_PASSWORD=your-app-password
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+
+# OAuth2 Configuration
 google_client_id=YOUR_GOOGLE_CLIENT_ID
 google_client_secret=YOUR_GOOGLE_CLIENT_SECRET
 github_client_id=YOUR_GITHUB_CLIENT_ID
 github_client_secret=YOUR_GITHUB_CLIENT_SECRET
 
 # Security
-SECRET_KEY=your-secret-key-here
+SECRET_KEY=your-strong-secret-key-here-change-in-production
+
+# Database (PostgreSQL)
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=disasterguard
+DB_USER=postgres
+DB_PASSWORD=your-db-password
 ```
 
-**Note:** For Gmail SMTP, use an [App Password](https://support.google.com/accounts/answer/185833), not your regular password.
-
-### Running the Frontend
-
-1. Navigate to the `frontend` directory
-2. Open `index.html` in a web browser
-3. Or serve via local server:
-   ```bash
-   cd frontend
-   python -m http.server 8000
-   ```
-
-### Running the Backend
-
-1. Install dependencies:
-   ```bash
-   pip install fastapi uvicorn pydantic python-dotenv requests
-   ```
-
-2. Start the FastAPI server:
-   ```bash
-   python backend/main.py
-   ```
-   
-   Or using uvicorn directly:
-   ```bash
-   uvicorn backend.main:app --host 0.0.0.0 --port 5000
-   ```
-
-3. Backend will be available at `http://localhost:5000`
-
-### API Documentation
-
-Once the backend is running, access interactive API docs:
-- Swagger UI: http://localhost:5000/docs
-- ReDoc: http://localhost:5000/redoc
-
-### Running API Tests
-
+### 2. Install Python Dependencies
 ```bash
-# Install dependencies
-pip install requests python-dotenv
+cd backend
+pip install -r requirements.txt
+```
 
-# Run the API testing script
+### 3. Database Setup (PostgreSQL)
+1. Create a PostgreSQL database named `disasterguard`
+2. Run `db_setup.sql` to create tables
+3. (Optional) Run `init_db.py` or `add_test_users.py` to add test data
+
+---
+
+## Running the Application
+
+### 1. Start the Backend Server
+```bash
+cd backend
+python main.py
+```
+OR
+```bash
+uvicorn backend.main:app --host 0.0.0.0 --port 5000 --reload
+```
+
+The server will start on:
+- **API Base URL**: `http://localhost:5000`
+- **API Docs (Swagger UI)**: `http://localhost:5000/docs`
+- **API Docs (ReDoc)**: `http://localhost:5000/redoc`
+
+### 2. Access the Frontend
+Open your browser and navigate to:
+- **Landing Page**: `http://localhost:5000/index.html`
+- **Login Page**: `http://localhost:5000/login.html`
+- **Admin Login**: `http://localhost:5000/admin/admin-login.html`
+
+### 3. Running Test Scripts
+```bash
+# Test chatbot API
+python test_chatbot.py
+
+# Test all external data sources
 python api_testing.py
 ```
 
 ---
 
-## Screenshots
+## Incomplete Features
 
-Screenshots of the UI are available in `frontend_screenshort.pdf`.
+List of features that are planned or partially implemented:
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| **Machine Learning Prediction Models** | ❌ Not Implemented | Datasets exist in `datasets/`, but no trained models integrated |
+| **Redis Caching** | ❌ Not Implemented | In-memory dict cache only; no Redis |
+| **WebSocket Real-Time Updates** | ❌ Not Implemented | No real-time push notifications |
+| **SMS Alerts** | ❌ Not Implemented | No SMS integration (Twilio, etc.) |
+| **NDMA Integration** | ❌ Not Implemented | No official Pakistani disaster management data |
+| **Mobile Application** | ❌ Not Implemented | No React Native/Flutter app |
+| **PostgreSQL Default Setup** | ⚠️ Partial | SQLite code exists, but USE_SQLITE is False by default; tables not auto-created |
+| **API Monitoring Dashboard** | ⚠️ Static Page | HTML page exists, but no live stats |
+| **Risk Heatmap** | ⚠️ Static Page | HTML page exists, but no interactive Leaflet map |
 
 ---
 
 ## Future Enhancements
 
-### Planned Features
-- [ ] Mobile application (React Native)
-- [ ] SMS alert integration
-- [ ] Multi-language support (Urdu, English)
-- [ ] Community reporting system
-- [ ] Evacuation route planning
-- [ ] Integration with NDMA (National Disaster Management Authority)
-- [ ] Real-time push notifications
-- [ ] Machine learning model retraining pipeline
+1. **Train & Deploy ML Models**
+   - Flood prediction using LSTM on rainfall data
+   - Earthquake risk assessment using Random Forest
+   - Wildfire hotspot detection using satellite imagery
 
-### Completed Features
-- [x] **FastAPI RESTful API** - Async endpoints with CORS support
-- [x] **Email PIN Verification** - 6-digit PIN verification flow with SMTP
-- [x] **Social Login** - Google & GitHub OAuth integration
-- [x] **verify-email.html** - Dedicated PIN verification page
-- [x] **Toast Notifications** - Success/error feedback system
-- [x] **User Authentication System** - Complete login/registration flow
-- [x] **Password Visibility Toggle** - Eye icon for password fields
-- [x] **Remember Me Functionality** - Save user credentials locally
-- [x] **Weather API Integration** - OpenWeatherMap real-time data
-- [x] **User Dropdown Menus** - Profile and logout functionality
-- [x] **Logout Functionality** - Confirmation dialog and localStorage clear
-- [x] **Terms of Service & Privacy Policy** - Legal pages with navigation
-- [x] **Admin Panel Authentication** - Remember me and password toggle
-- [x] **Professional UI Styling** - Consistent design across all pages
+2. **Real-Time Features**
+   - WebSocket for live updates
+   - Push notifications (browser/mobile)
 
-### Backend Development (Remaining)
-- [ ] PostgreSQL database integration (using in-memory storage currently)
-- [ ] Redis for caching (migrate from in-memory dict)
-- [ ] Celery for background tasks
-- [ ] WebSocket for real-time updates
+3. **Data Persistence**
+   - Redis for caching
+   - Complete PostgreSQL integration with auto-migrations
 
-### ML Improvements
-- [ ] Ensemble models for better accuracy
-- [ ] Historical data training pipeline
-- [ ] Automated model retraining
-- [ ] Feature engineering improvements
+4. **Mobile App**
+   - React Native cross-platform app
+   - Offline functionality
+
+5. **Additional Integrations**
+   - NDMA official data
+   - SMS alerts (Twilio)
+   - Pakistan-specific weather services (PMD)
+
+6. **Enhanced UI**
+   - Complete Leaflet map integration
+   - Chart.js data visualization
+   - Responsive design improvements
 
 ---
 
-## Risk Score Legend
+## Contact
 
-| Score Range | Level | Color | Description |
-|-------------|-------|-------|-------------|
-| 0.0 - 0.3 | Low | Green | Safe conditions |
-| 0.3 - 0.6 | Moderate | Yellow | Caution advised |
-| 0.6 - 0.8 | High | Orange | Warning - prepare |
-| 0.8+ | Extreme | Red | Danger - immediate action |
+**Developed by Muhammad Moiz Ahmed** - Final Year Project
 
 ---
 
-## Performance Metrics
+## Additional Notes
 
-- **Prediction Accuracy:** 95% average across models
-- **System Uptime:** 99.9% target
-- **API Response Time:** <500ms average
-- **Users Protected:** 50,000+ (target)
-- **Cities Monitored:** 12 major Pakistani cities
+- The frontend `main.js` has a base URL mismatch: it points to `http://localhost:5001` but the server runs on port `5000` by default
+- Email verification PINs are stored in-memory and will be lost on server restart (use Redis in production)
+- Password hashing uses SHA256; consider bcrypt for production
+- CORS is open to all origins in development; restrict in production
 
----
-
-## Security Features
-
-- JWT-based authentication
-- Password hashing (bcrypt)
-- **6-digit PIN email verification** - Prevents fake registrations
-- **Rate limiting** on API endpoints
-- CORS protection
-- Input validation and sanitization
-- OAuth 2.0 for social login (Google, GitHub)
-- HTTPS enforcement (production)
-
----
-
-## Contributing
-
-This is a Final Year Project (FYP) for academic purposes. Contributions and suggestions are welcome for future development.
-
----
-
-## License
-
-This project is developed for academic purposes as part of a Final Year Project (FYP).
-
----
-
-## Acknowledgments
-
-- NASA for providing open APIs and satellite data
-- USGS for earthquake data
-- OpenWeather for weather forecasts
-- GDACS for disaster alerts
-
----
-
-## Contact & Support
-
-For inquiries or support, please contact the project developer.
-
----
-
-**Developed by Muhammad Moiz Ahmed**
-
-*Final Year Project - Pakistan*
-*2026*
