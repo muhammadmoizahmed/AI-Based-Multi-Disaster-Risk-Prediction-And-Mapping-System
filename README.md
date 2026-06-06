@@ -27,7 +27,7 @@ An AI-powered disaster prediction and early warning system specifically designed
 
 **DisasterGuard** is a comprehensive disaster prediction and management system for Pakistan. It integrates multiple real-time data sources, AI-powered chat assistance, user authentication, and admin management.
 
-### What has been completed?
+### Completed Features
 - ✅ **Full Stack Architecture**: FastAPI backend with HTML/CSS/JS frontend
 - ✅ **User Authentication System**: Email/password, OAuth2 (Google/GitHub), email verification
 - ✅ **AI Chat Assistant**: Gemini-based chatbot for disaster management queries
@@ -38,8 +38,8 @@ An AI-powered disaster prediction and early warning system specifically designed
 - ✅ **API Testing Scripts**: Comprehensive testing of external data sources
 - ✅ **Email Service**: SMTP integration for verification/reset emails
 
-### What is incomplete?
-- ❌ **Machine Learning Models**: Flood/earthquake/wildfire prediction models not trained/deployed
+### Planned Enhancements
+- ❌ **Machine Learning**: Datasets have been collected and prepared. Model training and deployment are planned in the next development phase.
 - ❌ **Redis Caching**: In-memory cache only, no Redis integration
 - ❌ **WebSocket Updates**: No real-time WebSocket push notifications
 - ❌ **PostgreSQL by Default**: SQLite not fully set up (USE_SQLITE flag in db_config)
