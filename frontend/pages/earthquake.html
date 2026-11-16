@@ -4,10 +4,10 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Earthquake Monitoring - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -16,14 +16,14 @@
     <style>
         .leaflet-control-zoom-in,
         .leaflet-control-zoom-out {
-            background-color: #1e293b !important;
-            color: #f8fafc !important;
-            border-color: #334155 !important;
+            background-color: #FFFFFF !important;
+            color: #34495E !important;
+            border-color: #E7EDF0 !important;
         }
         .sidebar a.active {
-            border-left: 4px solid #22d3ee;
-            background: rgba(34, 211, 238, 0.1);
-            color: #67e8f9;
+            border-left: 4px solid #82AAA7;
+            background: rgba(130, 170, 167, 0.12);
+            color: #82AAA7;
             font-weight: 600;
         }
     </style>
@@ -49,6 +49,16 @@
     <style>
         .navbar-content { max-width: 100% !important; margin: 0 !important; padding: 0 2rem !important; }
     </style>
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 
 <body>
@@ -91,7 +101,7 @@
                         Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"
                             style="color: var(--accent-quaternary);"></i> Heatmap</a></li>
-                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #E9BD69;"></i> Weather</a></li>
                 <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
@@ -133,7 +143,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
                     <input type="text" class="input-field border border-slate-700 bg-slate-900/80 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-slate-100 placeholder-slate-500" id="citySearch" placeholder="Search any city..."
                         style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
                     <div id="cityDropdown" class="city-dropdown"
-                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
+                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(52, 73, 94, 0.10); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="refreshData()">
@@ -200,7 +210,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
         <!-- Charts Row -->
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem; align-items: stretch;">
             <div class="card-3d">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <h3 style="font-weight: 700;"><i class="fas fa-chart-line"
                             style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity Timeline</h3>
                     <p id="chartSubtitle" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.35rem;">Loading recorded events...</p>
@@ -242,7 +252,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
         <!-- Map and Table -->
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
             <div class="card-3d">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3 style="font-weight: 700;"><i class="fas fa-map-marked-alt"
                                 style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity Map</h3>
@@ -251,15 +261,15 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
                 </div>
                 <div id="quakeMap" role="img" aria-label="Seismic activity map" style="height: 420px; border-radius: 0 0 var(--radius-md) var(--radius-md);"></div>
                 <div style="display: flex; gap: 1.5rem; padding: 0.8rem 1rem; background: var(--bg-tertiary); border-radius: var(--radius-md); margin: 0 1rem 1rem; font-size: 0.8rem;">
-                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff1744;margin-right:6px;"></span>Strong (5+)</span>
-                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff6d00;margin-right:6px;"></span>Moderate (4-5)</span>
-                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ffd600;margin-right:6px;"></span>Light (3-4)</span>
-                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#00c853;margin-right:6px;"></span>Minor (&lt;3)</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#D98282;margin-right:6px;"></span>Strong (5+)</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#E69A70;margin-right:6px;"></span>Moderate (4-5)</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#E9BD69;margin-right:6px;"></span>Light (3-4)</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#72B995;margin-right:6px;"></span>Minor (&lt;3)</span>
                 </div>
             </div>
 
             <div class="card-3d" style="align-self: start;">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <h3 style="font-weight: 700;">Recent Earthquakes</h3>
                 </div>
                 <div id="recentQuakeList" style="padding: 1rem; max-height: 480px; overflow-y: auto;">
@@ -270,7 +280,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
 
         <!-- Earthquake History Table -->
         <div class="card-3d">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 style="font-weight: 700;"><i class="fas fa-history"
                             style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Earthquake History</h3>
@@ -338,8 +348,8 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
                 datasets: [{
                     label: 'Magnitude',
                     data: [],
-                    borderColor: '#7b2cbf',
-                    backgroundColor: 'rgba(123, 44, 191, 0.1)',
+                    borderColor: '#82AAA7',
+                    backgroundColor: 'rgba(130, 170, 167, 0.12)',
                     fill: true,
                     tension: 0.35,
                     pointRadius: 3
@@ -347,10 +357,10 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
             },
             options: {
                 responsive: true,
-                plugins: { legend: { labels: { color: '#a0a0b0' } } },
+                plugins: { legend: { labels: { color: '#7B8794' } } },
                 scales: {
-                    x: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
-                    y: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                    x: { ticks: { color: '#7B8794' }, grid: { color: 'rgba(52, 73, 94, 0.07)' } },
+                    y: { ticks: { color: '#7B8794' }, grid: { color: 'rgba(52, 73, 94, 0.07)' } }
                 }
             }
         });
@@ -362,24 +372,24 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
                 labels: ['Minor (1-3)', 'Light (3-4)', 'Moderate (4-5)', 'Strong (5+)'],
                 datasets: [{
                     data: [0, 0, 0, 0],
-                    backgroundColor: ['#00c853', '#ffd600', '#ff6d00', '#ff1744']
+                    backgroundColor: ['#72B995', '#E9BD69', '#E69A70', '#D98282']
                 }]
             },
             options: {
                 responsive: true,
-                plugins: { legend: { position: 'bottom', labels: { color: '#a0a0b0' } } }
+                plugins: { legend: { position: 'bottom', labels: { color: '#7B8794' } } }
             }
         });
 
         // Initialize Earthquake Map
         const quakeMap = L.map('quakeMap').setView([33.6844, 73.0479], 9);
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
             maxNativeZoom: 16,
             maxZoom: 19
         }).addTo(quakeMap);
 
-        const riskColorMap = { low: '#00c853', moderate: '#ffd600', high: '#ff6d00', extreme: '#ff1744' };
+        const riskColorMap = { low: '#72B995', moderate: '#E9BD69', high: '#E69A70', extreme: '#D98282' };
         const quakeLayer = L.layerGroup().addTo(quakeMap);
         let latestRisk = null;
         let refreshTimer = null;
@@ -397,10 +407,10 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
         }
 
         function magnitudeColor(magnitude) {
-            if (magnitude >= 5) return '#ff1744';
-            if (magnitude >= 4) return '#ff6d00';
-            if (magnitude >= 3) return '#ffd600';
-            return '#00c853';
+            if (magnitude >= 5) return '#D98282';
+            if (magnitude >= 4) return '#E69A70';
+            if (magnitude >= 3) return '#E9BD69';
+            return '#72B995';
         }
 
         async function getJson(url) {
@@ -419,7 +429,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
             if (location && Number.isFinite(location.latitude) && Number.isFinite(location.longitude) && latestRisk) {
                 const probability = latestRisk.prediction.damage_probability;
                 const radiusMeters = 12000 + probability * 88000;
-                const riskColor = riskColorMap[latestRisk.prediction.risk_level] || '#ffd600';
+                const riskColor = riskColorMap[latestRisk.prediction.risk_level] || '#E9BD69';
                 L.circle([location.latitude, location.longitude], {
                     radius: radiusMeters,
                     color: riskColor,
@@ -472,7 +482,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
         function renderRisk(data) {
             latestRisk = data;
             const level = data.prediction.risk_level;
-            const color = riskColorMap[level] || '#ffd600';
+            const color = riskColorMap[level] || '#E9BD69';
             const probability = data.prediction.damage_probability;
 
             const scoreEl = document.getElementById('riskScoreValue');
@@ -565,7 +575,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
                 recentEl.innerHTML = liveEvents.slice(0, 4).map(e => {
                     const color = magnitudeColor(e.magnitude);
                     return `
-                        <div style="padding: 0.75rem; background: rgba(255,255,255,0.04); border-left: 3px solid ${color}; border-radius: var(--radius-md);">
+                        <div style="padding: 0.75rem; background: rgba(52, 73, 94, 0.06); border-left: 3px solid ${color}; border-radius: var(--radius-md);">
                             <span style="font-size: 0.8rem; color: var(--text-secondary);">M ${Number(e.magnitude).toFixed(1)} · ${Number(e.depth_km || 0).toFixed(0)} km deep · ${Math.round(e.distance_km || 0)} km away</span>
                             <p style="font-weight: 600; font-size: 0.9rem;">${e.place || e.city}</p>
                             <p style="color: var(--text-muted); font-size: 0.75rem;">${e.date}</p>
@@ -576,7 +586,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
                 const color = magnitudeColor(nearest.magnitude);
                 recentEl.innerHTML = `
                     <p style="color: var(--text-muted); font-size: 0.85rem;">No local USGS events in the last ${liveRisk.location?.window_days || 30} days.</p>
-                    <div style="padding: 0.75rem; background: rgba(255,255,255,0.04); border-left: 3px solid ${color}; border-radius: var(--radius-md);">
+                    <div style="padding: 0.75rem; background: rgba(52, 73, 94, 0.06); border-left: 3px solid ${color}; border-radius: var(--radius-md);">
                         <span style="font-size: 0.8rem; color: var(--text-secondary);">Nearest: M ${Number(nearest.magnitude).toFixed(1)} · ${Math.round(nearest.distance_km)} km away</span>
                         <p style="font-weight: 600; font-size: 0.9rem;">${nearest.place || ''}</p>
                         <p style="color: var(--text-muted); font-size: 0.75rem;">${nearest.date} (${Math.round(nearest.age_days)} days ago)</p>
@@ -673,8 +683,8 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
                 ['Temporal CV F1', temporal.f1],
             ];
             document.getElementById('modelMetrics').innerHTML = cards.map(([label, value]) => `
-                <div style="padding: 0.75rem; background: rgba(255,255,255,0.04); border-radius: var(--radius-md);">
-                    <p style="color: #cbd5e1; font-size: 0.72rem;">${label}</p>
+                <div style="padding: 0.75rem; background: rgba(52, 73, 94, 0.06); border-radius: var(--radius-md);">
+                    <p style="color: #7B8794; font-size: 0.72rem;">${label}</p>
                     <p style="font-size: 1.15rem; font-weight: 800; color: var(--accent-secondary);">${value != null ? Number(value).toFixed(3) : '--'}</p>
                 </div>
             `).join('');
@@ -685,7 +695,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
 
         async function loadDashboard() {
             const icon = document.getElementById('refreshIcon');
-            setLiveStatus('Syncing...', '#ffd600');
+            setLiveStatus('Syncing...', '#E9BD69');
             try {
                 const [info, risk] = await Promise.all([
                     getJson('/api/earthquake/model-info'),
@@ -717,11 +727,11 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
                     : risk.location;
                 renderRisk(risk);
                 renderEvents(cityEvents, mapLocation);
-                setLiveStatus('Live · API connected', '#00c853');
+                setLiveStatus('Live · API connected', '#72B995');
                 setLastUpdated();
             } catch (error) {
                 console.error('Earthquake dashboard load failed:', error);
-                setLiveStatus('API unavailable', '#ff1744');
+                setLiveStatus('API unavailable', '#D98282');
                 document.getElementById('riskScoreValue').textContent = '--';
                 document.getElementById('riskBadge').textContent = 'UNAVAILABLE';
                 document.getElementById('riskBadge').className = 'risk-badge moderate';
@@ -825,7 +835,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
 
             if (filtered.length > 0 && value.length > 0) {
                 cityDropdown.innerHTML = filtered.map(city =>
-                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(123,44,191,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
+                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(52, 73, 94, 0.07);" onmouseover="this.style.background='rgba(130, 170, 167, 0.12)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
             } else {
@@ -836,7 +846,7 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
         citySearch.addEventListener('focus', function () {
             if (this.value === '') {
                 cityDropdown.innerHTML = pakistanCities.slice(0, 10).map(city =>
-                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(123,44,191,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
+                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(52, 73, 94, 0.07);" onmouseover="this.style.background='rgba(130, 170, 167, 0.12)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
             }
@@ -941,6 +951,8 @@ var(--risk-moderate); font-weight: 600;">Connecting...</span>
         initEarthquakePage();
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 
 </html>

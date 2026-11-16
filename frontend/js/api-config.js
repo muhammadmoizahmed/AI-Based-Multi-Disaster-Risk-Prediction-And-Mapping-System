@@ -3,14 +3,15 @@
     try {
         configured = configured || localStorage.getItem('api_origin');
     } catch (e) {}
-    var origin = (configured || 'http://localhost:5000').replace(/\/$/, '');
-    var backendPort = '';
-    try {
-        backendPort = new URL(origin).port;
-    } catch (e) {}
+    var fallbackOrigin = window.location.origin;
+    if (window.location.protocol === 'file:') {
+        fallbackOrigin = 'http://localhost:5000';
+    } else if (window.location.protocol === 'http:' && window.location.port !== '5000') {
+        fallbackOrigin = 'http://' + window.location.hostname + ':5000';
+    }
+    var origin = (configured || fallbackOrigin).replace(/\/$/, '');
 
-    var servedByBackend = window.location.protocol.indexOf('http') === 0 && window.location.port === backendPort;
-    if (servedByBackend) {
+    if (origin === window.location.origin) {
         return;
     }
 

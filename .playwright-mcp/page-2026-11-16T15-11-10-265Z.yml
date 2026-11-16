@@ -1,0 +1,47 @@
+- generic [active] [ref=f238e1]:
+  - navigation [ref=f238e4]:
+    - generic [ref=f238e5]:
+      - link " DisasterGuard" [ref=f238e6] [cursor=pointer]:
+        - /url: index.html
+        - generic [ref=f238e7]: 
+        - text: DisasterGuard
+      - list [ref=f238e8]:
+        - listitem [ref=f238e9]:
+          - link "Sign Up" [ref=f238e10] [cursor=pointer]:
+            - /url: register.html
+  - generic [ref=f238e13]:
+    - generic [ref=f238e14]:
+      - generic [ref=f238e15]: 
+      - heading "Welcome Back" [level=2] [ref=f238e17]
+      - paragraph [ref=f238e18]: Sign in to access your disaster monitoring dashboard
+    - button " Sign In With Google" [ref=f238e20] [cursor=pointer]:
+      - generic [ref=f238e21]: 
+      - text: Sign In With Google
+    - generic [ref=f238e22]: or continue with email
+    - generic [ref=f238e23]:
+      - generic [ref=f238e24]:
+        - generic [ref=f238e25]: 
+        - textbox "Enter your email" [ref=f238e26]
+      - generic [ref=f238e27]:
+        - generic [ref=f238e28]: 
+        - textbox "Enter your password" [ref=f238e29]
+        - generic [ref=f238e30] [cursor=pointer]: 
+      - generic [ref=f238e31]:
+        - generic [ref=f238e32] [cursor=pointer]:
+          - checkbox "Remember me" [ref=f238e33]
+          - generic [ref=f238e34]: Remember me
+        - link "Forgot password?" [ref=f238e35] [cursor=pointer]:
+          - /url: forgot-password.html
+      - button " Sign In" [ref=f238e36] [cursor=pointer]:
+        - generic [ref=f238e37]: 
+        - text: Sign In
+    - paragraph [ref=f238e39]:
+      - text: Don't have an account?
+      - link "Create one" [ref=f238e40] [cursor=pointer]:
+        - /url: register.html
+  - text: 
+  - generic [ref=f238e41]:
+    - button "Install app" [ref=f238e42] [cursor=pointer]:
+      - generic [aria-hidden] [ref=f238e43]: 
+    - button "Dismiss install prompt" [ref=f238e45] [cursor=pointer]:
+      - generic [aria-hidden] [ref=f238e46]: 

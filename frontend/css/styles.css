@@ -1,48 +1,59 @@
 ﻿/* ============================================
-   DISASTER MANAGEMENT SYSTEM - 3D DARK THEME
+   DISASTER MANAGEMENT SYSTEM - PREMIUM LIGHT THEME
    ============================================ */
 
 /* CSS Variables */
 :root {
-    /* Dark Theme Colors */
-    --bg-primary: #0a0a0f;
-    --bg-secondary: #12121a;
-    --bg-tertiary: #1a1a25;
-    --bg-card: #161621;
-    --bg-glass: rgba(22, 22, 33, 0.85);
+    /* Neutral Surfaces */
+    --bg-primary: #F8FAFC;
+    --bg-secondary: #F1F6F8;
+    --bg-tertiary: #EAF3FA;
+    --bg-card: #FFFFFF;
+    --bg-glass: rgba(255, 255, 255, 0.88);
+    --surface-white: #FFFFFF;
+    --surface-blue: #EAF3FA;
+    --surface-pale-blue: #DDEBF5;
+    --surface-sky: #C9DFEE;
+    --surface-cream: #FFF8EE;
+    --surface-peach: #FCEBDD;
+    --surface-apricot: #F8E3D3;
+    --surface-sand: #F3E9D9;
+    --surface-mint: #E7F3EE;
+    --surface-sage: #D8E9DF;
+    --surface-aqua: #E5F3F2;
+    --border-color: #E7EDF0;
+    --border-strong: #D8E4E9;
 
     /* Accent Colors */
-    --accent-primary: #00d4ff;
-    --accent-secondary: #7b2cbf;
-    --accent-tertiary: #ff006e;
-    --accent-quaternary: #ffbe0b;
+    --accent-primary: #668E9A;
+    --accent-secondary: #82AAA7;
+    --accent-tertiary: #E9A18D;
+    --accent-quaternary: #E9BD69;
 
     /* Risk Level Colors */
-    --risk-low: #00c853;
-    --risk-moderate: #ffd600;
-    --risk-high: #ff6d00;
-    --risk-extreme: #ff1744;
+    --risk-low: #72B995;
+    --risk-moderate: #E9BD69;
+    --risk-high: #E69A70;
+    --risk-extreme: #D98282;
 
     /* Text Colors */
-    --text-primary: #fdfbfb;
-    --text-secondary: #a0a0b0;
-    --text-muted: #6c6c80;
+    --text-primary: #34495E;
+    --text-secondary: #7B8794;
+    --text-muted: #9AA6B2;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #7b2cbf 100%);
-    --gradient-secondary: linear-gradient(135deg, #ff006e 0%, #ffbe0b 100%);
-    --gradient-dark: linear-gradient(180deg, #161621 0%, #0a0a0f 100%);
-    --gradient-card: linear-gradient(145deg, rgba(22, 22, 33, 0.9) 0%, rgba(10, 10, 15, 0.95) 100%);
+    --gradient-primary: linear-gradient(135deg, #668E9A 0%, #82AAA7 100%);
+    --gradient-secondary: linear-gradient(135deg, #FCEBDD 0%, #F3E9D9 100%);
+    --gradient-dark: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    --gradient-card: linear-gradient(145deg, #FFFFFF 0%, #FCFEFF 100%);
 
-    /* 3D Effects */
-    --shadow-3d: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.05),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    --shadow-3d-hover: 0 30px 60px -12px rgba(0, 0, 0, 0.6),
-        0 0 0 1px rgba(0, 212, 255, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    --glow-primary: 0 0 20px rgba(0, 212, 255, 0.3);
-    --glow-secondary: 0 0 20px rgba(123, 44, 191, 0.3);
+    /* Elevation */
+    --shadow-3d: 0 1px 2px rgba(52, 73, 94, 0.04),
+        0 16px 40px rgba(52, 73, 94, 0.07);
+    --shadow-3d-hover: 0 2px 6px rgba(52, 73, 94, 0.05),
+        0 24px 56px rgba(52, 73, 94, 0.12);
+    --glow-primary: 0 8px 24px rgba(102, 142, 154, 0.25);
+    --glow-secondary: 0 8px 24px rgba(130, 170, 167, 0.20);
 
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -53,16 +64,16 @@
     --spacing-xxl: 3rem;
 
     /* Border Radius */
-    --radius-sm: 8px;
-    --radius-md: 12px;
+    --radius-sm: 10px;
+    --radius-md: 14px;
     --radius-lg: 20px;
     --radius-xl: 28px;
     --radius-full: 9999px;
 
     /* Transitions */
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.3s ease;
-    --transition-slow: 0.5s ease;
+    --transition-fast: 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+    --transition-normal: 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+    --transition-slow: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* Reset & Base */
@@ -98,9 +109,9 @@ body {
     z-index: -1;
 background: 
 
-        radial-gradient(ellipse at 20% 20%, rgba(0, 212, 255, 0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(123, 44, 191, 0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, rgba(255, 0, 110, 0.02) 0%, transparent 60%);
+        radial-gradient(ellipse at 20% 20%, rgba(102, 142, 154, 0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(130, 170, 167, 0.03) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(233, 161, 141, 0.02) 0%, transparent 60%);
 }
 
 .bg-grid {
@@ -112,8 +123,8 @@ background:
     z-index: -1;
 background-image: 
 
-        linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(102, 142, 154, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(102, 142, 154, 0.03) 1px, transparent 1px);
     background-size: 50px 50px;
 }
 
@@ -165,9 +176,9 @@ background-image:
     background: linear-gradient(135deg,
             rgba(255, 255, 255, 0.25) 0%,
             rgba(255, 255, 255, 0.12) 15%,
-            rgba(0, 212, 255, 0.08) 30%,
+            rgba(102, 142, 154, 0.08) 30%,
             transparent 50%,
-            rgba(123, 44, 191, 0.06) 70%,
+            rgba(130, 170, 167, 0.06) 70%,
             rgba(0, 0, 0, 0.15) 100%);
     transition: background 0.5s ease;
 }
@@ -226,14 +237,14 @@ background-image:
 /* Mirror Reflection on Input Fields */
 .input-field {
     background: linear-gradient(180deg,
-            rgba(26, 26, 37, 1) 0%,
-            rgba(18, 18, 26, 1) 100%);
+            #FFFFFF 0%,
+            #FFFFFF 100%);
 }
 
 .input-field:focus {
     outline: none;
     border-color: var(--accent-primary);
-    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(102, 142, 154, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Select Dropdown Dark Theme */
@@ -242,7 +253,7 @@ select.input-field {
     color: var(--text-primary);
     cursor: pointer;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300d4ff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23668E9A' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;
     padding-right: 2.5rem;
@@ -285,10 +296,10 @@ select.input-field option:checked {
 /* Mirror glow on sidebar active item */
 .sidebar-menu a.active {
     background: linear-gradient(90deg,
-            rgba(0, 212, 255, 0.1) 0%,
-            rgba(0, 212, 255, 0.05) 50%,
-            rgba(123, 44, 191, 0.05) 100%);
-    box-shadow: inset 0 0 0 1px rgba(0, 212, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            rgba(102, 142, 154, 0.1) 0%,
+            rgba(102, 142, 154, 0.05) 50%,
+            rgba(130, 170, 167, 0.05) 100%);
+    box-shadow: inset 0 0 0 1px rgba(102, 142, 154, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Mirror reflection on tables - STRONG */
@@ -298,11 +309,11 @@ select.input-field option:checked {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 212, 255, 0.05) 50%, rgba(0, 0, 0, 0.3) 100%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(102, 142, 154, 0.05) 50%, rgba(0, 0, 0, 0.3) 100%);
 }
 
 .data-table tr:hover td {
-    background: linear-gradient(90deg, rgba(0, 212, 255, 0.08) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(123, 44, 191, 0.08) 100%);
+    background: linear-gradient(90deg, rgba(102, 142, 154, 0.08) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(130, 170, 167, 0.08) 100%);
 }
 
 /* Buttons */
@@ -341,12 +352,12 @@ select.input-field option:checked {
 .btn-primary {
     background: var(--gradient-primary);
     color: white;
-    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(102, 142, 154, 0.3);
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(0, 212, 255, 0.4);
+    box-shadow: 0 6px 25px rgba(102, 142, 154, 0.4);
 }
 
 .btn-secondary {
@@ -384,10 +395,10 @@ select.input-field option:checked {
 }
 
 .btn-secondary.active {
-    background: rgba(251, 191, 36, 0.15);
-    border-color: rgba(251, 191, 36, 0.4);
-    color: #fbbf24;
-    box-shadow: 0 0 12px rgba(251, 191, 36, 0.15);
+    background: rgba(233, 189, 105, 0.15);
+    border-color: rgba(233, 189, 105, 0.4);
+    color: #E9BD69;
+    box-shadow: 0 0 12px rgba(233, 189, 105, 0.15);
 }
 
 .btn-secondary.active i {
@@ -395,12 +406,12 @@ select.input-field option:checked {
 }
 
 .btn-danger {
-    background: linear-gradient(135deg, #ff1744 0%, #ff6d00 100%);
+    background: linear-gradient(135deg, #D98282 0%, #E69A70 100%);
     color: white;
 }
 
 .btn-success {
-    background: linear-gradient(135deg, #00c853 0%, #00d4ff 100%);
+    background: linear-gradient(135deg, #82AAA7 0%, #668E9A 100%);
     color: white;
 }
 
@@ -696,7 +707,7 @@ select.input-field option:checked {
 }
 
 .dropdown-item:hover {
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(102, 142, 154, 0.1);
     color: var(--accent-primary);
     transform: translateX(5px);
 }
@@ -710,7 +721,7 @@ select.input-field option:checked {
 }
 
 .dropdown-item.logout:hover {
-    background: rgba(255, 23, 68, 0.1);
+    background: rgba(217, 130, 130, 0.1);
     color: var(--risk-extreme);
 }
 
@@ -747,7 +758,7 @@ select.input-field option:checked {
     font-weight: 900;
     line-height: 1.1;
     margin-bottom: var(--spacing-lg);
-    background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
+    background: linear-gradient(135deg, #fff 0%, #7B8794 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -785,13 +796,13 @@ select.input-field option:checked {
     height: 450px;
     border-radius: 50%;
     background:
-        radial-gradient(circle at 30% 30%, rgba(0, 212, 255, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at 70% 70%, rgba(123, 44, 191, 0.4) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(123, 44, 191, 0.1) 100%);
+        radial-gradient(circle at 30% 30%, rgba(102, 142, 154, 0.4) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(130, 170, 167, 0.4) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(102, 142, 154, 0.1) 0%, rgba(130, 170, 167, 0.1) 100%);
     box-shadow:
         inset -20px -20px 60px rgba(0, 0, 0, 0.5),
         inset 20px 20px 60px rgba(255, 255, 255, 0.1),
-        0 0 100px rgba(0, 212, 255, 0.2);
+        0 0 100px rgba(102, 142, 154, 0.2);
     position: relative;
     animation: float 6s ease-in-out infinite;
 }
@@ -804,7 +815,7 @@ select.input-field option:checked {
     right: 10%;
     bottom: 10%;
     border-radius: 50%;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 Q30 30 30 50 Q30 70 50 90 Q70 70 70 50 Q70 30 50 10' fill='none' stroke='rgba(0,212,255,0.3)' stroke-width='0.5'/%3E%3C/svg%3E") center/contain;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 10 Q30 30 30 50 Q30 70 50 90 Q70 70 70 50 Q70 30 50 10' fill='none' stroke='rgba(102,142,154,0.3)' stroke-width='0.5'/%3E%3C/svg%3E") center/contain;
     opacity: 0.5;
     animation: rotate 20s linear infinite;
 }
@@ -852,7 +863,7 @@ select.input-field option:checked {
     font-size: 2.5rem;
     font-weight: 800;
     margin-bottom: var(--spacing-md);
-    background: linear-gradient(135deg, #fff 0%, #a0a0b0 100%);
+    background: linear-gradient(135deg, #fff 0%, #7B8794 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -940,22 +951,22 @@ select.input-field option:checked {
 }
 
 .risk-badge.low {
-    background: rgba(0, 200, 83, 0.2);
+    background: rgba(114, 185, 149, 0.2);
     color: var(--risk-low);
 }
 
 .risk-badge.moderate {
-    background: rgba(255, 214, 0, 0.2);
+    background: rgba(233, 189, 105, 0.2);
     color: var(--risk-moderate);
 }
 
 .risk-badge.high {
-    background: rgba(255, 109, 0, 0.2);
+    background: rgba(230, 154, 112, 0.2);
     color: var(--risk-high);
 }
 
 .risk-badge.extreme {
-    background: rgba(255, 23, 68, 0.2);
+    background: rgba(217, 130, 130, 0.2);
     color: var(--risk-extreme);
 }
 
@@ -1049,7 +1060,7 @@ select.input-field option:checked {
 
 .sidebar-menu a:hover,
 .sidebar-menu a.active {
-    background: rgba(0, 212, 255, 0.1);
+    background: rgba(102, 142, 154, 0.1);
     color: var(--accent-primary);
 }
 
@@ -1151,7 +1162,7 @@ select.input-field option:checked {
 }
 
 .status-badge.active {
-    background: rgba(0, 200, 83, 0.15);
+    background: rgba(114, 185, 149, 0.15);
     color: var(--risk-low);
 }
 
@@ -1161,7 +1172,7 @@ select.input-field option:checked {
 }
 
 .status-badge.warning {
-    background: rgba(255, 214, 0, 0.15);
+    background: rgba(233, 189, 105, 0.15);
     color: var(--risk-moderate);
 }
 
@@ -1170,7 +1181,7 @@ select.input-field option:checked {
 }
 
 .status-badge.critical {
-    background: rgba(255, 23, 68, 0.15);
+    background: rgba(217, 130, 130, 0.15);
     color: var(--risk-extreme);
 }
 
@@ -1285,12 +1296,12 @@ select.input-field option:checked {
 
 .alert-item.warning {
     border-left-color: var(--risk-moderate);
-    background: rgba(255, 214, 0, 0.05);
+    background: rgba(233, 189, 105, 0.05);
 }
 
 .alert-item.critical {
     border-left-color: var(--risk-extreme);
-    background: rgba(255, 23, 68, 0.05);
+    background: rgba(217, 130, 130, 0.05);
 }
 
 .alert-icon {
@@ -1304,12 +1315,12 @@ select.input-field option:checked {
 }
 
 .alert-item.warning .alert-icon {
-    background: rgba(255, 214, 0, 0.1);
+    background: rgba(233, 189, 105, 0.1);
     color: var(--risk-moderate);
 }
 
 .alert-item.critical .alert-icon {
-    background: rgba(255, 23, 68, 0.1);
+    background: rgba(217, 130, 130, 0.1);
     color: var(--risk-extreme);
 }
 

@@ -4,14 +4,14 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!-- NO-CACHE METATAGS -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Admin Settings - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- NO-CACHE METATAGS ONLY (DON'T CLEAR LOCALSTORAGE) -->
@@ -21,6 +21,16 @@
     <script src="../js/location.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/api-config.js"></script>
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 
 <body>
@@ -34,7 +44,7 @@
                 <i class="fas fa-shield-alt"></i>
                 DisasterGuard
                 <span
-                    style="font-size: 0.6em; background: #10b981; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
+                    style="font-size: 0.6em; background: #72B995; padding: 0.25rem 0.5rem; border-radius: 4px; margin-left: 0.5rem;color: #fff !important;font-weight: 700;letter-spacing: 0.5px;-webkit-text-fill-color: #fff !important;">ADMIN</span>
             </a>
             <div style="display: flex; align-items: center; gap: 1.5rem;">
                 <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
@@ -96,7 +106,7 @@
 
         <!-- Password Change Section -->
         <div class="card-3d" style="margin-bottom: 2rem;">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                 <h3 style="font-weight: 700;"><i class="fas fa-key" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Change Password</h3>
             </div>
             <div style="padding: 1.5rem;">
@@ -126,7 +136,7 @@
 
         <!-- Add Moderator Section -->
         <div class="card-3d" style="margin-bottom: 2rem;">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                 <h3 style="font-weight: 700;"><i class="fas fa-user-plus" style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Add Moderator</h3>
             </div>
             <div style="padding: 1.5rem;">
@@ -159,7 +169,7 @@
 
         <!-- Existing Moderators List -->
         <div class="card-3d" style="margin-bottom: 2rem;">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                 <h3 style="font-weight: 700;"><i class="fas fa-users-cog" style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Existing Moderators</h3>
             </div>
             <div style="overflow-x: auto;">
@@ -177,7 +187,7 @@
                         <tr>
                             <td>
                                 <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff006e, #ffbe0b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">HR</div>
+                                    <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #E9A18D, #E9BD69); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">HR</div>
                                     <span>Hamid Raza</span>
                                 </div>
                             </td>
@@ -213,40 +223,40 @@
 
         <!-- Permissions Documentation -->
         <div class="card-3d" style="margin-bottom: 2rem;">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                 <h3 style="font-weight: 700;"><i class="fas fa-info-circle" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Role Permissions</h3>
             </div>
             <div style="padding: 1.5rem;">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
                     <!-- Admin Permissions -->
-                    <div style="padding: 1.5rem; background: rgba(0, 212, 255, 0.05); border: 1px solid rgba(0, 212, 255, 0.2); border-radius: var(--radius-md);">
+                    <div style="padding: 1.5rem; background: rgba(102, 142, 154, 0.08); border: 1px solid rgba(102, 142, 154, 0.18); border-radius: var(--radius-md);">
                         <h4 style="font-weight: 700; margin-bottom: 1rem; color: var(--accent-primary);"><i class="fas fa-crown" style="margin-right: 0.5rem;"></i>Admin Capabilities</h4>
                         <ul style="list-style: none; padding: 0;">
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Change own password
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Add and remove moderators
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Manage all users (edit, delete, ban)
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Configure system settings and alerts
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Manage ML models and training
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 View all system logs and audit trails
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Monitor API usage and performance
                             </li>
@@ -258,34 +268,34 @@
                     </div>
 
                     <!-- Moderator Permissions -->
-                    <div style="padding: 1.5rem; background: rgba(123, 44, 191, 0.05); border: 1px solid rgba(123, 44, 191, 0.2); border-radius: var(--radius-md);">
+                    <div style="padding: 1.5rem; background: rgba(130, 170, 167, 0.07); border: 1px solid rgba(130, 170, 167, 0.18); border-radius: var(--radius-md);">
                         <h4 style="font-weight: 700; margin-bottom: 1rem; color: var(--accent-secondary);"><i class="fas fa-shield-alt" style="margin-right: 0.5rem;"></i>Moderator Capabilities</h4>
                         <ul style="list-style: none; padding: 0;">
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Change own password
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 View and manage regular users
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Configure alert thresholds and notifications
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 View system logs (read-only)
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Monitor API status
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-check-circle" style="color: var(--risk-low); margin-right: 0.5rem;"></i>
                                 Access all disaster monitoring features
                             </li>
-                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                            <li style="padding: 0.5rem 0; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                                 <i class="fas fa-times-circle" style="color: var(--risk-extreme); margin-right: 0.5rem;"></i>
                                 Cannot add/remove other moderators
                             </li>
@@ -476,7 +486,7 @@
                     <tr>
                         <td>
                             <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #ff006e, #ffbe0b); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">
+                                <div style="width: 32px; height: 32px; background: linear-gradient(135deg, #E9A18D, #E9BD69); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;">
                                     ${initials}
                                 </div>
                                 <span>${mod.name}</span>
@@ -520,6 +530,8 @@
         loadModerators();
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 
 </html>

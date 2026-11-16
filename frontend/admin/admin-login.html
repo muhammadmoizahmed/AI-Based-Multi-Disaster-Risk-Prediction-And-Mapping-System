@@ -3,14 +3,14 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!-- NO-CACHE METATAGS -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Admin Login - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @keyframes slideIn {
@@ -44,7 +44,7 @@
             color: white;
             font-weight: 600;
             z-index: 10000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(52, 73, 94, 0.10);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -52,14 +52,24 @@
         }
         
         .toast-success {
-            background: #10b981;
+            background: #72B995;
         }
         
         .toast-error {
-            background: #ef4444;
+            background: #D98282;
         }
     </style>
     <script src="../js/location.js"></script>
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 <body>
     <div class="bg-mesh"></div>
@@ -83,7 +93,7 @@
         <div class="auth-container">
             <div class="card-3d auth-card mirror-effect">
                 <div class="auth-header">
-                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, rgba(255, 23, 68, 0.2), rgba(255, 109, 0, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, rgba(217, 130, 130, 0.18), rgba(230, 154, 112, 0.18)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
                         <i class="fas fa-user-shield" style="font-size: 2.5rem; color: var(--accent-tertiary);"></i>
                     </div>
                     <h2 style="font-size: 1.75rem; font-weight: 800; margin-bottom: 0.5rem;">Admin Portal</h2>
@@ -119,7 +129,7 @@
                     </button>
                 </form>
 
-                <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <div style="text-align: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(52, 73, 94, 0.10);">
                     <p style="color: var(--text-secondary); font-size: 0.9rem;">
                         <i class="fas fa-info-circle" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>
                         Restricted Access - Authorized Personnel Only
@@ -252,6 +262,8 @@
         }
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 </html>
 

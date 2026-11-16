@@ -3,12 +3,22 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Weather Forecast - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="../js/location.js"></script>
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 <body>
     <div class="bg-mesh"></div>
@@ -46,7 +56,7 @@
                 <li><a href="earthquake.html?v=3"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
-                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #E9BD69;"></i> Weather</a></li>
                 <li><a href="forecast.html" class="active"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
@@ -79,14 +89,14 @@
                 <div style="position: relative; width: 250px;">
                     <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
                     <input type="text" class="input-field" id="citySearch" placeholder="Search city..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
-                    <div id="cityDropdown" class="city-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);"></div>
+                    <div id="cityDropdown" class="city-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(52, 73, 94, 0.10); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);"></div>
                 </div>
                 <button class="btn btn-primary" onclick="refreshForecast()"><i class="fas fa-sync-alt"></i> Refresh</button>
             </div>
         </div>
 
         <!-- Selected City Forecast -->
-        <div id="selectedCityForecast" class="card-3d" style="padding: 2rem; margin-bottom: 2rem; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));">
+        <div id="selectedCityForecast" class="card-3d" style="padding: 2rem; margin-bottom: 2rem; background: linear-gradient(135deg, rgba(102, 142, 154, 0.12), rgba(130, 170, 167, 0.12));">
             <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
                 <div style="text-align: center;">
                     <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--accent-primary); margin-bottom: 1rem;"></i>
@@ -104,7 +114,7 @@
 
         <!-- Detailed Forecast Table -->
         <div class="card-3d">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.10);">
                 <h3 style="font-size: 1.25rem; font-weight: 700;"><i class="fas fa-table" style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Detailed Forecast</h3>
             </div>
             <div style="overflow-x: auto;">
@@ -327,18 +337,18 @@
 
         // Weather conditions mapping
         const weatherConditions = {
-            'Clear': { icon: 'fa-sun', color: '#ffd600' },
-            'Sunny': { icon: 'fa-sun', color: '#ffd600' },
-            'Partly Cloudy': { icon: 'fa-cloud-sun', color: '#ffab00' },
-            'Cloudy': { icon: 'fa-cloud', color: '#90a4ae' },
-            'Overcast': { icon: 'fa-cloud', color: '#78909c' },
-            'Rain': { icon: 'fa-cloud-rain', color: '#00d4ff' },
-            'Light Rain': { icon: 'fa-cloud-rain', color: '#00d4ff' },
-            'Heavy Rain': { icon: 'fa-cloud-showers-heavy', color: '#0091ea' },
-            'Thunderstorm': { icon: 'fa-bolt', color: '#ff6d00' },
-            'Snow': { icon: 'fa-snowflake', color: '#ffffff' },
-            'Fog': { icon: 'fa-smog', color: '#b0bec5' },
-            'Haze': { icon: 'fa-smog', color: '#b0bec5' }
+            'Clear': { icon: 'fa-sun', color: '#E9BD69' },
+            'Sunny': { icon: 'fa-sun', color: '#E9BD69' },
+            'Partly Cloudy': { icon: 'fa-cloud-sun', color: '#E9BD69' },
+            'Cloudy': { icon: 'fa-cloud', color: '#7B8794' },
+            'Overcast': { icon: 'fa-cloud', color: '#7B8794' },
+            'Rain': { icon: 'fa-cloud-rain', color: '#668E9A' },
+            'Light Rain': { icon: 'fa-cloud-rain', color: '#668E9A' },
+            'Heavy Rain': { icon: 'fa-cloud-showers-heavy', color: '#668E9A' },
+            'Thunderstorm': { icon: 'fa-bolt', color: '#E69A70' },
+            'Snow': { icon: 'fa-snowflake', color: '#82AAA7' },
+            'Fog': { icon: 'fa-smog', color: '#7B8794' },
+            'Haze': { icon: 'fa-smog', color: '#7B8794' }
         };
 
         // Get weather condition text from OpenWeatherMap weather code
@@ -456,7 +466,7 @@
             const container = document.getElementById('selectedCityForecast');
             const forecast = generateMockData(city); // We'll replace with real data when it loads
             const today = forecast[0];
-            const condition = weatherConditions[today.condition] || { icon: 'fa-question', color: '#fff' };
+            const condition = weatherConditions[today.condition] || { icon: 'fa-question', color: '#7B8794' };
             
             container.innerHTML = `
                 <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -501,7 +511,7 @@
             const grid = document.getElementById('forecastGrid');
             
             grid.innerHTML = forecast.map(day => {
-                const condition = weatherConditions[day.condition] || { icon: 'fa-question', color: '#fff' };
+                const condition = weatherConditions[day.condition] || { icon: 'fa-question', color: '#7B8794' };
                 const alertLevel = day.rainChance > 70 ? 'var(--risk-extreme)' : day.rainChance > 50 ? 'var(--risk-moderate)' : 'transparent';
                 
                 return `
@@ -525,7 +535,7 @@
             const tbody = document.getElementById('forecastTableBody');
             
             tbody.innerHTML = forecast.map(day => {
-                const condition = weatherConditions[day.condition] || { icon: 'fa-question', color: '#fff' };
+                const condition = weatherConditions[day.condition] || { icon: 'fa-question', color: '#7B8794' };
                 let alertBadge = '';
                 if (day.rainChance > 70) {
                     alertBadge = '<span class="status-badge critical">High Risk</span>';
@@ -578,7 +588,7 @@
             const updatedRender = (c, f) => {
                 const cont = document.getElementById('selectedCityForecast');
                 const today = f[0];
-                const cond = weatherConditions[today.condition] || { icon: 'fa-question', color: '#fff' };
+                const cond = weatherConditions[today.condition] || { icon: 'fa-question', color: '#7B8794' };
                 cont.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div>
@@ -646,8 +656,8 @@
 
                 if (filteredCities.length > 0) {
                     dropdown.innerHTML = filteredCities.map(c => `
-                        <div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" 
-                             onmouseover="this.style.background='rgba(0, 212, 255, 0.1)'" 
+                        <div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(52, 73, 94, 0.07);" 
+                             onmouseover="this.style.background='rgba(102, 142, 154, 0.12)'" 
                              onmouseout="this.style.background='transparent'"
                              onclick="selectCity('${c.name}', ${c.lat}, ${c.lng})">
                             <strong>${c.name}</strong> <span style="color: var(--text-muted); font-size: 0.85rem;">- ${c.province}</span>
@@ -716,5 +726,7 @@
         })();
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 </html>

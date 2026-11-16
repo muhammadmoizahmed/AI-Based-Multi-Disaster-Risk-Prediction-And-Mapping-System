@@ -1,0 +1,239 @@
+- generic [active] [ref=f287e1]:
+  - navigation [ref=f287e4]:
+    - generic [ref=f287e5]:
+      - generic [ref=f287e6]:
+        - button "Open navigation" [ref=f287e7] [cursor=pointer]:
+          - generic [ref=f287e8]: 
+        - link " DisasterGuard" [ref=f287e9] [cursor=pointer]:
+          - /url: index.html
+          - generic [ref=f287e10]: 
+          - text: DisasterGuard
+      - generic [ref=f287e11]:
+        - button "Notifications" [ref=f287e12] [cursor=pointer]:
+          - generic [ref=f287e13]: 
+          - generic [ref=f287e14]: "3"
+        - generic [ref=f287e15] [cursor=pointer]:
+          - generic [ref=f287e16]: TU
+          - generic [ref=f287e18]: 
+  - complementary [ref=f287e19]:
+    - generic [ref=f287e20]:
+      - paragraph [ref=f287e21]: Main
+      - list [ref=f287e22]:
+        - listitem [ref=f287e23]:
+          - link " Dashboard" [ref=f287e24] [cursor=pointer]:
+            - /url: dashboard.html
+            - generic [ref=f287e25]: 
+            - text: Dashboard
+        - listitem [ref=f287e26]:
+          - link " Alerts" [ref=f287e27] [cursor=pointer]:
+            - /url: pages/alerts.html
+            - generic [ref=f287e28]: 
+            - text: Alerts
+        - listitem [ref=f287e29]:
+          - link " History" [ref=f287e30] [cursor=pointer]:
+            - /url: pages/history.html
+            - generic [ref=f287e31]: 
+            - text: History
+    - generic [ref=f287e32]:
+      - paragraph [ref=f287e33]: Disaster Monitoring
+      - list [ref=f287e34]:
+        - listitem [ref=f287e35]:
+          - link " Flood/Rain" [ref=f287e36] [cursor=pointer]:
+            - /url: pages/flood.html
+            - generic [ref=f287e37]: 
+            - text: Flood/Rain
+        - listitem [ref=f287e38]:
+          - link " Earthquake" [ref=f287e39] [cursor=pointer]:
+            - /url: pages/earthquake.html?v=3
+            - generic [ref=f287e40]: 
+            - text: Earthquake
+        - listitem [ref=f287e41]:
+          - link " Wildfire" [ref=f287e42] [cursor=pointer]:
+            - /url: pages/wildfire.html
+            - generic [ref=f287e43]: 
+            - text: Wildfire
+        - listitem [ref=f287e44]:
+          - link " Heatmap" [ref=f287e45] [cursor=pointer]:
+            - /url: pages/heatmap.html
+            - generic [ref=f287e46]: 
+            - text: Heatmap
+        - listitem [ref=f287e47]:
+          - link " Weather" [ref=f287e48] [cursor=pointer]:
+            - /url: pages/weather.html
+            - generic [ref=f287e49]: 
+            - text: Weather
+        - listitem [ref=f287e50]:
+          - link " Weather Forecast" [ref=f287e51] [cursor=pointer]:
+            - /url: pages/forecast.html
+            - generic [ref=f287e52]: 
+            - text: Weather Forecast
+    - generic [ref=f287e53]:
+      - paragraph [ref=f287e54]: Support
+      - list [ref=f287e55]:
+        - listitem [ref=f287e56]:
+          - link " Live Chat" [ref=f287e57] [cursor=pointer]:
+            - /url: pages/live-chat.html
+            - generic [ref=f287e58]: 
+            - text: Live Chat
+        - listitem [ref=f287e59]:
+          - link " Profile" [ref=f287e60] [cursor=pointer]:
+            - /url: pages/profile.html
+            - generic [ref=f287e61]: 
+            - text: Profile
+        - listitem [ref=f287e62]:
+          - link " Settings" [ref=f287e63] [cursor=pointer]:
+            - /url: pages/settings.html
+            - generic [ref=f287e64]: 
+            - text: Settings
+    - generic [ref=f287e65]:
+      - paragraph [ref=f287e66]: Account
+      - list [ref=f287e67]:
+        - listitem [ref=f287e68]:
+          - link " Logout" [ref=f287e69] [cursor=pointer]:
+            - /url: "#"
+            - generic [ref=f287e70]: 
+            - text: Logout
+  - main [ref=f287e71]:
+    - generic [ref=f287e72]:
+      - generic [ref=f287e73]:
+        - heading "Dashboard" [level=1] [ref=f287e74]
+        - paragraph [ref=f287e75]: Welcome back! Here's your disaster monitoring overview.
+        - paragraph [ref=f287e76]: Showing alerts for Karachi (IP location)
+      - generic [ref=f287e77]:
+        - button " Refresh" [ref=f287e78] [cursor=pointer]:
+          - generic [ref=f287e79]: 
+          - text: Refresh
+        - button " Export Report" [ref=f287e80] [cursor=pointer]:
+          - generic [ref=f287e81]: 
+          - text: Export Report
+    - generic [ref=f287e82]:
+      - generic [ref=f287e83]:
+        - generic [ref=f287e84]: 
+        - combobox "Search city to change location..." [ref=f287e85]
+      - button " Change Location" [ref=f287e86] [cursor=pointer]:
+        - generic [ref=f287e87]: 
+        - text: Change Location
+      - button " Use My Location" [ref=f287e88] [cursor=pointer]:
+        - generic [ref=f287e89]: 
+        - text: Use My Location
+    - generic [ref=f287e90]:
+      - generic [ref=f287e91]:
+        - generic [ref=f287e92]:
+          - generic [ref=f287e93]:
+            - generic [ref=f287e94]: 
+            - text: Flood Risk
+          - generic [ref=f287e95]: "--"
+        - generic [ref=f287e96]: "--"
+        - generic [ref=f287e98]:
+          - generic [ref=f287e99]: Loading...
+          - link "View Details →" [ref=f287e100] [cursor=pointer]:
+            - /url: pages/flood.html
+      - generic [ref=f287e101]:
+        - generic [ref=f287e102]:
+          - generic [ref=f287e103]:
+            - generic [ref=f287e104]: 
+            - text: Earthquake Risk
+          - generic [ref=f287e105]: "--"
+        - generic [ref=f287e106]: "--"
+        - generic [ref=f287e108]:
+          - generic [ref=f287e109]: Detecting location...
+          - link "View Details →" [ref=f287e110] [cursor=pointer]:
+            - /url: pages/earthquake.html?v=3
+      - generic [ref=f287e111]:
+        - generic [ref=f287e112]:
+          - generic [ref=f287e113]:
+            - generic [ref=f287e114]: 
+            - text: Wildfire Risk
+          - generic [ref=f287e115]: Low
+        - generic [ref=f287e116]: "0.03"
+        - generic [ref=f287e119]:
+          - generic [ref=f287e120]: Punjab Region
+          - link "View Details →" [ref=f287e121] [cursor=pointer]:
+            - /url: pages/wildfire.html
+    - generic [ref=f287e122]:
+      - generic [ref=f287e123]:
+        - generic [ref=f287e124]:
+          - heading " Heatmap - Pakistan" [level=3] [ref=f287e125]:
+            - generic [ref=f287e126]: 
+            - text: Heatmap - Pakistan
+          - link "Full View" [ref=f287e127] [cursor=pointer]:
+            - /url: pages/heatmap.html
+        - generic [ref=f287e129]:
+          - generic:
+            - generic:
+              - img:
+                - generic [ref=f287e130] [cursor=pointer]
+        - generic [ref=f287e131]:
+          - generic [ref=f287e132]: Low (0-0.3)
+          - generic [ref=f287e135]: Moderate (0.3-0.6)
+          - generic [ref=f287e138]: High (0.6-0.8)
+          - generic [ref=f287e141]: Extreme (0.8+)
+      - generic [ref=f287e144]:
+        - generic [ref=f287e145]:
+          - heading " Recent Alerts" [level=3] [ref=f287e146]:
+            - generic [ref=f287e147]: 
+            - text: Recent Alerts
+          - link "View All" [ref=f287e148] [cursor=pointer]:
+            - /url: pages/alerts.html
+        - generic [ref=f287e149]:
+          - generic [ref=f287e150]:
+            - generic [ref=f287e151]: 
+            - generic [ref=f287e153]:
+              - heading "Flood Risk Increased" [level=4] [ref=f287e154]
+              - paragraph [ref=f287e155]: Karachi - Heavy rainfall predicted
+            - generic [ref=f287e156]: 2 min ago
+          - text: 
+          - generic [ref=f287e157]:
+            - generic [ref=f287e158]: 
+            - generic [ref=f287e160]:
+              - heading "Fire Hotspot Detected" [level=4] [ref=f287e161]
+              - paragraph [ref=f287e162]: Satellite data shows activity
+            - generic [ref=f287e163]: 1 hour ago
+          - generic [ref=f287e164]:
+            - generic [ref=f287e165]: 
+            - generic [ref=f287e167]:
+              - heading "Rainfall Alert" [level=4] [ref=f287e168]
+              - paragraph [ref=f287e169]: "72hr forecast: 150mm expected"
+            - generic [ref=f287e170]: 3 hours ago
+    - generic [ref=f287e171]:
+      - generic [ref=f287e172]:
+        - generic [ref=f287e173]: 
+        - generic [ref=f287e175]: "3"
+        - generic [ref=f287e176]: Cities Monitored
+      - generic [ref=f287e177]:
+        - generic [ref=f287e178]: 
+        - generic [ref=f287e180]: "241"
+        - generic [ref=f287e181]: API Calls Today
+      - generic [ref=f287e182]:
+        - generic [ref=f287e183]: 
+        - generic [ref=f287e185]: "1"
+        - generic [ref=f287e186]: Active Alerts
+      - generic [ref=f287e187]:
+        - generic [ref=f287e188]: 
+        - generic [ref=f287e190]: 27%
+        - generic [ref=f287e191]: System Uptime
+    - generic [ref=f287e192]:
+      - generic [ref=f287e193]:
+        - heading " Recent Activity" [level=3] [ref=f287e194]:
+          - generic [ref=f287e195]: 
+          - text: Recent Activity
+        - link "View All →" [ref=f287e196] [cursor=pointer]:
+          - /url: pages/history.html
+      - table [ref=f287e199]:
+        - rowgroup [ref=f287e200]:
+          - row [ref=f287e201]:
+            - columnheader "Event Type" [ref=f287e202]
+            - columnheader "Location" [ref=f287e203]
+            - columnheader "Risk Level" [ref=f287e204]
+            - columnheader "Time" [ref=f287e205]
+            - columnheader "Status" [ref=f287e206]
+            - columnheader "Action" [ref=f287e207]
+        - rowgroup [ref=f287e208]:
+          - row [ref=f287e209]:
+            - cell "Loading recent activity..." [ref=f287e210]
+  - text:       
+  - generic [ref=f287e211]:
+    - button "Install app" [ref=f287e212] [cursor=pointer]:
+      - generic [aria-hidden] [ref=f287e213]: 
+    - button "Dismiss install prompt" [ref=f287e215] [cursor=pointer]:
+      - generic [aria-hidden] [ref=f287e216]: 

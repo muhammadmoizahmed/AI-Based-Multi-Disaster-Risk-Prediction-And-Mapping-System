@@ -1,0 +1,238 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link " DisasterGuard" [ref=e6] [cursor=pointer]:
+        - /url: index.html
+        - generic [ref=e7]: 
+        - text: DisasterGuard
+      - list [ref=e8]:
+        - listitem [ref=e9]:
+          - link "Features" [ref=e10] [cursor=pointer]:
+            - /url: "#features"
+        - listitem [ref=e11]:
+          - link "Demo" [ref=e12] [cursor=pointer]:
+            - /url: "#demo"
+        - listitem [ref=e13]:
+          - link "About" [ref=e14] [cursor=pointer]:
+            - /url: "#about"
+        - listitem [ref=e15]:
+          - link "Login" [ref=e16] [cursor=pointer]:
+            - /url: login.html
+        - listitem [ref=e17]:
+          - link "Get Started" [ref=e18] [cursor=pointer]:
+            - /url: register.html
+  - generic [ref=e20]:
+    - generic [ref=e21]:
+      - text: AI-POWERED DISASTER INTELLIGENCE
+      - 'heading "DisasterGuard: Predicting Disasters Before They Strike" [level=1] [ref=e22]'
+      - paragraph [ref=e23]: AI-powered flood, earthquake, and wildfire prediction system for Pakistan. Real-time monitoring, risk assessment, and early warnings to save lives.
+      - generic [ref=e24]:
+        - link " Get Started" [ref=e25] [cursor=pointer]:
+          - /url: register.html
+          - generic [ref=e26]: 
+          - text: Get Started
+        - link " Watch Demo" [ref=e27] [cursor=pointer]:
+          - /url: "#demo"
+          - generic [ref=e28]: 
+          - text: Watch Demo
+    - generic [ref=e29]:
+      - generic [ref=e32]:
+        - generic [ref=e33]: High Risk
+        - generic [ref=e34]: "0.82"
+        - text: Flood Risk
+      - generic [ref=e36]:
+        - generic [ref=e37]: 
+        - generic [ref=e38]: 12 Alerts
+        - text: Active Now
+  - generic [ref=e40]:
+    - generic [ref=e41]:
+      - generic [ref=e42]: 8/7
+      - generic [ref=e43]: Real-time Monitoring
+    - generic [ref=e44]:
+      - generic [ref=e45]: "1"
+      - generic [ref=e46]: Disaster Types
+    - generic [ref=e47]:
+      - generic [ref=e48]: 31%
+      - generic [ref=e49]: Prediction Accuracy
+    - generic [ref=e50]:
+      - generic [ref=e51]: 16K+
+      - generic [ref=e52]: Lives Protected
+  - generic [ref=e53]:
+    - generic [ref=e54]:
+      - text: DISASTERGUARD PLATFORM
+      - heading "Comprehensive Disaster Protection" [level=2] [ref=e55]
+      - paragraph [ref=e56]: Advanced AI models analyze satellite data, weather patterns, and seismic activity to predict disasters before they occur.
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - generic [ref=e59]: 
+        - heading "Flood Prediction" [level=3] [ref=e61]
+        - paragraph [ref=e62]: LSTM-based rainfall analysis and river level monitoring for accurate flood forecasting with 72-hour advance warning.
+        - list [ref=e63]:
+          - listitem [ref=e64]:
+            - generic [ref=e65]: 
+            - text: Rainfall prediction
+          - listitem [ref=e66]:
+            - generic [ref=e67]: 
+            - text: River monitoring
+          - listitem [ref=e68]:
+            - generic [ref=e69]: 
+            - text: Risk zone mapping
+      - generic [ref=e70]:
+        - generic [ref=e71]: 
+        - heading "Earthquake Prediction" [level=3] [ref=e73]
+        - paragraph [ref=e74]: Seismic activity analysis using USGS data and geological patterns to identify high-risk zones across Pakistan.
+        - list [ref=e75]:
+          - listitem [ref=e76]:
+            - generic [ref=e77]: 
+            - text: Seismic monitoring
+          - listitem [ref=e78]:
+            - generic [ref=e79]: 
+            - text: Fault line analysis
+          - listitem [ref=e80]:
+            - generic [ref=e81]: 
+            - text: Intensity prediction
+      - generic [ref=e82]:
+        - generic [ref=e83]: 
+        - heading "Wildfire Detection" [level=3] [ref=e85]
+        - paragraph [ref=e86]: Satellite-based fire hotspot detection using NASA FIRMS and thermal anomaly detection for rapid response.
+        - list [ref=e87]:
+          - listitem [ref=e88]:
+            - generic [ref=e89]: 
+            - text: Satellite monitoring
+          - listitem [ref=e90]:
+            - generic [ref=e91]: 
+            - text: Hotspot detection
+          - listitem [ref=e92]:
+            - generic [ref=e93]: 
+            - text: Spread prediction
+  - generic [ref=e94]:
+    - generic [ref=e95]:
+      - text: DISASTERGUARD PLATFORM
+      - heading "Powerful Dashboard Interface" [level=2] [ref=e96]
+      - paragraph [ref=e97]: Real-time risk assessment with interactive maps, detailed analytics, and instant alerts.
+    - generic [ref=e99]:
+      - generic [ref=e100]:
+        - generic [ref=e101]:
+          - generic [ref=e102]:
+            - generic [ref=e103]:
+              - generic [ref=e104]: 
+              - text: Flood Risk
+            - generic [ref=e105]: High
+          - generic [ref=e106]: "0.24"
+          - text: Karachi, Sindh
+        - generic [ref=e109]:
+          - generic [ref=e110]:
+            - generic [ref=e111]:
+              - generic [ref=e112]: 
+              - text: Earthquake Risk
+            - generic [ref=e113]: Moderate
+          - generic [ref=e114]: "0.15"
+          - text: Islamabad Region
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - generic [ref=e119]:
+              - generic [ref=e120]: 
+              - text: Wildfire Risk
+            - generic [ref=e121]: Low
+          - generic [ref=e122]: "0.04"
+          - text: Punjab Region
+      - generic [ref=e125]:
+        - generic:
+          - generic:
+            - img:
+              - generic:
+                - generic [ref=e126] [cursor=pointer]
+                - generic [ref=e127] [cursor=pointer]
+                - generic [ref=e128] [cursor=pointer]
+                - generic [ref=e129] [cursor=pointer]
+                - generic [ref=e130] [cursor=pointer]
+                - generic [ref=e131] [cursor=pointer]
+                - generic [ref=e132] [cursor=pointer]
+                - generic [ref=e133] [cursor=pointer]
+                - generic [ref=e134] [cursor=pointer]
+                - generic [ref=e135] [cursor=pointer]
+        - generic:
+          - generic [ref=e136]:
+            - button "Zoom in" [ref=e137] [cursor=pointer]: +
+            - button "Zoom out" [ref=e138] [cursor=pointer]: −
+          - generic [ref=e139]:
+            - link "Leaflet" [ref=e140] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| Tiles © Esri — Esri, DeLorme, NAVTEQ"
+  - generic [ref=e145]:
+    - generic [ref=e146]:
+      - text: DISASTERGUARD PLATFORM
+      - heading "How It Works" [level=2] [ref=e147]
+      - paragraph [ref=e148]: Four simple steps to comprehensive disaster protection
+    - generic [ref=e149]:
+      - generic [ref=e150]:
+        - generic [ref=e151]: "1"
+        - heading "Data Collection" [level=3] [ref=e152]
+        - paragraph [ref=e153]: Real-time data from NASA, USGS, and OpenWeather APIs
+      - generic [ref=e154]:
+        - generic [ref=e155]: "2"
+        - heading "AI Analysis" [level=3] [ref=e156]
+        - paragraph [ref=e157]: LSTM models process data and predict risk scores
+      - generic [ref=e158]:
+        - generic [ref=e159]: "3"
+        - heading "Risk Assessment" [level=3] [ref=e160]
+        - paragraph [ref=e161]: Interactive maps show danger zones by city
+      - generic [ref=e162]:
+        - generic [ref=e163]: "4"
+        - heading "Early Alerts" [level=3] [ref=e164]
+        - paragraph [ref=e165]: Instant notifications when risk thresholds cross
+  - generic [ref=e168]:
+    - text: AI-POWERED DISASTER INTELLIGENCE
+    - heading "Ready to Protect Your Community?" [level=2] [ref=e169]
+    - paragraph [ref=e170]: Join thousands of users who trust DisasterGuard for early warning and disaster preparedness.
+    - link " Create Free Account" [ref=e172] [cursor=pointer]:
+      - /url: register.html
+      - generic [ref=e173]: 
+      - text: Create Free Account
+  - contentinfo [ref=e174]:
+    - generic [ref=e175]:
+      - generic [ref=e176]:
+        - link " DisasterGuard" [ref=e177] [cursor=pointer]:
+          - /url: index.html
+          - generic [ref=e178]: 
+          - text: DisasterGuard
+        - paragraph [ref=e179]: AI-powered disaster prediction system for Pakistan. Protecting communities through early warning and risk assessment.
+      - generic [ref=e180]:
+        - heading "Product" [level=4] [ref=e181]
+        - list [ref=e182]:
+          - listitem [ref=e183]:
+            - link "Features" [ref=e184] [cursor=pointer]:
+              - /url: "#features"
+          - listitem [ref=e185]:
+            - link "Demo" [ref=e186] [cursor=pointer]:
+              - /url: "#demo"
+          - listitem [ref=e187]:
+            - link "API" [ref=e188] [cursor=pointer]:
+              - /url: "#"
+      - generic [ref=e189]:
+        - heading "Company" [level=4] [ref=e190]
+        - list [ref=e191]:
+          - listitem [ref=e192]:
+            - link "About" [ref=e193] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e194]:
+            - link "Contact" [ref=e195] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e196]:
+            - link "Privacy" [ref=e197] [cursor=pointer]:
+              - /url: "#"
+      - generic [ref=e198]:
+        - heading "Connect" [level=4] [ref=e199]
+        - generic [ref=e200]:
+          - link "" [ref=e201] [cursor=pointer]:
+            - /url: "#"
+          - link "" [ref=e203] [cursor=pointer]:
+            - /url: "#"
+          - link "" [ref=e205] [cursor=pointer]:
+            - /url: "#"
+    - generic [ref=e207]: © 2025 DisasterGuard. All rights reserved. | FYP Project Pakistan
+  - generic [ref=e208]:
+    - button "Install app" [ref=e209] [cursor=pointer]:
+      - generic [aria-hidden] [ref=e210]: 
+    - button "Dismiss install prompt" [ref=e212] [cursor=pointer]:
+      - generic [aria-hidden] [ref=e213]: 

@@ -1,4 +1,4 @@
-﻿const LOCATION_CACHE_KEY = "disasterguard_user_location";
+const LOCATION_CACHE_KEY = "disasterguard_user_location";
 const SELECTED_LOCATION_KEY = "disasterguard_selected_location";
 const LOCATION_CACHE_TTL = 10 * 60 * 1000;
 

@@ -3,7 +3,7 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>OAuth Callback - DisasterGuard</title>
     <style>
         * {
@@ -13,7 +13,7 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            background: linear-gradient(135deg, #34495E 0%, #EAF3FA 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -23,17 +23,17 @@
         .container {
             text-align: center;
             padding: 40px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(52, 73, 94, 0.07);
             border-radius: 20px;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(52, 73, 94, 0.10);
             max-width: 400px;
         }
         .spinner {
             width: 50px;
             height: 50px;
-            border: 3px solid rgba(0, 255, 255, 0.3);
-            border-top-color: #00ffff;
+            border: 3px solid rgba(130, 170, 167, 0.30);
+            border-top-color: #82AAA7;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
@@ -43,20 +43,31 @@
         }
         h2 {
             margin-bottom: 10px;
-            color: #00ffff;
+            color: #82AAA7;
         }
         p {
-            color: #a0a0a0;
+            color: #7B8794;
             margin-bottom: 20px;
         }
         .error {
-            color: #ff6b6b;
+            color: #D98282;
         }
         .success {
-            color: #51cf66;
+            color: #72B995;
         }
     </style>
     <script src="js/location.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
 </head>
 <body>
     <div class="container">
@@ -193,5 +204,7 @@
         handleCallback();
     </script>
     <script src="js/mobile-nav.js"></script>
+    <script src="./js/pwa.js"></script>
+    <script src="./js/ui.js"></script>
 </body>
 </html>

@@ -4,12 +4,22 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Alerts - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 
 <body>
@@ -53,7 +63,7 @@
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
-                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #E9BD69;"></i> Weather</a></li>
                 <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
@@ -81,7 +91,7 @@
                 <p style="color: var(--text-secondary);">Manage your notifications and warnings</p>
                 <p id="locationStatus" style="color: var(--accent-primary); font-size: 0.9rem; margin-top: 0.5rem;">Detecting your location...</p>
                 <div style="display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap;">
-                    <input id="locationSearch" type="text" placeholder="Search another location" style="padding: 0.5rem 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: var(--text-primary); min-width: 220px;">
+                    <input id="locationSearch" type="text" placeholder="Search another location" style="padding: 0.5rem 0.75rem; border-radius: 8px; border: 1px solid rgba(52, 73, 94, 0.10); background: rgba(52, 73, 94, 0.07); color: var(--text-primary); min-width: 220px;">
                     <button class="btn btn-secondary" type="button" onclick="searchAlertLocation()">Search</button>
                     <button class="btn btn-secondary" type="button" onclick="useMyAlertLocation()">Use my location</button>
                 </div>
@@ -115,7 +125,7 @@
             </div>
         </div>
         <div class="card-3d">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                 <h3 style="font-weight: 700;">Alert History</h3>
             </div>
             <div class="alert-feed" id="alertFeed" style="padding: 1rem;">
@@ -307,6 +317,8 @@
         }
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 
 </html>

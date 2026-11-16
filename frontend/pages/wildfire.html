@@ -4,16 +4,26 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Wildfire Monitoring - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../js/location.js"></script>
     <script src="../js/api-config.js"></script>
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 
 <body>
@@ -62,7 +72,7 @@
                             style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"
                             style="color: var(--accent-quaternary);"></i> Heatmap</a></li>
-                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #E9BD69;"></i> Weather</a></li>
                 <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
@@ -99,7 +109,7 @@
                     <input type="text" class="input-field" id="citySearch" placeholder="Search any city..."
                         style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
                     <div id="cityDropdown" class="city-dropdown"
-                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
+                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(52, 73, 94, 0.10); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="refreshData()">
@@ -163,12 +173,12 @@
                     <p style="color: var(--text-secondary); margin-bottom: 1rem;">Satellite Status</p>
                     <div style="display: flex; flex-direction: column; gap: 0.5rem;">
                         <div
-                            style="padding: 0.75rem; background: rgba(0, 200, 83, 0.1); border-radius: var(--radius-md);">
+                            style="padding: 0.75rem; background: rgba(114, 185, 149, 0.14); border-radius: var(--radius-md);">
                             <span style="font-size: 0.85rem; color: var(--text-secondary);">Active Hotspots</span>
                             <p style="font-weight: 700; color: var(--risk-low);">0 detected</p>
                         </div>
                         <div
-                            style="padding: 0.75rem; background: rgba(0, 212, 255, 0.1); border-radius: var(--radius-md);">
+                            style="padding: 0.75rem; background: rgba(102, 142, 154, 0.12); border-radius: var(--radius-md);">
                             <span style="font-size: 0.85rem; color: var(--text-secondary);">Last Scan</span>
                             <p style="font-weight: 700;">15 min ago</p>
                         </div>
@@ -180,7 +190,7 @@
         <!-- Charts Row -->
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
             <div class="card-3d">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <h3 style="font-weight: 700;"><i class="fas fa-thermometer-half"
                             style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>Temperature Trend (7 Days)
                     </h3>
@@ -194,7 +204,7 @@
                 <h3 style="font-weight: 700; margin-bottom: 1.5rem;">Fire Risk Conditions</h3>
                 <div style="display: flex; flex-direction: column; gap: 1rem;">
                     <div
-                        style="padding: 1rem; background: rgba(0, 200, 83, 0.05); border: 1px solid rgba(0, 200, 83, 0.2); border-radius: var(--radius-md);">
+                        style="padding: 1rem; background: rgba(114, 185, 149, 0.08); border: 1px solid rgba(114, 185, 149, 0.18); border-radius: var(--radius-md);">
                         <div style="display: flex; align-items: center; gap: 0.75rem;">
                             <i class="fas fa-check-circle" style="color: var(--risk-low); font-size: 1.5rem;"></i>
                             <div>
@@ -204,7 +214,7 @@
                         </div>
                     </div>
                     <div
-                        style="padding: 1rem; background: rgba(255, 214, 0, 0.05); border: 1px solid rgba(255, 214, 0, 0.2); border-radius: var(--radius-md);">
+                        style="padding: 1rem; background: rgba(233, 189, 105, 0.08); border: 1px solid rgba(233, 189, 105, 0.18); border-radius: var(--radius-md);">
                         <div style="display: flex; align-items: center; gap: 0.75rem;">
                             <i class="fas fa-exclamation-circle"
                                 style="color: var(--risk-moderate); font-size: 1.5rem;"></i>
@@ -221,7 +231,7 @@
         <!-- Map and Hotspots -->
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
             <div class="card-3d">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <h3 style="font-weight: 700;"><i class="fas fa-satellite"
                             style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>NASA FIRMS Fire Map</h3>
                 </div>
@@ -229,13 +239,13 @@
             </div>
 
             <div class="card-3d">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <h3 style="font-weight: 700;">Satellite Data Sources</h3>
                 </div>
                 <div style="padding: 1.5rem;">
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
                         <div
-                            style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: var(--radius-md);">
+                            style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(102, 142, 154, 0.08); border-radius: var(--radius-md);">
                             <i class="fas fa-satellite-dish"
                                 style="font-size: 1.5rem; color: var(--accent-primary);"></i>
                             <div>
@@ -245,7 +255,7 @@
                             </div>
                         </div>
                         <div
-                            style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(123, 44, 191, 0.05); border-radius: var(--radius-md);">
+                            style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(130, 170, 167, 0.07); border-radius: var(--radius-md);">
                             <i class="fas fa-satellite-dish"
                                 style="font-size: 1.5rem; color: var(--accent-secondary);"></i>
                             <div>
@@ -255,7 +265,7 @@
                             </div>
                         </div>
                         <div
-                            style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(255, 0, 110, 0.05); border-radius: var(--radius-md);">
+                            style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: rgba(233, 161, 141, 0.08); border-radius: var(--radius-md);">
                             <i class="fas fa-satellite-dish"
                                 style="font-size: 1.5rem; color: var(--accent-tertiary);"></i>
                             <div>
@@ -271,7 +281,7 @@
 
         <!-- Fire History Table -->
         <div class="card-3d">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                 <h3 style="font-weight: 700;"><i class="fas fa-history"
                         style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>Fire Detection History</h3>
             </div>
@@ -337,32 +347,32 @@
                 datasets: [{
                     label: 'Temperature (°C)',
                     data: [35, 36, 38, 37, 39, 38, 36],
-                    borderColor: '#ff006e',
-                    backgroundColor: 'rgba(255, 0, 110, 0.1)',
+                    borderColor: '#E9A18D',
+                    backgroundColor: 'rgba(233, 161, 141, 0.14)',
                     fill: true,
                     tension: 0.4
                 }, {
                     label: 'Humidity (%)',
                     data: [50, 48, 45, 47, 43, 45, 48],
-                    borderColor: '#00d4ff',
-                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    borderColor: '#668E9A',
+                    backgroundColor: 'rgba(102, 142, 154, 0.12)',
                     fill: true,
                     tension: 0.4
                 }]
             },
             options: {
                 responsive: true,
-                plugins: { legend: { labels: { color: '#a0a0b0' } } },
+                plugins: { legend: { labels: { color: '#7B8794' } } },
                 scales: {
-                    x: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
-                    y: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                    x: { ticks: { color: '#7B8794' }, grid: { color: 'rgba(52, 73, 94, 0.07)' } },
+                    y: { ticks: { color: '#7B8794' }, grid: { color: 'rgba(52, 73, 94, 0.07)' } }
                 }
             }
         });
 
         // Initialize Fire Map
         const fireMap = L.map('fireMap').setView([31.4180, 73.0791], 7);
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
             maxNativeZoom: 16,
             maxZoom: 19
@@ -379,7 +389,7 @@
         monitoredZones.forEach(zone => {
             L.circleMarker([zone.lat, zone.lng], {
                 radius: 10,
-                fillColor: '#00c853',
+                fillColor: '#72B995',
                 color: '#fff',
                 weight: 2,
                 fillOpacity: 0.6
@@ -471,7 +481,7 @@
 
             if (filtered.length > 0 && value.length > 0) {
                 cityDropdown.innerHTML = filtered.map(city =>
-                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(255,0,110,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
+                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(52, 73, 94, 0.07);" onmouseover="this.style.background='rgba(233, 161, 141, 0.14)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
             } else {
@@ -482,7 +492,7 @@
         citySearch.addEventListener('focus', function () {
             if (this.value === '') {
                 cityDropdown.innerHTML = pakistanCities.slice(0, 10).map(city =>
-                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(255,0,110,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
+                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(52, 73, 94, 0.07);" onmouseover="this.style.background='rgba(233, 161, 141, 0.14)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
             }
@@ -555,6 +565,8 @@
         });
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 
 </html>

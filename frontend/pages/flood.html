@@ -4,10 +4,10 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Flood Monitoring - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -32,6 +32,16 @@
             main.main-content > div[style*="width: 280px"] { width: 100% !important; }
         }
     </style>
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 
 <body>
@@ -83,7 +93,7 @@
                         Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"
                             style="color: var(--accent-quaternary);"></i> Heatmap</a></li>
-                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #E9BD69;"></i> Weather</a></li>
                 <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
@@ -122,7 +132,7 @@
                     <input type="text" class="input-field" id="citySearch" placeholder="Search any city..."
                         style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
                     <div id="cityDropdown" class="city-dropdown"
-                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
+                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(52, 73, 94, 0.10); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
                     </div>
                 </div>
                 <button class="btn btn-primary" onclick="refreshFloodData()">
@@ -193,7 +203,7 @@
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
             <!-- Rainfall Chart -->
             <div class="card-3d">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <h3 style="font-weight: 700;"><i class="fas fa-chart-area"
                             style="margin-right: 0.5rem; color: var(--accent-primary);"></i>LSTM Rainfall Prediction
                     </h3>
@@ -208,7 +218,7 @@
                 <h3 style="font-weight: 700; margin-bottom: 1.5rem;">Current Metrics</h3>
                 <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(0, 212, 255, 0.05); border-radius: var(--radius-md);">
+                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(102, 142, 154, 0.08); border-radius: var(--radius-md);">
                         <div>
                             <p style="font-size: 0.85rem; color: var(--text-secondary);">Latest Rainfall</p>
                             <p id="metricRainfall" style="font-size: 1.5rem; font-weight: 700; color: var(--accent-primary);">-- mm</p>
@@ -216,7 +226,7 @@
                         <i class="fas fa-tint" style="font-size: 2rem; color: var(--accent-primary); opacity: 0.3;"></i>
                     </div>
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(123, 44, 191, 0.05); border-radius: var(--radius-md);">
+                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(130, 170, 167, 0.07); border-radius: var(--radius-md);">
                         <div>
                             <p style="font-size: 0.85rem; color: var(--text-secondary);">Latest River Level</p>
                             <p id="metricRiver" style="font-size: 1.5rem; font-weight: 700; color: var(--accent-secondary);">-- m</p>
@@ -225,7 +235,7 @@
                             style="font-size: 2rem; color: var(--accent-secondary); opacity: 0.3;"></i>
                     </div>
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255, 0, 110, 0.05); border-radius: var(--radius-md);">
+                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(233, 161, 141, 0.08); border-radius: var(--radius-md);">
                         <div>
                             <p style="font-size: 0.85rem; color: var(--text-secondary);">Flood Probability</p>
                             <p id="metricProbability" style="font-size: 1.5rem; font-weight: 700; color: var(--accent-tertiary);">--%</p>
@@ -234,7 +244,7 @@
                             style="font-size: 2rem; color: var(--accent-tertiary); opacity: 0.3;"></i>
                     </div>
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255, 190, 11, 0.05); border-radius: var(--radius-md);">
+                        style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(233, 189, 105, 0.08); border-radius: var(--radius-md);">
                         <div>
                             <p style="font-size: 0.85rem; color: var(--text-secondary);">Predicted Class</p>
                             <p id="metricClass" style="font-size: 1.5rem; font-weight: 700; color: var(--accent-quaternary);">--</p>
@@ -249,7 +259,7 @@
         <!-- Map and Alerts -->
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
             <div class="card-3d">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <h3 style="font-weight: 700;"><i class="fas fa-map-marked-alt"
                             style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Flood Risk Zones</h3>
                 </div>
@@ -257,7 +267,7 @@
             </div>
 
             <div class="card-3d">
-                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                     <h3 style="font-weight: 700;"><i class="fas fa-exclamation-triangle"
                             style="margin-right: 0.5rem; color: var(--accent-tertiary);"></i>Active Warnings</h3>
                 </div>
@@ -269,7 +279,7 @@
 
         <!-- Historical Data Table -->
         <div class="card-3d">
-            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+            <div style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
                 <h3 style="font-weight: 700;"><i class="fas fa-history"
                         style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Flood History</h3>
             </div>
@@ -330,8 +340,8 @@
                 datasets: [{
                     label: 'Observed Rainfall (mm)',
                     data: [],
-                    borderColor: '#00d4ff',
-                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    borderColor: '#668E9A',
+                    backgroundColor: 'rgba(102, 142, 154, 0.12)',
                     fill: true,
                     tension: 0.4
                 }]
@@ -340,17 +350,17 @@
                 responsive: true,
                 plugins: {
                     legend: {
-                        labels: { color: '#a0a0b0' }
+                        labels: { color: '#7B8794' }
                     }
                 },
                 scales: {
                     x: {
-                        ticks: { color: '#a0a0b0' },
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        ticks: { color: '#7B8794' },
+                        grid: { color: 'rgba(52, 73, 94, 0.07)' }
                     },
                     y: {
-                        ticks: { color: '#a0a0b0' },
-                        grid: { color: 'rgba(255, 255, 255, 0.05)' }
+                        ticks: { color: '#7B8794' },
+                        grid: { color: 'rgba(52, 73, 94, 0.07)' }
                     }
                 }
             }
@@ -358,17 +368,17 @@
 
         // Initialize Flood Map
         const floodMap = L.map('floodMap').setView([24.8607, 67.0011], 11);
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
             maxNativeZoom: 16,
             maxZoom: 19
         }).addTo(floodMap);
 
         const colors = {
-            low: '#00c853',
-            moderate: '#ffd600',
-            high: '#ff6d00',
-            extreme: '#ff1744'
+            low: '#72B995',
+            moderate: '#E9BD69',
+            high: '#E69A70',
+            extreme: '#D98282'
         };
         let riskLayer = L.layerGroup().addTo(floodMap);
 
@@ -377,7 +387,7 @@
             items.forEach(item => {
                 L.circleMarker([item.latitude, item.longitude], {
                     radius: 10 + Math.round(item.probability * 14),
-                    fillColor: colors[item.risk_level] || '#00c853',
+                    fillColor: colors[item.risk_level] || '#72B995',
                     color: '#fff',
                     weight: 1,
                     opacity: 1,
@@ -578,7 +588,7 @@
                     const suggestions = (data.suggestions || []).map(item => item.name || item.city || item);
                     if (suggestions.length > 0) {
                         cityDropdown.innerHTML = suggestions.map(city =>
-                            `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
+                            `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(52, 73, 94, 0.07);" onmouseover="this.style.background='rgba(102, 142, 154, 0.12)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                         ).join('');
                         cityDropdown.style.display = 'block';
                     } else {
@@ -588,7 +598,7 @@
                     const filtered = supportedCities.filter(city => city.toLowerCase().includes(value.toLowerCase()));
                     if (filtered.length > 0) {
                         cityDropdown.innerHTML = filtered.map(city =>
-                            `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
+                            `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(52, 73, 94, 0.07);" onmouseover="this.style.background='rgba(102, 142, 154, 0.12)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                         ).join('');
                         cityDropdown.style.display = 'block';
                     } else {
@@ -601,7 +611,7 @@
         citySearch.addEventListener('focus', function () {
             if (this.value === '') {
                 cityDropdown.innerHTML = supportedCities.slice(0, 10).map(city =>
-                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05);" onmouseover="this.style.background='rgba(0,212,255,0.1)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
+                    `<div class="city-option" style="padding: 0.75rem 1rem; cursor: pointer; border-bottom: 1px solid rgba(52, 73, 94, 0.07);" onmouseover="this.style.background='rgba(102, 142, 154, 0.12)'" onmouseout="this.style.background='transparent'" onclick="selectCity('${city}')">${city}</div>`
                 ).join('');
                 cityDropdown.style.display = 'block';
             }
@@ -665,6 +675,8 @@
         })();
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 
 </html>

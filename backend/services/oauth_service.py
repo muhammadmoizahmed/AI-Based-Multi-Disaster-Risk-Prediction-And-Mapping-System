@@ -29,11 +29,11 @@ GITHUB_REDIRECT_URI = os.getenv(
 )
 
 
-def get_google_auth_url() -> str:
+def get_google_auth_url(redirect_uri: str = None) -> str:
     """Get Google OAuth authorization URL"""
     params = {
         "client_id": GOOGLE_CLIENT_ID,
-        "redirect_uri": GOOGLE_REDIRECT_URI,
+        "redirect_uri": redirect_uri or GOOGLE_REDIRECT_URI,
         "response_type": "code",
         "scope": "openid email profile",
         "access_type": "offline",
@@ -43,7 +43,7 @@ def get_google_auth_url() -> str:
     return f"https://accounts.google.com/o/oauth2/v2/auth?{urllib.parse.urlencode(params)}"
 
 
-def get_google_user_info(code: str):
+def get_google_user_info(code: str, redirect_uri: str = None):
     """Exchange Google OAuth code for user info"""
     token_response = requests.post(
         "https://oauth2.googleapis.com/token",
@@ -52,7 +52,7 @@ def get_google_user_info(code: str):
             "client_secret": GOOGLE_CLIENT_SECRET,
             "code": code,
             "grant_type": "authorization_code",
-            "redirect_uri": GOOGLE_REDIRECT_URI
+            "redirect_uri": redirect_uri or GOOGLE_REDIRECT_URI
         }
     )
     token_json = token_response.json()
@@ -66,11 +66,11 @@ def get_google_user_info(code: str):
     return userinfo
 
 
-def get_github_auth_url() -> str:
+def get_github_auth_url(redirect_uri: str = None) -> str:
     """Get GitHub OAuth authorization URL"""
     params = {
         "client_id": GITHUB_CLIENT_ID,
-        "redirect_uri": GITHUB_REDIRECT_URI,
+        "redirect_uri": redirect_uri or GITHUB_REDIRECT_URI,
         "scope": "user user:email",
         "response_type": "code"
     }
@@ -78,7 +78,7 @@ def get_github_auth_url() -> str:
     return f"https://github.com/login/oauth/authorize?{urllib.parse.urlencode(params)}"
 
 
-def get_github_user_info(code: str):
+def get_github_user_info(code: str, redirect_uri: str = None):
     """Exchange GitHub OAuth code for user info"""
     token_response = requests.post(
         "https://github.com/login/oauth/access_token",
@@ -86,7 +86,7 @@ def get_github_user_info(code: str):
             "client_id": GITHUB_CLIENT_ID,
             "client_secret": GITHUB_CLIENT_SECRET,
             "code": code,
-            "redirect_uri": GITHUB_REDIRECT_URI
+            "redirect_uri": redirect_uri or GITHUB_REDIRECT_URI
         },
         headers={"Accept": "application/json"}
     )

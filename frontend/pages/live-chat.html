@@ -4,13 +4,23 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Live Chat - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="../js/location.js"></script>
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 
 <body>
@@ -55,7 +65,7 @@
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
-                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #E9BD69;"></i> Weather</a></li>
                 <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
@@ -83,7 +93,7 @@
                 style="flex: 1; display: flex; flex-direction: column; padding: 0; overflow: hidden;">
                 <!-- Chat Header -->
                 <div
-                    style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 191, 0.1));">
+                    style="padding: 1.5rem; border-bottom: 1px solid rgba(52, 73, 94, 0.10); display: flex; justify-content: space-between; align-items: center; background: linear-gradient(135deg, rgba(102, 142, 154, 0.12), rgba(130, 170, 167, 0.12));">
                     <div style="display: flex; align-items: center; gap: 1rem;">
                         <div
                             style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
@@ -137,7 +147,7 @@
                 </div>
 
                 <!-- Quick Suggestions -->
-                <div style="padding: 0.75rem 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="padding: 0.75rem 1.5rem; border-top: 1px solid rgba(52, 73, 94, 0.07);">
                     <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                         <button class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;"
                             onclick="sendQuickMessage('What is the current flood risk in Karachi?')">
@@ -160,7 +170,7 @@
 
                 <!-- Input Area -->
                 <div
-                    style="padding: 1rem 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1); background: var(--bg-tertiary);">
+                    style="padding: 1rem 1.5rem; border-top: 1px solid rgba(52, 73, 94, 0.10); background: var(--bg-tertiary);">
                     <form id="chatForm" style="display: flex; gap: 1rem;" onsubmit="sendMessage(event)">
                         <div style="flex: 1; position: relative;">
                             <input type="text" id="messageInput" class="input-field"
@@ -202,14 +212,14 @@
                     <div style="display: flex; flex-direction: column; gap: 0.75rem;">
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
-                            <span><i class="fas fa-ambulance" style="color: #ff1744; margin-right: 0.5rem;"></i>Rescue
+                            <span><i class="fas fa-ambulance" style="color: #D98282; margin-right: 0.5rem;"></i>Rescue
                                 1122</span>
                             <strong style="color: var(--accent-primary);">1122</strong>
                         </div>
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
                             <span><i class="fas fa-fire-extinguisher"
-                                    style="color: #ff6d00; margin-right: 0.5rem;"></i>Fire Brigade</span>
+                                    style="color: #E69A70; margin-right: 0.5rem;"></i>Fire Brigade</span>
                             <strong style="color: var(--accent-primary);">16</strong>
                         </div>
                         <div
@@ -221,7 +231,7 @@
                         <div
                             style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; background: var(--bg-tertiary); border-radius: var(--radius-sm);">
                             <span><i class="fas fa-heartbeat"
-                                    style="color: #00c853; margin-right: 0.5rem;"></i>Ambulance</span>
+                                    style="color: #72B995; margin-right: 0.5rem;"></i>Ambulance</span>
                             <strong style="color: var(--accent-primary);">115</strong>
                         </div>
                     </div>
@@ -230,7 +240,7 @@
                 <!-- Chat Tips -->
                 <div class="card-3d" style="padding: 1.5rem; flex-shrink: 0;">
                     <h4 style="font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-lightbulb"
-                            style="color: #ffd600; margin-right: 0.5rem;"></i>Tips</h4>
+                            style="color: #E9BD69; margin-right: 0.5rem;"></i>Tips</h4>
                     <ul style="font-size: 0.9rem; color: var(--text-secondary); padding-left: 1rem; line-height: 1.6;">
                         <li>Be specific about location</li>
                         <li>Mention disaster type clearly</li>
@@ -501,6 +511,8 @@
         }
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 
 </html>

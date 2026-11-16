@@ -296,8 +296,8 @@ class MapManager {
         
         this.map = L.map(this.containerId).setView(center, zoom);
         
-        // Dark theme map tiles
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        // Light map tiles
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             maxZoom: 19
         }).addTo(this.map);
         
@@ -312,10 +312,10 @@ class MapManager {
     
     addRiskZone(lat, lng, radius, riskLevel) {
         const colors = {
-            low: '#00c853',
-            moderate: '#ffd600',
-            high: '#ff6d00',
-            extreme: '#ff1744'
+            low: '#72B995',
+            moderate: '#E9BD69',
+            high: '#E69A70',
+            extreme: '#D98282'
         };
         
         const circle = L.circle([lat, lng], {
@@ -384,10 +384,10 @@ class RiskCalculator {
     }
     
     static getRiskLabel(score) {
-        if (score < 0.3) return { label: 'Low', class: 'low', color: '#00c853' };
-        if (score < 0.6) return { label: 'Moderate', class: 'moderate', color: '#ffd600' };
-        if (score < 0.8) return { label: 'High', class: 'high', color: '#ff6d00' };
-        return { label: 'Extreme', class: 'extreme', color: '#ff1744' };
+        if (score < 0.3) return { label: 'Low', class: 'low', color: '#72B995' };
+        if (score < 0.6) return { label: 'Moderate', class: 'moderate', color: '#E9BD69' };
+        if (score < 0.8) return { label: 'High', class: 'high', color: '#E69A70' };
+        return { label: 'Extreme', class: 'extreme', color: '#D98282' };
     }
 }
 
@@ -587,7 +587,7 @@ style.textContent = `
     
     .toast {
         background: var(--bg-card);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(52, 73, 94, 0.10);
         border-radius: var(--radius-md);
         padding: 1rem 1.5rem;
         display: flex;

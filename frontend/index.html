@@ -3,14 +3,24 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>DisasterGuard - Pakistan Disaster Prediction System</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="js/location.js"></script>
     <script src="js/api-config.js"></script>
+    <link rel="stylesheet" href="./css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
 </head>
 <body>
     <!-- Background Effects -->
@@ -103,7 +113,7 @@
         <div class="features-grid">
             <!-- Flood Prediction -->
             <div class="card-3d feature-card">
-                <div class="feature-icon" style="background: rgba(0, 212, 255, 0.1);">
+                <div class="feature-icon" style="background: rgba(102, 142, 154, 0.12);">
                     <i class="fas fa-water" style="color: var(--accent-primary);"></i>
                 </div>
                 <h3>Flood Prediction</h3>
@@ -117,7 +127,7 @@
 
             <!-- Earthquake Prediction -->
             <div class="card-3d feature-card">
-                <div class="feature-icon" style="background: rgba(123, 44, 191, 0.1);">
+                <div class="feature-icon" style="background: rgba(130, 170, 167, 0.12);">
                     <i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
                 </div>
                 <h3>Earthquake Prediction</h3>
@@ -131,7 +141,7 @@
 
             <!-- Wildfire Detection -->
             <div class="card-3d feature-card">
-                <div class="feature-icon" style="background: rgba(255, 0, 110, 0.1);">
+                <div class="feature-icon" style="background: rgba(233, 161, 141, 0.14);">
                     <i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                 </div>
                 <h3>Wildfire Detection</h3>
@@ -242,7 +252,7 @@
     </section>
 
     <!-- Footer -->
-    <footer style="background: var(--bg-secondary); padding: 3rem 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05);">
+    <footer style="background: var(--bg-secondary); padding: 3rem 2rem; border-top: 1px solid rgba(52, 73, 94, 0.07);">
         <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;">
             <div>
                 <a href="index.html" class="logo" style="font-size: 1.5rem; margin-bottom: 1rem; display: inline-block;">
@@ -278,7 +288,7 @@
                 </div>
             </div>
         </div>
-        <div style="max-width: 1400px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+        <div style="max-width: 1400px; margin: 2rem auto 0; padding-top: 2rem; border-top: 1px solid rgba(52, 73, 94, 0.07); text-align: center; color: var(--text-muted); font-size: 0.85rem;">
             © 2025 DisasterGuard. All rights reserved. | FYP Project Pakistan
         </div>
     </footer>
@@ -289,7 +299,7 @@
         const map = L.map('map').setView([30.3753, 69.3451], 5);
 
         // Add dark theme tiles (CartoDB Dark Matter)
-        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
             attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
             maxNativeZoom: 16,
             maxZoom: 19
@@ -311,9 +321,9 @@
 
         // Define marker colors based on risk
         const riskColors = {
-            critical: '#ff006e',
-            warning: '#ffbe0b',
-            safe: '#10b981'
+            critical: '#E9A18D',
+            warning: '#E9BD69',
+            safe: '#72B995'
         };
 
         // Add markers to map
@@ -329,14 +339,16 @@
 
             marker.bindPopup(`
                 <div style="text-align: center;">
-                    <h4 style="margin: 0 0 0.5rem 0; color: #1a1a25;">${zone.city}</h4>
-                    <p style="margin: 0; color: #555;">Risk: <strong style="color: ${riskColors[zone.risk]};">${zone.risk.toUpperCase()}</strong></p>
-                    <p style="margin: 0.25rem 0 0 0; color: #777;">Type: ${zone.type}</p>
+                    <h4 style="margin: 0 0 0.5rem 0; color: #FFFFFF;">${zone.city}</h4>
+                    <p style="margin: 0; color: #7B8794;">Risk: <strong style="color: ${riskColors[zone.risk]};">${zone.risk.toUpperCase()}</strong></p>
+                    <p style="margin: 0.25rem 0 0 0; color: #7B8794;">Type: ${zone.type}</p>
                 </div>
             `);
         });
     </script>
     <script src="js/main.js"></script>
     <script src="js/mobile-nav.js"></script>
+    <script src="./js/pwa.js"></script>
+    <script src="./js/ui.js"></script>
 </body>
 </html>

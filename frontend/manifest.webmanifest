@@ -1,0 +1,57 @@
+{
+  "id": "/",
+  "name": "DisasterGuard - Pakistan Disaster Prediction",
+  "short_name": "DisasterGuard",
+  "description": "AI-powered multi-disaster risk prediction, live weather, flood, earthquake, wildfire alerts and mapping for Pakistan.",
+  "start_url": "/dashboard.html",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#F8FAFC",
+  "theme_color": "#F8FAFC",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["weather", "utilities", "navigation"],
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "short_name": "Dashboard",
+      "url": "/dashboard.html",
+      "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Disaster Alerts",
+      "short_name": "Alerts",
+      "url": "/pages/alerts.html",
+      "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Current Weather",
+      "short_name": "Weather",
+      "url": "/pages/weather.html",
+      "icons": [{ "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

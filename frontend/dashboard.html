@@ -4,14 +4,14 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!-- NO-CACHE METATAGS -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Dashboard - DisasterGuard</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Leaflet CSS -->
@@ -27,6 +27,16 @@
             AuthManager.requireAuth();
         });
     </script>
+    <link rel="stylesheet" href="./css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
 </head>
 
 <body>
@@ -88,7 +98,7 @@
                 <li><a href="pages/wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
                 <li><a href="pages/heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
-                <li><a href="pages/weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a>
+                <li><a href="pages/weather.html"><i class="fas fa-cloud-sun" style="color: #E9BD69;"></i> Weather</a>
                 </li>
                 <li><a href="pages/forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
@@ -313,7 +323,7 @@
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
             <div class="card-3d stat-card">
                 <div
-                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0, 212, 255, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(102, 142, 154, 0.12); border-radius: var(--radius-md); margin: 0 auto 1rem;">
                     <i class="fas fa-map-marker-alt" style="color: var(--accent-primary); font-size: 1.5rem;"></i>
                 </div>
                 <div class="stat-value">12</div>
@@ -321,7 +331,7 @@
             </div>
             <div class="card-3d stat-card">
                 <div
-                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(123, 44, 191, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(130, 170, 167, 0.12); border-radius: var(--radius-md); margin: 0 auto 1rem;">
                     <i class="fas fa-database" style="color: var(--accent-secondary); font-size: 1.5rem;"></i>
                 </div>
                 <div class="stat-value">847</div>
@@ -329,7 +339,7 @@
             </div>
             <div class="card-3d stat-card">
                 <div
-                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(255, 0, 110, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(233, 161, 141, 0.14); border-radius: var(--radius-md); margin: 0 auto 1rem;">
                     <i class="fas fa-exclamation-triangle"
                         style="color: var(--accent-tertiary); font-size: 1.5rem;"></i>
                 </div>
@@ -338,7 +348,7 @@
             </div>
             <div class="card-3d stat-card">
                 <div
-                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(0, 200, 83, 0.1); border-radius: var(--radius-md); margin: 0 auto 1rem;">
+                    style="display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; background: rgba(114, 185, 149, 0.14); border-radius: var(--radius-md); margin: 0 auto 1rem;">
                     <i class="fas fa-check-circle" style="color: var(--risk-low); font-size: 1.5rem;"></i>
                 </div>
                 <div class="stat-value">95%</div>
@@ -406,7 +416,7 @@
                 </div>
             </div>
         </div>
-        <div style="padding: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.05); text-align: center;">
+        <div style="padding: 1rem; border-top: 1px solid rgba(52, 73, 94, 0.07); text-align: center;">
             <a href="pages/alerts.html" class="dropdown-item" style="justify-content: center;">View All
                 Notifications</a>
         </div>
@@ -429,7 +439,7 @@
 
     <!-- Toast Notification -->
     <div id="toast"
-        style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 9999; box-shadow: var(--shadow-3d);">
+        style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid rgba(52, 73, 94, 0.10); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 9999; box-shadow: var(--shadow-3d);">
         <i id="toastIcon" class="fas fa-info-circle" style="color: var(--accent-primary);"></i>
         <span id="toastMessage">Notification</span>
     </div>
@@ -483,10 +493,10 @@
         let dashboardLocationMarker = null;
         let dashboardRiskMarkers = [];
         const dashboardRiskColors = {
-            low: '#00c853',
-            moderate: '#ffd600',
-            high: '#ff6d00',
-            extreme: '#ff1744'
+            low: '#72B995',
+            moderate: '#E9BD69',
+            high: '#E69A70',
+            extreme: '#D98282'
         };
 
         function initMiniMap() {
@@ -495,7 +505,7 @@
                 attributionControl: false
             }).setView([30.3753, 69.3451], 5);
 
-            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
                 maxNativeZoom: 16,
                 maxZoom: 19
             }).addTo(dashboardMap);
@@ -514,7 +524,7 @@
                 dashboardRiskMarkers = [];
                 (data.cities || []).forEach(c => {
                     if (typeof c.latitude !== 'number' || typeof c.longitude !== 'number') return;
-                    const color = dashboardRiskColors[c.risk_level] || '#00d4ff';
+                    const color = dashboardRiskColors[c.risk_level] || '#668E9A';
                     const pct = Math.round((c.probability || 0) * 100);
                     const marker = L.circleMarker([c.latitude, c.longitude], {
                         radius: 10,
@@ -538,7 +548,7 @@
                 if (dashboardLocationMarker) dashboardMap.removeLayer(dashboardLocationMarker);
                 dashboardLocationMarker = L.circleMarker([loc.latitude, loc.longitude], {
                     radius: 9,
-                    fillColor: '#00d4ff',
+                    fillColor: '#668E9A',
                     color: '#ffffff',
                     weight: 3,
                     opacity: 1,
@@ -582,8 +592,8 @@
                 const data = await response.json();
                 const probability = data.prediction.damage_probability;
                 const level = data.prediction.risk_level;
-                const colorMap = { low: "#00c853", moderate: "#ffd600", high: "#ff6d00", extreme: "#ff1744" };
-                const color = colorMap[level] || "#ffd600";
+                const colorMap = { low: "#72B995", moderate: "#E9BD69", high: "#E69A70", extreme: "#D98282" };
+                const color = colorMap[level] || "#E9BD69";
                 if (scoreEl) {
                     scoreEl.textContent = `${Math.round(probability * 100)}%`;
                     scoreEl.style.color = color;
@@ -861,8 +871,8 @@
                 const data = await response.json();
                 const top = data.prediction;
                 const percent = Math.round(top.flood_probability * 100);
-                const colorMap = { low: '#00c853', moderate: '#ffd600', high: '#ff6d00', extreme: '#ff1744' };
-                const color = colorMap[top.risk_level] || '#00d4ff';
+                const colorMap = { low: '#72B995', moderate: '#E9BD69', high: '#E69A70', extreme: '#D98282' };
+                const color = colorMap[top.risk_level] || '#668E9A';
                 if (scoreEl) {
                     scoreEl.textContent = Math.round(top.flood_probability * 100) + '%';
                     scoreEl.style.color = color;
@@ -1021,6 +1031,8 @@
         }
     </script>
     <script src="js/mobile-nav.js"></script>
+    <script src="./js/pwa.js"></script>
+    <script src="./js/ui.js"></script>
 </body>
 
 </html>

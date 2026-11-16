@@ -30,6 +30,17 @@ router = APIRouter(prefix="/api/auth", tags=["Authentication"])
 verification_pins = {}
 
 
+def _oauth_callback_url(request: Request, provider: str) -> str:
+    forwarded_host = request.headers.get("x-forwarded-host")
+    if forwarded_host:
+        host = forwarded_host.split(",")[0].strip()
+        proto = (request.headers.get("x-forwarded-proto") or request.url.scheme).split(",")[0].strip()
+        base_url = f"{proto}://{host}"
+    else:
+        base_url = str(request.base_url).rstrip("/")
+    return f"{base_url}/api/auth/{provider}/callback"
+
+
 @router.post("/login")
 async def login(request: Request, data: LoginData):
     client_ip = get_client_ip(request)
@@ -94,10 +105,10 @@ async def forgot_password(data: ForgotPasswordData):
 
 
 @router.get("/google")
-async def google_login():
+async def google_login(request: Request):
     if not GOOGLE_CLIENT_ID:
         return {"success": False, "message": "Google OAuth not configured"}, 500
-    return {"auth_url": get_google_auth_url()}
+    return {"auth_url": get_google_auth_url(_oauth_callback_url(request, "google"))}
 
 
 @router.get("/google/callback")
@@ -107,7 +118,7 @@ async def google_callback(request: Request, code: str):
     
     try:
         client_ip = get_client_ip(request)
-        userinfo = get_google_user_info(code)
+        userinfo = get_google_user_info(code, _oauth_callback_url(request, "google"))
         
         email = userinfo.get("email")
         if not email:
@@ -138,10 +149,10 @@ async def google_callback(request: Request, code: str):
 
 
 @router.get("/github")
-async def github_login():
+async def github_login(request: Request):
     if not GITHUB_CLIENT_ID:
         return {"success": False, "message": "GitHub OAuth not configured"}, 500
-    return {"auth_url": get_github_auth_url()}
+    return {"auth_url": get_github_auth_url(_oauth_callback_url(request, "github"))}
 
 
 @router.get("/github/callback")
@@ -151,7 +162,7 @@ async def github_callback(request: Request, code: str):
     
     try:
         client_ip = get_client_ip(request)
-        user_data = get_github_user_info(code)
+        user_data = get_github_user_info(code, _oauth_callback_url(request, "github"))
         
         email = user_data.get("email")
         if not email:

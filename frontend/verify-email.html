@@ -3,12 +3,22 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Email Verification - DisasterGuard</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="js/location.js"></script>
+    <link rel="stylesheet" href="./css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
 </head>
 <body class="page-transition">
     <!-- Background Effects -->
@@ -31,7 +41,7 @@
             <!-- PIN Verification Form -->
             <div id="pinView" class="card-3d mirror-effect auth-card">
                 <div class="auth-header">
-                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(123, 47, 247, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, rgba(102, 142, 154, 0.18), rgba(130, 170, 167, 0.18)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
                         <i class="fas fa-lock" style="font-size: 2rem; color: var(--accent-primary);"></i>
                     </div>
                     <h2>Enter Verification PIN</h2>
@@ -71,14 +81,14 @@
             <!-- Verification Success -->
             <div id="successView" class="card-3d mirror-effect auth-card" style="display: none;">
                 <div class="auth-header">
-                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, rgba(0, 200, 83, 0.2), rgba(0, 212, 255, 0.2)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; animation: pulse 2s ease-in-out infinite;">
+                    <div style="width: 100px; height: 100px; background: linear-gradient(135deg, rgba(114, 185, 149, 0.18), rgba(102, 142, 154, 0.18)); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; animation: pulse 2s ease-in-out infinite;">
                         <i class="fas fa-check" style="font-size: 3rem; color: var(--risk-low);"></i>
                     </div>
                     <h2>Email Verified!</h2>
                     <p>Your email has been successfully verified. Your account is now active and ready to use.</p>
                 </div>
 
-                <div style="background: rgba(0, 200, 83, 0.05); border: 1px solid rgba(0, 200, 83, 0.2); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem;">
+                <div style="background: rgba(114, 185, 149, 0.08); border: 1px solid rgba(114, 185, 149, 0.18); border-radius: var(--radius-md); padding: 1.5rem; margin-bottom: 1.5rem;">
                     <div style="display: flex; align-items: center; gap: 1rem;">
                         <i class="fas fa-user-check" style="font-size: 2rem; color: var(--risk-low);"></i>
                         <div>
@@ -102,7 +112,7 @@
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 9999; box-shadow: var(--shadow-3d);">
+    <div id="toast" style="position: fixed; bottom: 2rem; right: 2rem; background: var(--bg-card); border: 1px solid rgba(52, 73, 94, 0.10); border-radius: var(--radius-md); padding: 1rem 1.5rem; display: none; align-items: center; gap: 0.75rem; z-index: 9999; box-shadow: var(--shadow-3d);">
         <i id="toastIcon" class="fas fa-info-circle" style="color: var(--accent-primary);"></i>
         <span id="toastMessage">Notification</span>
     </div>
@@ -273,5 +283,7 @@
         });
     </script>
     <script src="js/mobile-nav.js"></script>
+    <script src="./js/pwa.js"></script>
+    <script src="./js/ui.js"></script>
 </body>
 </html>

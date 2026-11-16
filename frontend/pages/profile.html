@@ -4,10 +4,10 @@
 <head>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>User Profile - DisasterGuard</title>
     <link rel="stylesheet" href="../css/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -60,7 +60,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(52, 73, 94, 0.18);
             display: none;
             align-items: center;
             justify-content: center;
@@ -76,6 +76,16 @@
     </style>
     <script src="../js/location.js"></script>
     <script src="../js/api-config.js"></script>
+    <link rel="stylesheet" href="../css/theme.css">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DisasterGuard">
+    <meta name="application-name" content="DisasterGuard">
+    <link rel="manifest" href="../manifest.webmanifest">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 </head>
 
 <body>
@@ -113,7 +123,7 @@
                 <li><a href="earthquake.html?v=3"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
-                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
+                <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #E9BD69;"></i> Weather</a></li>
                 <li><a href="forecast.html"><i class="fas fa-calendar-alt" style="color: var(--accent-primary);"></i> Weather Forecast</a></li>
             </ul>
         </div>
@@ -143,7 +153,7 @@
             </div>
             <div class="profile-info">
                 <h1 id="fullName" style="font-size: 2rem; font-weight: 800; margin-bottom: 0.25rem;">John Doe</h1>
-                <p id="emailDisplay" style="color: rgba(255, 255, 255, 0.8);"><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>john.doe@email.com</p>
+                <p id="emailDisplay" style="color: #637181;"><i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>john.doe@email.com</p>
             </div>
         </div>
 
@@ -205,15 +215,15 @@
         </div>
     </main>
 
-    <div id="userDropdown" style="display: none; position: fixed; top: 70px; right: 2rem; width: 220px; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); box-shadow: var(--shadow-3d); z-index: 1001;">
-        <div style="padding: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+    <div id="userDropdown" style="display: none; position: fixed; top: 70px; right: 2rem; width: 220px; background: var(--bg-card); border: 1px solid rgba(52, 73, 94, 0.10); border-radius: var(--radius-md); box-shadow: var(--shadow-3d); z-index: 1001;">
+        <div style="padding: 1rem; border-bottom: 1px solid rgba(52, 73, 94, 0.07);">
             <p id="dropdownName" style="font-weight: 700;">John Doe</p>
             <p id="dropdownEmail" style="font-size: 0.85rem; color: var(--text-muted);">john.doe@email.com</p>
         </div>
         <ul style="list-style: none; padding: 0.5rem;">
             <li><a href="settings.html" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-cog"></i> Settings</a></li>
             <li><a href="profile.html" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--text-secondary); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-user"></i> Profile</a></li>
-            <li style="border-top: 1px solid rgba(255, 255, 255, 0.05); margin-top: 0.5rem;"><a href="#" onclick="logout()" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--risk-extreme); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li style="border-top: 1px solid rgba(52, 73, 94, 0.07); margin-top: 0.5rem;"><a href="#" onclick="logout()" style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; color: var(--risk-extreme); text-decoration: none; border-radius: var(--radius-sm);"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
         </ul>
     </div>
 
@@ -412,6 +422,8 @@
         });
     </script>
     <script src="../js/mobile-nav.js"></script>
+    <script src="../js/pwa.js"></script>
+    <script src="../js/ui.js"></script>
 </body>
 
 </html>
