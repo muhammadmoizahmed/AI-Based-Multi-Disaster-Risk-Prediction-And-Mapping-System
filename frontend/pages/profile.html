@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile - DisasterGuard</title>
@@ -73,6 +74,8 @@
             display: flex;
         }
     </style>
+    <script src="../js/location.js"></script>
+    <script src="../js/api-config.js"></script>
 </head>
 
 <body>
@@ -107,7 +110,7 @@
             <p class="sidebar-title">Disaster Monitoring</p>
             <ul class="sidebar-menu">
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood/Rain</a></li>
-                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
+                <li><a href="earthquake.html?v=3"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i> Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
                 <li><a href="heatmap.html"><i class="fas fa-map-marked-alt"></i> Heatmap</a></li>
                 <li><a href="weather.html"><i class="fas fa-cloud-sun" style="color: #ffd600;"></i> Weather</a></li>
@@ -408,6 +411,7 @@
             }
         });
     </script>
+    <script src="../js/mobile-nav.js"></script>
 </body>
 
 </html>

@@ -57,3 +57,27 @@ npm-debug.log*
 *.key
 *.pem
 *.p12
+
+# Large wildfire dataset
+datasets/wildfire/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Virtual environments
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+.tmp_*

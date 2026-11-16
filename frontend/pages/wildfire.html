@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wildfire Monitoring - DisasterGuard</title>
@@ -11,6 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/location.js"></script>
+    <script src="../js/api-config.js"></script>
 </head>
 
 <body>
@@ -53,7 +56,7 @@
             <ul class="sidebar-menu">
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood/Rain</a>
                 </li>
-                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
+                <li><a href="earthquake.html?v=3"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
                         Earthquake</a></li>
                 <li><a href="wildfire.html" class="active"><i class="fas fa-fire"
                             style="color: var(--accent-tertiary);"></i> Wildfire</a></li>
@@ -359,7 +362,11 @@
 
         // Initialize Fire Map
         const fireMap = L.map('fireMap').setView([31.4180, 73.0791], 7);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(fireMap);
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+            maxNativeZoom: 16,
+            maxZoom: 19
+        }).addTo(fireMap);
 
         // Add safe zone markers (no fires currently)
         const monitoredZones = [
@@ -547,6 +554,7 @@
             }
         });
     </script>
+    <script src="../js/mobile-nav.js"></script>
 </body>
 
 </html>

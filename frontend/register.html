@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - DisasterGuard</title>
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/location.js"></script>
 </head>
 <body>
     <!-- Background Effects -->
@@ -149,6 +151,7 @@
         <span id="toastMessage">Notification</span>
     </div>
 
+    <script src="js/api-config.js"></script>
     <script src="js/main.js"></script>
     <script>
         // Toggle password visibility
@@ -195,7 +198,7 @@
             showToast('Sending verification PIN...', 'info');
             
             // Call API to send PIN
-            fetch('http://localhost:5001/api/auth/register', {
+            fetch('/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name: firstName + ' ' + lastName, email, password })
@@ -231,7 +234,7 @@
                 return;
             }
             
-            fetch('http://localhost:5001/api/auth/verify-pin', {
+            fetch('/api/auth/verify-pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: pendingEmail, password: pin })
@@ -253,7 +256,7 @@
         }
         
         function resendPIN() {
-            fetch('http://localhost:5001/api/auth/resend-pin', {
+            fetch('/api/auth/resend-pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: pendingEmail })
@@ -291,7 +294,7 @@
         async function socialLogin(provider) {
             if (provider === 'google') {
                 try {
-                    const response = await fetch('http://localhost:5001/api/auth/google');
+                    const response = await fetch('/api/auth/google');
                     const data = await response.json();
                     
                     if (data.auth_url) {
@@ -305,7 +308,7 @@
                 }
             } else if (provider === 'github') {
                 try {
-                    const response = await fetch('http://localhost:5001/api/auth/github');
+                    const response = await fetch('/api/auth/github');
                     const data = await response.json();
                     
                     if (data.auth_url) {
@@ -353,5 +356,6 @@
             }, 3000);
         }
     </script>
+    <script src="js/mobile-nav.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Earthquake Monitoring - DisasterGuard</title>
@@ -11,35 +12,66 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/location.js"></script>
+    <style>
+        .leaflet-control-zoom-in,
+        .leaflet-control-zoom-out {
+            background-color: #1e293b !important;
+            color: #f8fafc !important;
+            border-color: #334155 !important;
+        }
+        .sidebar a.active {
+            border-left: 4px solid #22d3ee;
+            background: rgba(34, 211, 238, 0.1);
+            color: #67e8f9;
+            font-weight: 600;
+        }
+    </style>
+    <style>
+        nav.navbar { display: flex; align-items: center; justify-content: space-between; }
+        .layout-shell { display: flex; }
+        @media (max-width: 768px) {
+            .layout-shell { flex-direction: column; }
+            aside.sidebar { width: 100% !important; min-height: auto !important; }
+            main.main-content { margin-left: 0 !important; }
+        }
+    </style>
+    <style>
+        body { padding-top: 70px; }
+        aside.sidebar { display: flex; flex-direction: column; }
+        nav.navbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: nowrap; }
+        nav.navbar .logo { flex-shrink: 0; }
+        nav.navbar > div { flex-shrink: 0; }
+        .card-3d { min-width: 0; }
+        .data-table { table-layout: auto; width: 100%; }
+        .data-table th, .data-table td { white-space: normal; word-break: break-word; }
+    </style>
+    <style>
+        .navbar-content { max-width: 100% !important; margin: 0 !important; padding: 0 2rem !important; }
+    </style>
 </head>
 
 <body>
     <div class="bg-mesh"></div>
     <div class="bg-grid"></div>
 
-    <nav class="navbar">
-        <div class="navbar-content">
-            <a href="../index.html" class="logo">
-                <i class="fas fa-shield-alt"></i>
-                DisasterGuard
-            </a>
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
+    <nav class="navbar" style="display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 2rem;">
+        <a href="../index.html" class="logo" style="display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-shield-alt"></i>
+            DisasterGuard
+        </a>
 
-                <!-- User Menu -->
-                <div style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;"
-                    onclick="toggleUserMenu()">
-                    <div
-                        style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">
-                        <span id="userInitials">JD</span>
-                    </div>
-                    <span id="userName" style="font-weight: 600;">John Doe</span>
-                    <i class="fas fa-chevron-down" style="color: var(--text-muted);"></i>
-                </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span id="userName" style="font-weight: 600;">John Doe</span>
+            <div style="width: 40px; height: 40px; background: var(--gradient-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; cursor: pointer;" onclick="toggleUserMenu()">
+                <span id="userInitials">JD</span>
             </div>
+            <i class="fas fa-chevron-down" style="color: var(--text-muted); cursor: pointer;" onclick="toggleUserMenu()"></i>
         </div>
     </nav>
 
-    <aside class="sidebar">
+    <div class="layout-shell" style="margin-top: 0;">
+    <aside class="sidebar" style="position: fixed; left: 0; top: 70px; width: 280px; height: calc(100vh - 70px);">
         <div class="sidebar-section">
             <p class="sidebar-title">Main</p>
             <ul class="sidebar-menu">
@@ -53,7 +85,7 @@
             <ul class="sidebar-menu">
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood/Rain</a>
                 </li>
-                <li><a href="earthquake.html" class="active"><i class="fas fa-globe-asia"
+                <li><a href="earthquake.html?v=3" class="active"><i class="fas fa-globe-asia"
                             style="color: var(--accent-secondary);"></i> Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
@@ -80,20 +112,25 @@
         </div>
     </aside>
 
-    <main class="main-content" style="margin-top: 70px; margin-left: 280px; padding: 2rem;">
+    <main class="main-content" style="margin-top: 0; margin-left: 280px; padding: 2rem; min-width: 0;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
             <div>
                 <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">
                     <i class="fas fa-globe-asia" style="color: var(--accent-secondary); margin-right: 0.75rem;"></i>
                     Earthquake Monitoring
                 </h1>
-                <p style="color: var(--text-secondary);">Real-time seismic activity analysis and prediction</p>
+                <p style="color: var(--text-secondary);">
+                    Live seismic risk prediction from the trained RandomForest model
+                    <span id="liveStatus" role="status" aria-live="polite" style="margin-left: 0.75rem; color: 
+var(--risk-moderate); font-weight: 600;">Connecting...</span>
+                    <span id="lastUpdated" style="margin-left: 0.75rem; color: var(--text-muted); font-size: 0.85rem;"></span>
+                </p>
             </div>
             <div style="display: flex; gap: 1rem; position: relative;">
                 <div style="position: relative; width: 280px;">
                     <i class="fas fa-search"
                         style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
-                    <input type="text" class="input-field" id="citySearch" placeholder="Search any city..."
+                    <input type="text" class="input-field border border-slate-700 bg-slate-900/80 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-slate-100 placeholder-slate-500" id="citySearch" placeholder="Search any city..."
                         style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;" autocomplete="off">
                     <div id="cityDropdown" class="city-dropdown"
                         style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 300px; overflow-y: auto; z-index: 1000; box-shadow: var(--shadow-3d);">
@@ -106,82 +143,67 @@
             </div>
         </div>
 
+        <!-- Live overview statistics -->
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+            <div class="card-3d" style="padding: 1.25rem;">
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Training Events</p>
+                <h2 id="statEvents" style="font-size: 1.8rem; font-weight: 800; margin-top: 0.35rem;">--</h2>
+                <p id="statEventsRange" style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.35rem;">Loading dataset...</p>
+            </div>
+            <div class="card-3d" style="padding: 1.25rem;">
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Damaging Events</p>
+                <h2 id="statDamaging" style="font-size: 1.8rem; font-weight: 800; margin-top: 0.35rem;">--</h2>
+                <p id="statDamagingRate" style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.35rem;">--</p>
+            </div>
+            <div class="card-3d" style="padding: 1.25rem;">
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Strongest Event</p>
+                <h2 id="statMaxMag" style="font-size: 1.8rem; font-weight: 800; margin-top: 0.35rem;">--</h2>
+                <p id="statMaxMagPlace" style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.35rem;">--</p>
+            </div>
+            <div class="card-3d" style="padding: 1.25rem;">
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Model PR-AUC</p>
+                <h2 id="statPrAuc" style="font-size: 1.8rem; font-weight: 800; margin-top: 0.35rem;">--</h2>
+                <p id="statModelName" style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.35rem;">Loading model...</p>
+            </div>
+        </div>
+
         <!-- Risk Score Card -->
         <div class="card-3d"
             style="padding: 2rem; margin-bottom: 2rem; border-left: 4px solid var(--accent-secondary);">
             <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 3rem; align-items: center;">
                 <div style="text-align: center;">
                     <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">Seismic Risk Score</p>
-                    <div style="font-size: 5rem; font-weight: 900; color: var(--accent-secondary); line-height: 1;">0.45
-                    </div>
-                    <span class="risk-badge moderate" style="margin-top: 1rem; display: inline-block;">MODERATE</span>
+                    <div id="riskScoreValue"
+                        style="font-size: 5rem; font-weight: 900; color: var(--accent-secondary); line-height: 1;">--</div>
+                    <span class="risk-badge moderate" id="riskBadge"
+                        style="margin-top: 1rem; display: inline-block;">LOADING</span>
+                    <p id="riskPredictionText" style="margin-top: 0.9rem; color: var(--text-secondary); font-size: 0.9rem;">--</p>
+                    <p id="riskThresholdText" style="margin-top: 0.35rem; color: var(--text-muted); font-size: 0.78rem;">--</p>
+                    <p id="riskLocationText" style="margin-top: 0.35rem; color: var(--text-secondary); font-size: 0.85rem; font-weight: 600;">--</p>
                 </div>
                 <div>
                     <p style="color: var(--text-secondary); margin-bottom: 1rem;">Risk Factors</p>
-                    <div style="display: flex; flex-direction: column; gap: 1rem;">
-                        <div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span style="font-size: 0.9rem;">Magnitude Activity</span>
-                                <span style="font-weight: 600;">4.2 ML</span>
-                            </div>
-                            <div
-                                style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
-                                <div
-                                    style="height: 100%; width: 45%; background: var(--accent-secondary); border-radius: 4px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span style="font-size: 0.9rem;">Fault Line Proximity</span>
-                                <span style="font-weight: 600;">12 km</span>
-                            </div>
-                            <div
-                                style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
-                                <div
-                                    style="height: 100%; width: 60%; background: var(--accent-tertiary); border-radius: 4px;">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                                <span style="font-size: 0.9rem;">Historical Activity</span>
-                                <span style="font-weight: 600;">Moderate</span>
-                            </div>
-                            <div
-                                style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
-                                <div
-                                    style="height: 100%; width: 40%; background: var(--accent-primary); border-radius: 4px;">
-                                </div>
-                            </div>
-                        </div>
+                    <div id="riskFactors" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <p style="color: var(--text-muted); font-size: 0.9rem;">Waiting for model prediction...</p>
                     </div>
                 </div>
                 <div style="text-align: center;">
                     <p style="color: var(--text-secondary); margin-bottom: 1rem;">Recent Events</p>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <div
-                            style="padding: 0.75rem; background: rgba(255, 23, 68, 0.1); border-radius: var(--radius-md);">
-                            <span style="font-size: 0.85rem; color: var(--text-secondary);">M 4.2</span>
-                            <p style="font-weight: 600;">12 min ago</p>
-                        </div>
-                        <div
-                            style="padding: 0.75rem; background: rgba(255, 214, 0, 0.1); border-radius: var(--radius-md);">
-                            <span style="font-size: 0.85rem; color: var(--text-secondary);">M 3.1</span>
-                            <p style="font-weight: 600;">2 hours ago</p>
-                        </div>
+                    <div id="recentEvents" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">Loading recent events...</p>
                     </div>
+                    <p id="recentEventsBasis" style="margin-top: 0.9rem; color: var(--text-muted); font-size: 0.75rem;"></p>
                 </div>
             </div>
         </div>
 
         <!-- Charts Row -->
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem; align-items: stretch;">
             <div class="card-3d">
                 <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
                     <h3 style="font-weight: 700;"><i class="fas fa-chart-line"
-                            style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity (Last 24
-                        Hours)</h3>
+                            style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity Timeline</h3>
+                    <p id="chartSubtitle" style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.35rem;">Loading recorded events...</p>
                 </div>
                 <div style="padding: 1.5rem;">
                     <canvas id="seismicChart" height="250"></canvas>
@@ -194,53 +216,54 @@
             </div>
         </div>
 
+        <!-- Model intelligence -->
+        <div style="display: grid; grid-template-columns: 1.15fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="card-3d" style="padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="font-weight: 700;"><i class="fas fa-microchip"
+                            style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Model Drivers</h3>
+                    <span id="modelAlgorithmBadge" class="status-badge active">RandomForest</span>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem;">Global feature importance learned from the training data.</p>
+                <div id="modelFeatures" style="display: flex; flex-direction: column; gap: 0.7rem;">
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">Loading model insights...</p>
+                </div>
+            </div>
+            <div class="card-3d" style="padding: 1.5rem;">
+                <h3 style="font-weight: 700; margin-bottom: 1rem;"><i class="fas fa-chart-simple"
+                        style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Model Performance</h3>
+                <div id="modelMetrics" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">Loading metrics...</p>
+                </div>
+                <p id="modelTrainingMeta" style="color: var(--text-muted); font-size: 0.75rem; margin-top: 1rem;"></p>
+            </div>
+        </div>
+
         <!-- Map and Table -->
         <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
             <div class="card-3d">
                 <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                    <h3 style="font-weight: 700;"><i class="fas fa-map-marked-alt"
-                            style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity Map</h3>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-weight: 700;"><i class="fas fa-map-marked-alt"
+                                style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Seismic Activity Map</h3>
+                        <span id="mapCount" style="color: var(--text-muted); font-size: 0.8rem;">Loading...</span>
+                    </div>
                 </div>
-                <div id="quakeMap" style="height: 400px; border-radius: 0 0 var(--radius-md) var(--radius-md);"></div>
+                <div id="quakeMap" role="img" aria-label="Seismic activity map" style="height: 420px; border-radius: 0 0 var(--radius-md) var(--radius-md);"></div>
+                <div style="display: flex; gap: 1.5rem; padding: 0.8rem 1rem; background: var(--bg-tertiary); border-radius: var(--radius-md); margin: 0 1rem 1rem; font-size: 0.8rem;">
+                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff1744;margin-right:6px;"></span>Strong (5+)</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ff6d00;margin-right:6px;"></span>Moderate (4-5)</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ffd600;margin-right:6px;"></span>Light (3-4)</span>
+                    <span><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#00c853;margin-right:6px;"></span>Minor (&lt;3)</span>
+                </div>
             </div>
 
-            <div class="card-3d">
+            <div class="card-3d" style="align-self: start;">
                 <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
                     <h3 style="font-weight: 700;">Recent Earthquakes</h3>
                 </div>
-                <div style="padding: 1rem; max-height: 350px; overflow-y: auto;">
-                    <div class="alert-item critical">
-                        <div class="alert-icon"><i class="fas fa-globe-asia"></i></div>
-                        <div class="alert-content">
-                            <h4>M 4.2</h4>
-                            <p>24 km NNE of Islamabad</p>
-                        </div>
-                        <span class="alert-time">12m</span>
-                    </div>
-                    <div class="alert-item warning">
-                        <div class="alert-icon"><i class="fas fa-globe-asia"></i></div>
-                        <div class="alert-content">
-                            <h4>M 3.1</h4>
-                            <p>18 km SW of Rawalpindi</p>
-                        </div>
-                        <span class="alert-time">2h</span>
-                    </div>
-                    <div class="alert-item warning">
-                        <div class="alert-icon"><i class="fas fa-globe-asia"></i></div>
-                        <div class="alert-content">
-                            <h4>M 2.8</h4>
-                            <p>12 km E of Murree</p>
-                        </div>
-                        <span class="alert-time">5h</span>
-                    </div>
-                    <div class="alert-item warning">
-                        <div class="alert-icon"><i class="fas fa-globe-asia"></i></div>
-                        <div class="alert-content">
-                            <h4>M 3.5</h4>
-                            <p>45 km NW of Abbottabad</p>
-                        </div>
-                        <span class="alert-time">1d</span>
-                    </div>
+                <div id="recentQuakeList" style="padding: 1rem; max-height: 480px; overflow-y: auto;">
+                    <p style="color: var(--text-muted); font-size: 0.85rem; padding: 0.75rem;">Loading recorded earthquakes...</p>
                 </div>
             </div>
         </div>
@@ -248,8 +271,11 @@
         <!-- Earthquake History Table -->
         <div class="card-3d">
             <div style="padding: 1.5rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
-                <h3 style="font-weight: 700;"><i class="fas fa-history"
-                        style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Earthquake History</h3>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="font-weight: 700;"><i class="fas fa-history"
+                            style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Earthquake History</h3>
+                    <span id="historyCount" style="color: var(--text-muted); font-size: 0.82rem;">Loading...</span>
+                </div>
             </div>
             <div style="overflow-x: auto;">
                 <table class="data-table">
@@ -263,36 +289,19 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="historyTableBody">
                         <tr>
-                            <td>2025-04-16 14:30</td>
-                            <td><span style="color: var(--risk-extreme); font-weight: 700;">4.2 ML</span></td>
-                            <td>Islamabad Region</td>
-                            <td>12 km</td>
-                            <td>Moderate</td>
-                            <td><span class="status-badge critical">Recent</span></td>
-                        </tr>
-                        <tr>
-                            <td>2025-04-16 12:15</td>
-                            <td><span style="color: var(--risk-moderate); font-weight: 700;">3.1 ML</span></td>
-                            <td>Rawalpindi</td>
-                            <td>8 km</td>
-                            <td>Light</td>
-                            <td><span class="status-badge warning">Recorded</span></td>
-                        </tr>
-                        <tr>
-                            <td>2025-04-15 09:45</td>
-                            <td><span style="color: var(--risk-moderate); font-weight: 700;">2.8 ML</span></td>
-                            <td>Murree</td>
-                            <td>15 km</td>
-                            <td>Minor</td>
-                            <td><span class="status-badge active">Recorded</span></td>
+                            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">Loading earthquake history...</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <div style="padding: 0 1.5rem 1.5rem; text-align: right;">
+                <button id="historyToggle" type="button" class="btn btn-secondary" style="padding: 0.35rem 0.75rem; font-size: 0.8rem; display: none;">Show more</button>
+            </div>
         </div>
     </main>
+    </div>
 
     <!-- User Dropdown -->
     <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
@@ -309,6 +318,7 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/api-config.js"></script>
     <script src="../js/main.js"></script>
     <script>
         // Check authentication first
@@ -321,17 +331,18 @@
         AuthManager.loadUserName();
         
         // Seismic Activity Chart
-        new Chart(document.getElementById('seismicChart'), {
+        const seismicChart = new Chart(document.getElementById('seismicChart'), {
             type: 'line',
             data: {
-                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', 'Now'],
+                labels: [],
                 datasets: [{
                     label: 'Magnitude',
-                    data: [0, 1.2, 0.8, 4.2, 2.1, 1.5, 0.5],
+                    data: [],
                     borderColor: '#7b2cbf',
                     backgroundColor: 'rgba(123, 44, 191, 0.1)',
                     fill: true,
-                    tension: 0.4
+                    tension: 0.35,
+                    pointRadius: 3
                 }]
             },
             options: {
@@ -345,12 +356,12 @@
         });
 
         // Magnitude Distribution Chart
-        new Chart(document.getElementById('magnitudeChart'), {
+        const magnitudeChart = new Chart(document.getElementById('magnitudeChart'), {
             type: 'doughnut',
             data: {
                 labels: ['Minor (1-3)', 'Light (3-4)', 'Moderate (4-5)', 'Strong (5+)'],
                 datasets: [{
-                    data: [12, 8, 3, 0],
+                    data: [0, 0, 0, 0],
                     backgroundColor: ['#00c853', '#ffd600', '#ff6d00', '#ff1744']
                 }]
             },
@@ -362,34 +373,376 @@
 
         // Initialize Earthquake Map
         const quakeMap = L.map('quakeMap').setView([33.6844, 73.0479], 9);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png').addTo(quakeMap);
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+            maxNativeZoom: 16,
+            maxZoom: 19
+        }).addTo(quakeMap);
 
-        // Add earthquake markers
-        const quakes = [
-            { lat: 33.6844, lng: 73.0479, mag: 4.2, depth: 12, time: '12 min ago' },
-            { lat: 33.5984, lng: 73.0441, mag: 3.1, depth: 8, time: '2 hours ago' },
-            { lat: 33.9070, lng: 73.3930, mag: 2.8, depth: 15, time: '5 hours ago' }
-        ];
+        const riskColorMap = { low: '#00c853', moderate: '#ffd600', high: '#ff6d00', extreme: '#ff1744' };
+        const quakeLayer = L.layerGroup().addTo(quakeMap);
+        let latestRisk = null;
+        let refreshTimer = null;
 
-        quakes.forEach(q => {
-            const size = q.mag * 3;
-            const color = q.mag >= 4 ? '#ff1744' : q.mag >= 3 ? '#ff6d00' : '#ffd600';
+        function setLiveStatus(text, color) {
+            const el = document.getElementById('liveStatus');
+            if (!el) return;
+            el.textContent = text;
+            el.style.color = color || 'var(--text-secondary)';
+        }
 
-            L.circleMarker([q.lat, q.lng], {
-                radius: size,
-                fillColor: color,
-                color: '#fff',
-                weight: 2,
-                fillOpacity: 0.7
-            }).addTo(quakeMap).bindPopup(
-                `<b>Magnitude ${q.mag}</b><br>Depth: ${q.depth}km<br>${q.time}`
-            );
-        });
+        function setLastUpdated() {
+            const el = document.getElementById('lastUpdated');
+            if (el) el.textContent = 'Updated ' + new Date().toLocaleTimeString();
+        }
+
+        function magnitudeColor(magnitude) {
+            if (magnitude >= 5) return '#ff1744';
+            if (magnitude >= 4) return '#ff6d00';
+            if (magnitude >= 3) return '#ffd600';
+            return '#00c853';
+        }
+
+        async function getJson(url) {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`${url} returned ${response.status}`);
+            }
+            return response.json();
+        }
+
+        function renderMarkers(events, location) {
+            quakeLayer.clearLayers();
+            const bounds = [];
+            const plotted = (events || []).slice(0, 40);
+
+            if (location && Number.isFinite(location.latitude) && Number.isFinite(location.longitude) && latestRisk) {
+                const probability = latestRisk.prediction.damage_probability;
+                const radiusMeters = 12000 + probability * 88000;
+                const riskColor = riskColorMap[latestRisk.prediction.risk_level] || '#ffd600';
+                L.circle([location.latitude, location.longitude], {
+                    radius: radiusMeters,
+                    color: riskColor,
+                    weight: 2,
+                    fillColor: riskColor,
+                    fillOpacity: 0.12
+                }).addTo(quakeLayer).bindPopup(
+                    `<b>${location.city}</b><br>Model risk: ${(probability * 100).toFixed(1)}%<br>${latestRisk.prediction.risk_level.toUpperCase()}`
+                );
+                L.circleMarker([location.latitude, location.longitude], {
+                    radius: 11,
+                    fillColor: riskColor,
+                    color: '#ffffff',
+                    weight: 3,
+                    fillOpacity: 0.95
+                }).addTo(quakeLayer).bindPopup(
+                    `<b>${location.city}, ${location.province}</b><br>Seismic risk: ${(probability * 100).toFixed(1)}%<br>Scope: ${location.scope} history`
+                );
+                bounds.push([location.latitude, location.longitude]);
+            }
+
+            plotted.forEach(event => {
+                const color = magnitudeColor(event.magnitude);
+                const marker = L.circleMarker([event.latitude, event.longitude], {
+                    radius: Math.max(event.magnitude * 3, 5),
+                    fillColor: color,
+                    color: '#ffffff',
+                    weight: 2,
+                    fillOpacity: 0.75
+                }).addTo(quakeLayer).bindPopup(
+                    `<b>Magnitude ${event.magnitude.toFixed(1)}</b><br>` +
+                    `Depth: ${event.depth_km.toFixed(1)} km<br>` +
+                    `${event.city}, ${event.province}<br>` +
+                    `${event.date}<br>` +
+                    `Damage: ${event.damage_occurred ? 'Yes' : 'No'}`
+                );
+                bounds.push([event.latitude, event.longitude]);
+            });
+
+            if (bounds.length > 1) {
+                quakeMap.fitBounds(bounds, { padding: [30, 30], maxZoom: 9 });
+            } else if (bounds.length === 1) {
+                quakeMap.setView(bounds[0], 9);
+            }
+
+            const countEl = document.getElementById('mapCount');
+            if (countEl) countEl.textContent = `${plotted.length} events + city risk`;
+        }
+
+        function renderRisk(data) {
+            latestRisk = data;
+            const level = data.prediction.risk_level;
+            const color = riskColorMap[level] || '#ffd600';
+            const probability = data.prediction.damage_probability;
+
+            const scoreEl = document.getElementById('riskScoreValue');
+            const badge = document.getElementById('riskBadge');
+            scoreEl.textContent = `${Math.round(probability * 100)}%`;
+            scoreEl.style.color = color;
+            badge.textContent = level.charAt(0).toUpperCase() + level.slice(1);
+            badge.className = `risk-badge ${level}`;
+            badge.style.color = color;
+
+            const predicted = data.prediction.damage_predicted ? 'Damage likely' : 'No damage predicted';
+            document.getElementById('riskPredictionText').innerHTML =
+                `<strong style="color:${color};">${predicted}</strong> · ${data.prediction.confidence_band} confidence`;
+            document.getElementById('riskThresholdText').textContent =
+                `Threshold ${data.prediction.threshold_used.toFixed(2)} · ${data.model.name} v${data.model.version}`;
+
+            const location = data.location || {};
+            const sourceLabel = data.data_source === 'live_usgs'
+                ? 'live USGS'
+                : data.data_source === 'historical_dataset_fallback'
+                    ? 'historical (live unavailable)'
+                    : 'historical';
+            const locationLabel = `${location.city || ''}${location.province ? ', ' + location.province : ''}`;
+            document.getElementById('riskLocationText').textContent = `${locationLabel} · ${sourceLabel}`;
+
+            document.getElementById('riskFactors').innerHTML = data.factors.map(f => `
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.9rem;">${f.label}</span>
+                        <span style="font-weight: 600;">${f.value}</span>
+                    </div>
+                    <div style="height: 8px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
+                        <div style="height: 100%; width: ${(f.score * 100).toFixed(0)}%; background: ${f.color}; border-radius: 4px;"></div>
+                    </div>
+                </div>
+            `).join('');
+
+            window.__liveRisk = data;
+            const nearest = data.live_source && data.live_source.nearest_event;
+            const nearestText = nearest
+                ? ` · nearest M${Number(nearest.magnitude).toFixed(1)} ${Math.round(nearest.distance_km)} km, ${Math.round(nearest.age_days)} days ago`
+                : '';
+            document.getElementById('recentEventsBasis').textContent =
+                `${locationLabel} · ${data.location.basis || sourceLabel}${nearestText}`;
+        }
+
+        function historyRowHtml(e) {
+            const magColor = e.magnitude >= 5 ? 'var(--risk-extreme)' : e.magnitude >= 4 ? 'var(--risk-moderate)' : 'var(--accent-secondary)';
+            const status = e.damage_occurred
+                ? '<span class="status-badge critical">Damage</span>'
+                : '<span class="status-badge active">Recorded</span>';
+            return `
+                <tr>
+                    <td>${e.date}</td>
+                    <td><span style="color: ${magColor}; font-weight: 700;">${e.magnitude.toFixed(1)} ML</span></td>
+                    <td>${e.city}, ${e.province}</td>
+                    <td>${e.depth_km.toFixed(1)} km</td>
+                    <td>${e.intensity}</td>
+                    <td>${status}</td>
+                </tr>
+            `;
+        }
+
+        function renderEvents(payload, location) {
+            const events = payload.events || [];
+            const summary = payload.summary || {};
+            const ordered = [...events].reverse();
+
+            seismicChart.data.labels = ordered.map(e => e.date.slice(5));
+            seismicChart.data.datasets[0].data = ordered.map(e => e.magnitude);
+            seismicChart.update();
+            document.getElementById('chartSubtitle').textContent =
+                `${events.length} recorded events · ${summary.date_min || 'n/a'} to ${summary.date_max || 'n/a'}`;
+
+            const bins = [0, 0, 0, 0];
+            events.forEach(e => {
+                if (e.magnitude < 3) bins[0] += 1;
+                else if (e.magnitude < 4) bins[1] += 1;
+                else if (e.magnitude < 5) bins[2] += 1;
+                else bins[3] += 1;
+            });
+            magnitudeChart.data.datasets[0].data = bins;
+            magnitudeChart.update();
+
+            const recentEl = document.getElementById('recentEvents');
+            const liveRisk = window.__liveRisk || {};
+            const liveEvents = liveRisk.recent_events || [];
+            const nearest = (liveRisk.live_source && liveRisk.live_source.nearest_event) || null;
+            if (liveEvents.length) {
+                recentEl.innerHTML = liveEvents.slice(0, 4).map(e => {
+                    const color = magnitudeColor(e.magnitude);
+                    return `
+                        <div style="padding: 0.75rem; background: rgba(255,255,255,0.04); border-left: 3px solid ${color}; border-radius: var(--radius-md);">
+                            <span style="font-size: 0.8rem; color: var(--text-secondary);">M ${Number(e.magnitude).toFixed(1)} · ${Number(e.depth_km || 0).toFixed(0)} km deep · ${Math.round(e.distance_km || 0)} km away</span>
+                            <p style="font-weight: 600; font-size: 0.9rem;">${e.place || e.city}</p>
+                            <p style="color: var(--text-muted); font-size: 0.75rem;">${e.date}</p>
+                        </div>
+                    `;
+                }).join('');
+            } else if (nearest) {
+                const color = magnitudeColor(nearest.magnitude);
+                recentEl.innerHTML = `
+                    <p style="color: var(--text-muted); font-size: 0.85rem;">No local USGS events in the last ${liveRisk.location?.window_days || 30} days.</p>
+                    <div style="padding: 0.75rem; background: rgba(255,255,255,0.04); border-left: 3px solid ${color}; border-radius: var(--radius-md);">
+                        <span style="font-size: 0.8rem; color: var(--text-secondary);">Nearest: M ${Number(nearest.magnitude).toFixed(1)} · ${Math.round(nearest.distance_km)} km away</span>
+                        <p style="font-weight: 600; font-size: 0.9rem;">${nearest.place || ''}</p>
+                        <p style="color: var(--text-muted); font-size: 0.75rem;">${nearest.date} (${Math.round(nearest.age_days)} days ago)</p>
+                    </div>
+                `;
+            } else {
+                recentEl.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">No live USGS events available for this location.</p>';
+            }
+
+            window.__currentHistoryEvents = events;
+            historyExpanded = false;
+            const historyBody = document.getElementById('historyTableBody');
+            const visibleHistory = historyExpanded ? events : events.slice(0, 10);
+            historyBody.innerHTML = events.length ? visibleHistory.map(historyRowHtml).join('') : '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No historical events for this location.</td></tr>';
+            document.getElementById('historyCount').textContent = `${events.length} events · ${summary.damaging_events || 0} damaging`;
+            const historyToggle = document.getElementById('historyToggle');
+            if (historyToggle) {
+                historyToggle.style.display = events.length > 10 ? '' : 'none';
+                historyToggle.textContent = 'Show more';
+            }
+
+            const listEl = document.getElementById('recentQuakeList');
+            const national = (window.__nationalEvents || []).slice(0, 8);
+            listEl.innerHTML = national.length ? national.map(e => {
+                const color = magnitudeColor(e.magnitude);
+                const severity = e.magnitude >= 5 ? 'critical' : e.magnitude >= 4 ? 'warning' : '';
+                return `
+                    <div class="alert-item ${severity}" style="border-left: 3px solid ${color};">
+                        <div class="alert-icon"><i class="fas fa-globe-asia" style="color:${color};"></i></div>
+                        <div class="alert-content">
+                            <h4>M ${e.magnitude.toFixed(1)}</h4>
+                            <p>${e.city}, ${e.province}</p>
+                        </div>
+                        <span class="alert-time">${e.date.slice(5)}</span>
+                    </div>
+                `;
+            }).join('') : '<p style="color: var(--text-muted); font-size: 0.85rem; padding: 0.75rem;">No national events available.</p>';
+
+            renderMarkers(events, location);
+        }
+
+        function renderOverview(overview, model) {
+            const summary = overview.summary || {};
+            const latest = overview.latest_event || (overview.recent_events || [])[0] || {};
+            const cv = (model.metrics_summary || {}).repeated_cv || {};
+
+            document.getElementById('statEvents').textContent = summary.events ?? '--';
+            document.getElementById('statEventsRange').textContent =
+                summary.date_min && summary.date_max ? `${summary.date_min} to ${summary.date_max}` : 'Training dataset';
+            document.getElementById('statDamaging').textContent = summary.damaging_events ?? '--';
+            document.getElementById('statDamagingRate').textContent = summary.events
+                ? `${((summary.damaging_events / summary.events) * 100).toFixed(2)}% of all events`
+                : '--';
+            document.getElementById('statMaxMag').textContent =
+                summary.max_magnitude != null ? `${Number(summary.max_magnitude).toFixed(1)} M` : '--';
+            document.getElementById('statMaxMagPlace').textContent =
+                latest.city ? `${latest.city} · ${latest.date}` : '--';
+            document.getElementById('statPrAuc').textContent =
+                cv.pr_auc != null ? Number(cv.pr_auc).toFixed(3) : '--';
+            document.getElementById('statModelName').textContent =
+                `${model.model.algorithm} v${model.model.version}`;
+        }
+
+        function renderModel(info) {
+            const algorithm = info.model.algorithm || 'RandomForestClassifier';
+            const badge = document.getElementById('modelAlgorithmBadge');
+            badge.textContent = algorithm.replace('Classifier', '');
+            badge.className = 'status-badge active';
+
+            const features = info.top_features || [];
+            const maxImportance = features.length ? Math.max(...features.map(f => f.importance)) : 1;
+            document.getElementById('modelFeatures').innerHTML = features.length ? features.slice(0, 8).map(f => `
+                <div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                        <span style="font-size: 0.85rem;">${f.feature}</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">${(f.importance * 100).toFixed(1)}%</span>
+                    </div>
+                    <div style="height: 7px; background: var(--bg-tertiary); border-radius: 4px; overflow: hidden;">
+                        <div style="height: 100%; width: ${(f.importance / maxImportance * 100).toFixed(0)}%; background: var(--accent-secondary); border-radius: 4px;"></div>
+                    </div>
+                </div>
+            `).join('') : '<p style="color: var(--text-muted); font-size: 0.85rem;">Feature importance unavailable.</p>';
+
+            const metrics = info.metrics_summary || {};
+            const holdout = metrics.holdout || {};
+            const cv = metrics.repeated_cv || {};
+            const temporal = metrics.temporal_cv || {};
+            const cards = [
+                ['Holdout F1', holdout.f1],
+                ['Precision', holdout.precision],
+                ['Recall', holdout.recall],
+                ['PR-AUC', holdout.pr_auc],
+                ['Repeated CV PR-AUC', cv.pr_auc],
+                ['Temporal CV F1', temporal.f1],
+            ];
+            document.getElementById('modelMetrics').innerHTML = cards.map(([label, value]) => `
+                <div style="padding: 0.75rem; background: rgba(255,255,255,0.04); border-radius: var(--radius-md);">
+                    <p style="color: #cbd5e1; font-size: 0.72rem;">${label}</p>
+                    <p style="font-size: 1.15rem; font-weight: 800; color: var(--accent-secondary);">${value != null ? Number(value).toFixed(3) : '--'}</p>
+                </div>
+            `).join('');
+
+            document.getElementById('modelTrainingMeta').textContent =
+                `${info.dataset.rows} events · ${info.dataset.positives} damaging · ${info.training_runs.total_fits} model fits · trained ${String(info.model.trained_at).slice(0, 10)} · threshold ${Number(info.model.threshold).toFixed(2)}`;
+        }
+
+        async function loadDashboard() {
+            const icon = document.getElementById('refreshIcon');
+            setLiveStatus('Syncing...', '#ffd600');
+            try {
+                const [info, risk] = await Promise.all([
+                    getJson('/api/earthquake/model-info'),
+                    getJson(`/api/earthquake/risk-by-city?city=${encodeURIComponent(selectedCity)}&live=true&_ts=${Date.now()}`),
+                ]);
+                const eventCity = risk.location && risk.location.scope === 'national' ? '' : selectedCity;
+                const eventsUrl = eventCity
+                    ? `/api/earthquake/events?city=${encodeURIComponent(eventCity)}&limit=20`
+                    : `/api/earthquake/events?limit=60`;
+                const cityEvents = await getJson(eventsUrl);
+
+                let overview;
+                try {
+                    overview = await getJson('/api/earthquake/overview?limit=60');
+                } catch (overviewError) {
+                    const national = await getJson('/api/earthquake/events?limit=60');
+                    overview = {
+                        summary: national.summary,
+                        recent_events: national.events,
+                        latest_event: national.events[0],
+                    };
+                }
+
+                window.__nationalEvents = overview.recent_events || [];
+                renderModel(info);
+                renderOverview(overview, info);
+                const mapLocation = risk.location && risk.location.scope === 'national' && window.__userLocation
+                    ? { ...risk.location, latitude: window.__userLocation.latitude, longitude: window.__userLocation.longitude, city: window.__userLocation.city, scope: 'user location' }
+                    : risk.location;
+                renderRisk(risk);
+                renderEvents(cityEvents, mapLocation);
+                setLiveStatus('Live · API connected', '#00c853');
+                setLastUpdated();
+            } catch (error) {
+                console.error('Earthquake dashboard load failed:', error);
+                setLiveStatus('API unavailable', '#ff1744');
+                document.getElementById('riskScoreValue').textContent = '--';
+                document.getElementById('riskBadge').textContent = 'UNAVAILABLE';
+                document.getElementById('riskBadge').className = 'risk-badge moderate';
+                document.getElementById('riskPredictionText').textContent = 'Could not load the model API.';
+                document.getElementById('riskThresholdText').textContent = 'Start the backend and refresh this page.';
+                document.getElementById('riskFactors').innerHTML =
+                    '<p style="color: var(--risk-extreme); font-size: 0.85rem;">Risk factors unavailable.</p>';
+                document.getElementById('historyTableBody').innerHTML =
+                    '<tr><td colspan="6" style="text-align: center; color: var(--risk-extreme); padding: 1.5rem;">Could not load earthquake history.</td></tr>';
+                document.getElementById('recentQuakeList').innerHTML =
+                    '<p style="color: var(--risk-extreme); font-size: 0.85rem; padding: 0.75rem;">Could not load recent earthquakes.</p>';
+            } finally {
+                if (icon) {
+                    icon.classList.add('fa-spin');
+                    setTimeout(() => icon.classList.remove('fa-spin'), 500);
+                }
+            }
+        }
 
         function refreshData() {
-            const icon = document.getElementById('refreshIcon');
-            icon.classList.add('fa-spin');
-            setTimeout(() => icon.classList.remove('fa-spin'), 1500);
+            loadDashboard();
         }
 
         // Pakistan Cities Database (150+ Cities)
@@ -462,6 +815,7 @@
         const citySearch = document.getElementById('citySearch');
         const cityDropdown = document.getElementById('cityDropdown');
         let selectedCity = 'Islamabad';
+        let historyExpanded = false;
 
         citySearch.value = selectedCity;
 
@@ -494,16 +848,23 @@
             }
         });
 
-        function selectCity(city) {
+        async function selectCity(city) {
             selectedCity = city;
             citySearch.value = city;
             cityDropdown.style.display = 'none';
+            try {
+                // Persist the choice so the dashboard shows the same city/prediction.
+                await DisasterLocation.search(city);
+            } catch (error) {
+                console.warn('Could not persist selected city', error);
+            }
             refreshData();
         }
 
         function toggleNotifications() {
             const dropdown = document.getElementById('notifDropdown');
             const badge = document.getElementById('notifBadge');
+            if (!dropdown) return;
             if (dropdown.style.display === 'none' || dropdown.style.display === '') {
                 dropdown.style.display = 'block';
                 badge.style.display = 'none';
@@ -531,7 +892,55 @@
                 window.location.href = '../login.html';
             }
         }
+
+        const historyToggle = document.getElementById('historyToggle');
+        if (historyToggle) {
+            historyToggle.addEventListener('click', () => {
+                historyExpanded = !historyExpanded;
+                const events = window.__currentHistoryEvents || [];
+                const body = document.getElementById('historyTableBody');
+                const visible = historyExpanded ? events : events.slice(0, 10);
+                body.innerHTML = events.length ? visible.map(historyRowHtml).join('') : '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No historical events for this location.</td></tr>';
+                historyToggle.textContent = historyExpanded ? 'Show less' : 'Show more';
+            });
+        }
+
+        async function initEarthquakePage() {
+            try {
+                // When opened from the dashboard, use exactly the same city.
+                const requested = new URLSearchParams(window.location.search).get('city');
+                if (requested) {
+                    selectedCity = requested;
+                    if (citySearch) citySearch.value = selectedCity;
+                    try {
+                        await DisasterLocation.search(requested);
+                    } catch (error) {
+                        console.warn('Could not persist requested city', error);
+                    }
+                } else {
+                    // Same resolver as the dashboard: selected city first, then own location.
+                    const location = await DisasterLocation.detect();
+                    window.__userLocation = location;
+                    const city = location && location.city &&
+                        location.city !== "Unknown" && location.city !== "Current location" && location.city !== "Pakistan"
+                        ? location.city : null;
+                    if (city) {
+                        selectedCity = city;
+                        if (citySearch) citySearch.value = selectedCity;
+                    }
+                }
+            } catch (error) {
+                console.warn("Could not detect earthquake page location", error);
+            }
+            await loadDashboard();
+            refreshTimer = setInterval(() => {
+                if (!document.hidden) loadDashboard();
+            }, 120000);
+        }
+
+        initEarthquakePage();
     </script>
+    <script src="../js/mobile-nav.js"></script>
 </body>
 
 </html>

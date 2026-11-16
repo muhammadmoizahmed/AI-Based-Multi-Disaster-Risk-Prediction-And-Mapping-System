@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History - DisasterGuard</title>
@@ -9,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/location.js"></script>
+    <script src="../js/api-config.js"></script>
 </head>
 
 <body>
@@ -46,7 +49,7 @@
             <ul class="sidebar-menu">
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood/Rain</a>
                 </li>
-                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
+                <li><a href="earthquake.html?v=3"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
                         Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
@@ -194,6 +197,7 @@
         // Load user name
         AuthManager.loadUserName();
     </script>
+    <script src="../js/mobile-nav.js"></script>
 </body>
 
 </html>

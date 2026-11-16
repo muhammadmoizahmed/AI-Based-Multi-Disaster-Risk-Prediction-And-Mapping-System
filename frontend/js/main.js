@@ -67,10 +67,17 @@ class Toast {
 
 // API Manager (will connect to FastAPI backend)
 class APIManager {
-    constructor(baseURL = 'http://localhost:5001/api') {
+    constructor(baseURL = '/api') {
         this.baseURL = baseURL;
     }
     
+    static getHeaders() {
+        return {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('auth_token') || ''}`
+        };
+    }
+
     getHeaders() {
         return {
             'Content-Type': 'application/json',
@@ -603,7 +610,7 @@ document.head.appendChild(style);
 async function socialLogin(provider) {
     if (provider === 'google') {
         try {
-            const response = await fetch('http://localhost:5001/api/auth/google');
+            const response = await fetch('/api/auth/google');
             const data = await response.json();
             
             if (data.auth_url) {
@@ -617,7 +624,7 @@ async function socialLogin(provider) {
         }
     } else if (provider === 'github') {
         try {
-            const response = await fetch('http://localhost:5001/api/auth/github');
+            const response = await fetch('/api/auth/github');
             const data = await response.json();
             
             if (data.auth_url) {

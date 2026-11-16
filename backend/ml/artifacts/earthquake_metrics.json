@@ -1,0 +1,279 @@
+{
+  "model_name": "random_forest",
+  "model_family": "RandomForestClassifier",
+  "model_version": "3.0.0",
+  "deployment_note": "RandomForest-only pipeline. Model trained on the first 80% of chronological data; evaluation uses the untouched final 20%. No refit on all data.",
+  "feature_set": "context",
+  "feature_columns": [
+    "latitude",
+    "longitude",
+    "magnitude",
+    "depth_km",
+    "magnitude_squared",
+    "is_shallow",
+    "is_very_shallow",
+    "mag_depth_ratio",
+    "month_sin",
+    "month_cos",
+    "doy_sin",
+    "doy_cos",
+    "fault_distance_km",
+    "near_fault",
+    "prior_count_7d",
+    "prior_count_30d",
+    "prior_count_90d",
+    "prior_max_mag_30d",
+    "prior_max_mag_90d",
+    "prior_mean_depth_30d",
+    "prior_count_100km_90d",
+    "min_distance_past_km",
+    "days_since_previous",
+    "distance_to_previous_km",
+    "province",
+    "city"
+  ],
+  "threshold": 0.19,
+  "thresholds": {
+    "default": 0.5,
+    "f1_optimal": 0.19,
+    "deployment_f2_safety": 0.19
+  },
+  "risk_level_boundaries": {
+    "low": 0.25,
+    "moderate": 0.5,
+    "high": 0.75
+  },
+  "trained_at": "2026-11-04T13:13:38.491769+00:00",
+  "dataset": {
+    "path": "datasets\\pakistan_earthquake_2020_2025.csv",
+    "rows": 643,
+    "positives": 30,
+    "negatives": 613,
+    "positive_rate": 0.04665629860031104,
+    "date_min": "2020-01-01",
+    "date_max": "2025-12-30",
+    "training_rows": 514,
+    "training_positives": 24,
+    "test_rows": 129,
+    "test_positives": 6
+  },
+  "evaluation": {
+    "holdout_default_threshold": {
+      "threshold": 0.5,
+      "accuracy": 0.9844961240310077,
+      "balanced_accuracy": 0.8333333333333333,
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8,
+      "f2": 0.7142857142855611,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          123,
+          0
+        ],
+        [
+          2,
+          4
+        ]
+      ],
+      "tn": 123,
+      "fp": 0,
+      "fn": 2,
+      "tp": 4
+    },
+    "holdout_f1_optimal_threshold": {
+      "threshold": 0.19,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "f2": 0.9999999999997999,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          123,
+          0
+        ],
+        [
+          0,
+          6
+        ]
+      ],
+      "tn": 123,
+      "fp": 0,
+      "fn": 0,
+      "tp": 6
+    },
+    "holdout_deployment_threshold": {
+      "threshold": 0.19,
+      "accuracy": 1.0,
+      "balanced_accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "f2": 0.9999999999997999,
+      "roc_auc": 1.0,
+      "pr_auc": 1.0,
+      "confusion_matrix": [
+        [
+          123,
+          0
+        ],
+        [
+          0,
+          6
+        ]
+      ],
+      "tn": 123,
+      "fp": 0,
+      "fn": 0,
+      "tp": 6
+    },
+    "oof_threshold_search_best_f1": 0.8888888888888888,
+    "oof_threshold_search_best_f2": 0.9523809523807255
+  },
+  "feature_set_comparison": [
+    {
+      "feature_set": "raw",
+      "model": "random_forest",
+      "accuracy": 0.9941557205406435,
+      "accuracy_std": 0.00777659603916797,
+      "balanced_accuracy": 0.9539795918367346,
+      "balanced_accuracy_std": 0.05671340079062283,
+      "precision": 0.96,
+      "precision_std": 0.07999999999999999,
+      "recall": 0.9099999999999999,
+      "recall_std": 0.11135528725660043,
+      "f1": 0.9314285714285713,
+      "f1_std": 0.08590455073355947,
+      "roc_auc": 0.9991836734693876,
+      "roc_auc_std": 0.0016326530612245096,
+      "pr_auc": 0.9853333333333334,
+      "pr_auc_std": 0.029333333333333392,
+      "folds": 5,
+      "fit_seconds": 9.363230466842651
+    },
+    {
+      "feature_set": "static",
+      "model": "random_forest",
+      "accuracy": 0.9824671616219304,
+      "accuracy_std": 0.011381424058033147,
+      "balanced_accuracy": 0.8669387755102042,
+      "balanced_accuracy_std": 0.08906614401198049,
+      "precision": 0.8433333333333334,
+      "precision_std": 0.13482498944104457,
+      "recall": 0.74,
+      "recall_std": 0.17435595774162696,
+      "f1": 0.7853968253968253,
+      "f1_std": 0.15287749786179042,
+      "roc_auc": 0.9965306122448979,
+      "roc_auc_std": 0.0031351615297422774,
+      "pr_auc": 0.9248333333333333,
+      "pr_auc_std": 0.07194982819838958,
+      "folds": 5,
+      "fit_seconds": 8.103697299957275
+    },
+    {
+      "feature_set": "context",
+      "model": "random_forest",
+      "accuracy": 0.9902722253950124,
+      "accuracy_std": 0.0061404630082240565,
+      "balanced_accuracy": 0.9139795918367348,
+      "balanced_accuracy_std": 0.07570135760687209,
+      "precision": 0.9666666666666668,
+      "precision_std": 0.06666666666666667,
+      "recall": 0.8300000000000001,
+      "recall_std": 0.15362291495737218,
+      "f1": 0.881024531024531,
+      "f1_std": 0.08092279530256632,
+      "roc_auc": 0.9991836734693876,
+      "roc_auc_std": 0.0016326530612245096,
+      "pr_auc": 0.9885714285714287,
+      "pr_auc_std": 0.022857142857142864,
+      "folds": 5,
+      "fit_seconds": 9.068559646606445
+    }
+  ],
+  "repeated_cv": [
+    {
+      "model": "random_forest",
+      "feature_set": "context",
+      "accuracy": 0.9883368234025003,
+      "accuracy_std": 0.008081155686665285,
+      "balanced_accuracy": 0.9352721088435374,
+      "balanced_accuracy_std": 0.07035265155305194,
+      "precision": 0.9070634920634922,
+      "precision_std": 0.12335728353183177,
+      "recall": 0.8766666666666668,
+      "recall_std": 0.14476033833738977,
+      "f1": 0.8755629555629556,
+      "f1_std": 0.08168367856502677,
+      "roc_auc": 0.9989795918367346,
+      "roc_auc_std": 0.0014430750636459906,
+      "pr_auc": 0.9824126984126984,
+      "pr_auc_std": 0.023731597344511964,
+      "folds": 15,
+      "fit_seconds": 24.398367881774902
+    }
+  ],
+  "temporal_cv": [
+    {
+      "model": "random_forest",
+      "feature_set": "context",
+      "accuracy": 0.9858823529411765,
+      "accuracy_std": 0.013719886811400708,
+      "balanced_accuracy": 0.88921258657031,
+      "balanced_accuracy_std": 0.09972737556085852,
+      "precision": 0.8666666666666666,
+      "precision_std": 0.16329931618554522,
+      "recall": 0.7833333333333333,
+      "recall_std": 0.19436506316151003,
+      "f1": 0.819047619047619,
+      "f1_std": 0.17405397030949588,
+      "roc_auc": 0.9955133995784402,
+      "roc_auc_std": 0.006353722038090524,
+      "pr_auc": 0.9394047619047619,
+      "pr_auc_std": 0.07820295996857028,
+      "folds": 5,
+      "fit_seconds": 5.925655841827393
+    }
+  ],
+  "hyperparameter_tuning": [
+    {
+      "model": "random_forest",
+      "feature_set": "context",
+      "best_cv_pr_auc": 0.9933333333333334,
+      "best_params": "{\"model__max_depth\": null, \"model__max_features\": 0.5, \"model__min_samples_leaf\": 1, \"model__n_estimators\": 300}",
+      "candidate_parameter_sets": 36,
+      "cv_folds": 5
+    }
+  ],
+  "training_runs": {
+    "feature_set_comparison_fits": 15,
+    "hyperparameter_candidate_sets": 36,
+    "hyperparameter_fits": 180,
+    "oof_threshold_fits": 5,
+    "repeated_cv_fits": 15,
+    "temporal_cv_fits": 5,
+    "holdout_fits": 1,
+    "final_refit_fits": 0,
+    "total_fits": 221
+  },
+  "environment": {
+    "python": "3.11.0",
+    "scikit_learn": "1.4.0",
+    "pandas": "2.2.0",
+    "numpy": "1.26.3"
+  },
+  "training_seconds": 106.37836480000033,
+  "artifacts": {
+    "model_file": "earthquake_model.joblib",
+    "holdout_model_file": "earthquake_model_holdout.joblib",
+    "metrics_file": "earthquake_metrics.json",
+    "historical_events_file": "historical_events.csv"
+  }
+}

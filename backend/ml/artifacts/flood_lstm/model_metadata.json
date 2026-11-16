@@ -1,0 +1,50 @@
+{
+  "model_name": "flood_lstm",
+  "model_version": "1.0.0",
+  "framework": "tensorflow",
+  "framework_version": "2.15.0",
+  "lookback": 14,
+  "prediction_horizon": "next observed record per city",
+  "features": [
+    "rainfall_mm",
+    "river_level_m",
+    "latitude",
+    "longitude",
+    "days_since_previous",
+    "month_sin",
+    "month_cos"
+  ],
+  "threshold": 0.5,
+  "split": {
+    "train_sequences": 606,
+    "val_sequences": 130,
+    "test_sequences": 131,
+    "train_target_date_max": "2024-06-23",
+    "val_target_date_max": "2025-04-16",
+    "test_target_date_max": "2025-12-30"
+  },
+  "metrics": {
+    "accuracy": 0.8244274809160306,
+    "precision": 0.7321428571428571,
+    "recall": 0.8367346938775511,
+    "f1": 0.780952380952381,
+    "roc_auc": 0.8653558984569437,
+    "pr_auc": 0.7649624899610944,
+    "confusion_matrix": [
+      [
+        67,
+        15
+      ],
+      [
+        8,
+        41
+      ]
+    ],
+    "tn": 67,
+    "fp": 15,
+    "fn": 8,
+    "tp": 41
+  },
+  "training_seconds": 23.00816599999962,
+  "trained_at": "2026-11-04T18:12:26.483722+00:00"
+}

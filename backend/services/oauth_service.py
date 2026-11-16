@@ -10,11 +10,23 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '..', '..', '.env'))
 
 GOOGLE_CLIENT_ID = os.getenv('google_client_id')
 GOOGLE_CLIENT_SECRET = os.getenv('google_client_secret')
-GOOGLE_REDIRECT_URI = 'http://localhost:5000/api/auth/google/callback'
+
+BACKEND_BASE_URL = os.getenv(
+    'BACKEND_BASE_URL',
+    f"http://localhost:{os.getenv('PORT', '5000')}"
+).rstrip('/')
+
+GOOGLE_REDIRECT_URI = os.getenv(
+    'GOOGLE_REDIRECT_URI',
+    f'{BACKEND_BASE_URL}/api/auth/google/callback'
+)
 
 GITHUB_CLIENT_ID = os.getenv('github_client_id', '')
 GITHUB_CLIENT_SECRET = os.getenv('github_client_secret', '')
-GITHUB_REDIRECT_URI = 'http://localhost:5000/api/auth/github/callback'
+GITHUB_REDIRECT_URI = os.getenv(
+    'GITHUB_REDIRECT_URI',
+    f'{BACKEND_BASE_URL}/api/auth/github/callback'
+)
 
 
 def get_google_auth_url() -> str:
@@ -28,7 +40,7 @@ def get_google_auth_url() -> str:
         "prompt": "consent"
     }
     
-    return f"https://accounts.google.com/o/oauth2/v2/auth?{'&'.join(f'{k}={v}' for k, v in params.items())}"
+    return f"https://accounts.google.com/o/oauth2/v2/auth?{urllib.parse.urlencode(params)}"
 
 
 def get_google_user_info(code: str):
@@ -63,7 +75,7 @@ def get_github_auth_url() -> str:
         "response_type": "code"
     }
     
-    return f"https://github.com/login/oauth/authorize?{'&'.join(f'{k}={v}' for k, v in params.items())}"
+    return f"https://github.com/login/oauth/authorize?{urllib.parse.urlencode(params)}"
 
 
 def get_github_user_info(code: str):

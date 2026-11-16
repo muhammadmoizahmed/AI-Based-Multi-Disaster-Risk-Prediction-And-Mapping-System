@@ -101,6 +101,51 @@ def get_weather_forecast(lat: float, lon: float):
         return {"error": str(e)}
 
 
+def get_live_rainfall(lat: float, lon: float) -> Dict[str, Any]:
+    """Estimate live rainfall for the next 24h from OpenWeather current + forecast.
+
+    Returns a daily-total estimate (mm) suitable for the flood model's
+    ``rainfall_mm`` feature, plus supporting live observations.
+    """
+    current = get_current_weather(lat, lon)
+    forecast = get_weather_forecast(lat, lon)
+
+    rain_last_hour = 0.0
+    temperature_c = None
+    humidity = None
+    current_ok = isinstance(current, dict) and "error" not in current and "main" in current
+
+    if current_ok:
+        rain = current.get("rain") or {}
+        if isinstance(rain, dict):
+            rain_last_hour = float(rain.get("1h") or rain.get("3h") or 0.0)
+        main = current.get("main") or {}
+        temperature_c = main.get("temp")
+        humidity = main.get("humidity")
+
+    forecast_mm = 0.0
+    forecast_ok = isinstance(forecast, dict) and "error" not in forecast
+    if forecast_ok:
+        for entry in (forecast.get("list") or [])[:8]:  # next ~24h in 3h buckets
+            rain = entry.get("rain") or {}
+            if isinstance(rain, dict):
+                forecast_mm += float(rain.get("3h") or 0.0)
+
+    daily_mm = round(rain_last_hour + forecast_mm, 2)
+    available = bool(current_ok or forecast_ok or daily_mm > 0)
+
+    return {
+        "available": available,
+        "rainfall_mm": daily_mm,
+        "rain_last_hour_mm": round(rain_last_hour, 2),
+        "forecast_24h_mm": round(forecast_mm, 2),
+        "temperature_c": temperature_c,
+        "humidity": humidity,
+        "source": "OpenWeatherMap",
+        "fetched_at": datetime.utcnow().isoformat() + "Z",
+    }
+
+
 def get_pakistan_cities_weather():
     """Fetch live weather data for major Pakistan cities"""
     results = []

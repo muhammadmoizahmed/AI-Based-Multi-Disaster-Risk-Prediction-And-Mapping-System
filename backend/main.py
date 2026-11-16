@@ -11,11 +11,62 @@ from routes.auth import router as auth_router
 from routes.weather import router as weather_router
 from routes.ai import router as ai_router
 from routes.admin import router as admin_router
+from routes.earthquake import router as earthquake_router
+from routes.flood_lstm import router as flood_lstm_router
+from services.earthquake_service import _load_bundle as _load_earthquake_bundle
+from services.flood_lstm_service import preload_model as _preload_flood_lstm
 from database.db_config import test_connection
 
 
 # Initialize FastAPI app
 app = FastAPI(title="DisasterGuard API")
+
+
+@app.on_event("startup")
+def load_models_on_startup():
+    import logging
+
+    logger = logging.getLogger("disasterguard")
+    try:
+        _load_earthquake_bundle()
+    except Exception as exc:  # pragma: no cover - logged for operators
+        logger.error("Earthquake model failed to load: %s", exc)
+    try:
+        _preload_flood_lstm()
+    except Exception as exc:  # pragma: no cover - logged for operators
+        logger.error("Flood LSTM model failed to load: %s", exc)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+@app.get("/ready")
+def ready():
+    checks = {}
+    ready_state = True
+    try:
+        bundle = _load_earthquake_bundle()
+        checks["earthquake_model"] = bundle["metadata"]["model_version"]
+    except Exception as exc:
+        ready_state = False
+        checks["earthquake_model"] = f"unavailable: {exc}"
+    try:
+        from services.flood_lstm_service import model_info as _flood_info
+
+        info = _flood_info()
+        checks["flood_lstm_model"] = info["model"]["version"]
+        checks["flood_lstm_lookback"] = info["model"]["lookback"]
+    except Exception as exc:
+        ready_state = False
+        checks["flood_lstm_model"] = f"unavailable: {exc}"
+
+    if not ready_state:
+        from fastapi import HTTPException
+
+        raise HTTPException(status_code=503, detail=checks)
+    return {"status": "ready", **checks}
 
 # Add CORS middleware
 app.add_middleware(
@@ -31,6 +82,8 @@ app.include_router(auth_router)
 app.include_router(weather_router)
 app.include_router(ai_router)
 app.include_router(admin_router)
+app.include_router(earthquake_router)
+app.include_router(flood_lstm_router)
 
 # Root route
 @app.get("/")
@@ -98,6 +151,14 @@ async def test_db_connection():
 # Serve static frontend files (LAST to prevent overriding API routes)
 frontend_dir = os.path.join(os.path.dirname(__file__), '..', 'frontend')
 
+# Always revalidate frontend files so edits (and matching dashboard/page logic)
+# are picked up instead of being served from the browser cache.
+_NO_CACHE_HEADERS = {
+    "Cache-Control": "no-cache, no-store, must-revalidate",
+    "Pragma": "no-cache",
+    "Expires": "0",
+}
+
 
 @app.get("/{path:path}")
 async def serve_frontend(path: str):
@@ -108,11 +169,11 @@ async def serve_frontend(path: str):
     file_path = os.path.join(frontend_dir, path)
     
     if os.path.isfile(file_path):
-        return FileResponse(file_path)
+        return FileResponse(file_path, headers=_NO_CACHE_HEADERS)
     
     index_path = os.path.join(frontend_dir, "index.html")
     if os.path.isfile(index_path):
-        return FileResponse(index_path)
+        return FileResponse(index_path, headers=_NO_CACHE_HEADERS)
     
     from fastapi import HTTPException
     raise HTTPException(status_code=404, detail="Not found")

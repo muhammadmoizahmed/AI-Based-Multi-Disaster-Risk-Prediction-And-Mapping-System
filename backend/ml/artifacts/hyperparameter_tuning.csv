@@ -1,0 +1,2 @@
+model,feature_set,best_cv_pr_auc,best_params,candidate_parameter_sets,cv_folds
+random_forest,context,0.9933333333333334,"{""model__max_depth"": null, ""model__max_features"": 0.5, ""model__min_samples_leaf"": 1, ""model__n_estimators"": 300}",36,5

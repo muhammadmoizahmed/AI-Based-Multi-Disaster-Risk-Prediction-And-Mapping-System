@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Verification - DisasterGuard</title>
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="js/location.js"></script>
 </head>
 <body class="page-transition">
     <!-- Background Effects -->
@@ -105,6 +107,7 @@
         <span id="toastMessage">Notification</span>
     </div>
 
+    <script src="js/api-config.js"></script>
     <script src="js/main.js"></script>
     <script>
         let userEmail = '';
@@ -147,7 +150,7 @@
             
             showToast('Verifying...', 'info');
             
-            fetch('http://localhost:5001/api/auth/verify-pin', {
+            fetch('/api/auth/verify-pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: userEmail, password: pin })
@@ -193,7 +196,7 @@
             
             showToast('Sending new PIN...', 'info');
             
-            fetch('http://localhost:5001/api/auth/resend-pin', {
+            fetch('/api/auth/resend-pin', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: userEmail })
@@ -269,5 +272,6 @@
             }
         });
     </script>
+    <script src="js/mobile-nav.js"></script>
 </body>
 </html>

@@ -62,6 +62,19 @@ async def register(request: Request, data: RegisterData):
     return {"success": False, "message": "Invalid data"}, 400
 
 
+@router.post("/update-location")
+async def update_location(data: dict):
+    email = data.get("email")
+    location = data.get("location")
+    if not email or not location:
+        return {"success": False, "message": "email and location are required"}, 400
+    try:
+        update_user(email=email, location=location)
+        return {"success": True, "message": "Location updated"}
+    except Exception as exc:
+        return {"success": False, "message": str(exc)}, 400
+
+
 @router.post("/verify-pin")
 async def verify_pin(data: dict):
     email = data.get('email')

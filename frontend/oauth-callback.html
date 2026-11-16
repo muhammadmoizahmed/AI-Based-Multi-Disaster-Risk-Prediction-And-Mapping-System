@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OAuth Callback - DisasterGuard</title>
@@ -55,6 +56,7 @@
             color: #51cf66;
         }
     </style>
+    <script src="js/location.js"></script>
 </head>
 <body>
     <div class="container">
@@ -63,6 +65,7 @@
         <p id="message">Please wait while we complete your authentication.</p>
     </div>
 
+    <script src="js/api-config.js"></script>
     <script src="js/main.js"></script>
     <script>
         async function handleCallback() {
@@ -140,7 +143,7 @@
 
             try {
                 // Call backend callback endpoint
-                const response = await fetch(`http://localhost:5001/api/auth/${provider}/callback?code=${code}`, {
+                const response = await fetch(`/api/auth/${provider}/callback?code=${code}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -189,5 +192,6 @@
         // Handle callback on page load
         handleCallback();
     </script>
+    <script src="js/mobile-nav.js"></script>
 </body>
 </html>

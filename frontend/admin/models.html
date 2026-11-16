@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- NO-CACHE METATAGS -->
@@ -18,6 +19,8 @@
     <script>
         // No localStorage clearing - we need the auth token!
     </script>
+    <script src="../js/location.js"></script>
+    <script src="../js/api-config.js"></script>
 </head>
 
 <body>
@@ -119,7 +122,7 @@
                         </div>
                         <div>
                             <h4 style="font-weight: 700;">Flood LSTM</h4>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">v2.3.1</span>
+                            <span id="floodVersion" style="font-size: 0.8rem; color: var(--text-muted);">loading...</span>
                         </div>
                     </div>
                     <span class="status-badge" style="background: var(--risk-low);">Active</span>
@@ -162,8 +165,8 @@
                             <i class="fas fa-globe-asia" style="font-size: 1.5rem; color: white;"></i>
                         </div>
                         <div>
-                            <h4 style="font-weight: 700;">Quake CNN</h4>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">v1.8.2</span>
+                            <h4 style="font-weight: 700;">Quake XGBoost</h4>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">v1.0.0</span>
                         </div>
                     </div>
                     <span class="status-badge" style="background: var(--risk-low);">Active</span>
@@ -171,22 +174,22 @@
                 <div style="margin-bottom: 1rem;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
                         <span style="font-size: 0.9rem; color: var(--text-muted);">Accuracy</span>
-                        <span style="font-weight: 600;" id="quakeAcc">96.8%</span>
+                        <span style="font-weight: 600;" id="quakeAcc">99.2%</span>
                     </div>
                     <div style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;">
                         <div id="quakeAccBar"
-                            style="height: 100%; width: 96.8%; background: var(--accent-secondary); border-radius: 3px; transition: width 0.3s;">
+                            style="height: 100%; width: 99.2%; background: var(--accent-secondary); border-radius: 3px; transition: width 0.3s;">
                         </div>
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.85rem;">
                     <div style="background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: var(--radius-sm);">
                         <div style="color: var(--text-muted);">Precision</div>
-                        <div style="font-weight: 600;" id="quakePrec">94.2%</div>
+                        <div style="font-weight: 600;" id="quakePrec">100.0%</div>
                     </div>
                     <div style="background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: var(--radius-sm);">
                         <div style="color: var(--text-muted);">Recall</div>
-                        <div style="font-weight: 600;" id="quakeRec">97.5%</div>
+                        <div style="font-weight: 600;" id="quakeRec">83.3%</div>
                     </div>
                 </div>
                 <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
@@ -327,19 +330,29 @@
             return (Math.random() * (max - min) + min).toFixed(1);
         }
 
-        // Update model cards with random data
+        // Update model cards with real Flood LSTM metrics when available.
         function updateModelCards() {
-            const floodAcc = randomAcc(88, 95);
+            const flood = window.floodMetrics;
+            const floodAcc = flood ? (flood.accuracy * 100).toFixed(1) : randomAcc(88, 95);
             document.getElementById('floodAcc').textContent = floodAcc + '%';
             document.getElementById('floodAccBar').style.width = floodAcc + '%';
-            document.getElementById('floodPrec').textContent = randomAcc(85, 93) + '%';
-            document.getElementById('floodRec').textContent = randomAcc(89, 96) + '%';
+            document.getElementById('floodPrec').textContent = flood
+                ? (flood.precision * 100).toFixed(1) + '%'
+                : randomAcc(85, 93) + '%';
+            document.getElementById('floodRec').textContent = flood
+                ? (flood.recall * 100).toFixed(1) + '%'
+                : randomAcc(89, 96) + '%';
 
-            const quakeAcc = randomAcc(92, 98);
+            const quakeMetrics = window.quakeMetrics;
+            const quakeAcc = quakeMetrics ? (quakeMetrics.accuracy * 100).toFixed(1) : randomAcc(92, 98);
             document.getElementById('quakeAcc').textContent = quakeAcc + '%';
             document.getElementById('quakeAccBar').style.width = quakeAcc + '%';
-            document.getElementById('quakePrec').textContent = randomAcc(90, 96) + '%';
-            document.getElementById('quakeRec').textContent = randomAcc(93, 98) + '%';
+            document.getElementById('quakePrec').textContent = quakeMetrics
+                ? (quakeMetrics.precision * 100).toFixed(1) + '%'
+                : randomAcc(90, 96) + '%';
+            document.getElementById('quakeRec').textContent = quakeMetrics
+                ? (quakeMetrics.recall * 100).toFixed(1) + '%'
+                : randomAcc(93, 98) + '%';
 
             const fireAcc = randomAcc(85, 94);
             document.getElementById('fireAcc').textContent = fireAcc + '%';
@@ -354,7 +367,7 @@
 
         // Generate training jobs
         function generateTrainingJobs() {
-            const models = ['Flood LSTM', 'Quake CNN', 'Fire Detect', 'Risk Ensemble'];
+            const models = ['Flood LSTM', 'Quake XGBoost', 'Fire Detect', 'Risk Ensemble'];
             const statuses = [
                 { text: 'Running', color: 'var(--accent-primary)' },
                 { text: 'Completed', color: 'var(--risk-low)' },
@@ -502,12 +515,76 @@
             accuracyChart.update();
         }
 
+        async function loadEarthquakeModelMetrics() {
+            try {
+                const response = await fetch('/api/earthquake/model-info');
+                if (!response.ok) return;
+                const info = await response.json();
+                const metrics = info.metrics?.holdout_deployment_threshold || info.metrics?.holdout_f1_optimal_threshold;
+                if (!metrics) return;
+                window.quakeMetrics = {
+                    accuracy: metrics.accuracy,
+                    precision: metrics.precision,
+                    recall: metrics.recall,
+                    f1: metrics.f1,
+                    name: info.model?.name,
+                    version: info.model?.version
+                };
+                const card = document.getElementById('quakeAcc')?.closest('.card-3d');
+                if (card) {
+                    const title = card.querySelector('h4');
+                    const version = card.querySelector('h4 + span');
+                    if (title && info.model?.name) title.textContent = `Quake ${info.model.name.toUpperCase()}`;
+                    if (version && info.model?.version) version.textContent = `v${info.model.version} · F1 ${(metrics.f1 * 100).toFixed(1)}%`;
+                }
+                updateModelCards();
+            } catch (error) {
+                console.warn('Earthquake model info unavailable:', error);
+            }
+        }
+
+        async function loadFloodModelMetrics() {
+            try {
+                const response = await fetch('/api/flood-lstm/model-info');
+                if (!response.ok) return;
+                const info = await response.json();
+                const metrics = info.metrics || {};
+                window.floodMetrics = {
+                    accuracy: metrics.accuracy,
+                    precision: metrics.precision,
+                    recall: metrics.recall,
+                    f1: metrics.f1
+                };
+                const version = document.getElementById('floodVersion');
+                if (version) {
+                    version.textContent = `v${info.model.version} · F1 ${(metrics.f1 * 100).toFixed(1)}%`;
+                }
+                const card = document.getElementById('floodAcc')?.closest('.card-3d');
+                if (card) {
+                    const status = card.querySelector('.status-badge');
+                    const artifacts = info.artifact_status || {};
+                    const ready = artifacts.model && artifacts.scaler;
+                    if (status) {
+                        status.textContent = ready ? 'Active' : 'Artifact missing';
+                        status.style.background = ready ? 'var(--risk-low)' : 'var(--risk-extreme)';
+                    }
+                }
+                updateModelCards();
+            } catch (error) {
+                console.warn('Flood LSTM model info unavailable:', error);
+                const version = document.getElementById('floodVersion');
+                if (version) version.textContent = 'unavailable';
+            }
+        }
+
         // Auto-refresh every 8 seconds
         setInterval(() => {
             updateModelCards();
         }, 8000);
 
         // Initial load
+        loadEarthquakeModelMetrics();
+        loadFloodModelMetrics();
         updateModelCards();
         generateTrainingJobs();
 
@@ -535,6 +612,7 @@
             }
         }
     </script>
+    <script src="../js/mobile-nav.js"></script>
 </body>
 
 </html>

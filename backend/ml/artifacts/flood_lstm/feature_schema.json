@@ -1,0 +1,9 @@
+[
+  "rainfall_mm",
+  "river_level_m",
+  "latitude",
+  "longitude",
+  "days_since_previous",
+  "month_sin",
+  "month_cos"
+]

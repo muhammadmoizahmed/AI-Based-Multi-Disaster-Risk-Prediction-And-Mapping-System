@@ -17,9 +17,10 @@ An AI-powered disaster prediction and early warning system specifically designed
 8. [Database Layer](#database-layer-documentation)
 9. [Setup & Installation](#setup--installation)
 10. [Running the Application](#running-the-application)
-11. [Incomplete Features](#incomplete-features)
-12. [Future Enhancements](#future-enhancements)
-13. [Contact](#contact)
+11. [Earthquake ML Model](#earthquake-ml-model)
+12. [Incomplete Features](#incomplete-features)
+13. [Future Enhancements](#future-enhancements)
+14. [Contact](#contact)
 
 ---
 
@@ -39,7 +40,8 @@ An AI-powered disaster prediction and early warning system specifically designed
 - ✅ **Email Service**: SMTP integration for verification/reset emails
 
 ### Planned Enhancements
-- ❌ **Machine Learning**: Datasets have been collected and prepared. Model training and deployment are planned in the next development phase.
+- ✅ **Earthquake ML Model**: RandomForest damage-risk classifier trained on `datasets/pakistan_earthquake_2020_2025.csv`, exposed through `/api/earthquake/*`, and documented in `docs/EARTHQUAKE_MODEL_DOCUMENTATION.md`.
+- ❌ **Other ML Models**: Flood, wildfire, heatwave, landslide, cyclone and tsunami datasets are prepared; training is planned for the next phase.
 - ❌ **Redis Caching**: In-memory cache only, no Redis integration
 - ❌ **WebSocket Updates**: No real-time WebSocket push notifications
 - ❌ **PostgreSQL by Default**: SQLite not fully set up (USE_SQLITE flag in db_config)
@@ -513,13 +515,44 @@ python api_testing.py
 
 ---
 
+## Earthquake ML Model
+
+The earthquake branch is trained and integrated.
+
+- **Dataset**: 643 events (2020–2025), 30 damaging events (4.67%)
+- **Model**: RandomForest, `context` feature set (26 features)
+- **Training**: 557 model fits (feature-set comparison, tuning, repeated CV, temporal CV, holdout, final refit)
+- **Holdout metrics**: precision 1.000, recall 1.000, F1 1.000, PR-AUC 1.000
+- **Repeated CV**: PR-AUC 0.984 ± 0.025, precision 0.892, recall 0.933, F1 0.908
+- **Deployment threshold**: 0.22 (F2/safety), F1-optimal threshold 0.22
+- **Notebook**: `backend/ml/notebooks/earthquake_risk_training.ipynb`
+- **Full documentation**: [`docs/EARTHQUAKE_MODEL_DOCUMENTATION.md`](docs/EARTHQUAKE_MODEL_DOCUMENTATION.md)
+
+Endpoints:
+
+| Method | Endpoint |
+| --- | --- |
+| POST | `/api/earthquake/predict` |
+| GET | `/api/earthquake/risk-by-city?city=Harnai, Balochistan` |
+| GET | `/api/earthquake/events?city=Islamabad&limit=10` |
+| GET | `/api/earthquake/model-info` |
+
+Train the model:
+
+```bash
+python backend/ml/train_earthquake.py
+```
+
+---
+
 ## Incomplete Features
 
 List of features that are planned or partially implemented:
 
 | Feature | Status | Notes |
 |---------|--------|-------|
-| **Machine Learning Prediction Models** | ❌ Not Implemented | Datasets exist in `datasets/`, but no trained models integrated |
+| **Earthquake ML Model** | ✅ Implemented | RandomForest pipeline, artifacts, API and frontend integration |
+| **Other Disaster ML Models** | ⚠️ Partially Implemented | Datasets exist in `datasets/`; flood, wildfire, heatwave, landslide, cyclone and tsunami models are not trained yet |
 | **Redis Caching** | ❌ Not Implemented | In-memory dict cache only; no Redis |
 | **WebSocket Real-Time Updates** | ❌ Not Implemented | No real-time push notifications |
 | **SMS Alerts** | ❌ Not Implemented | No SMS integration (Twilio, etc.) |
@@ -534,9 +567,10 @@ List of features that are planned or partially implemented:
 ## Future Enhancements
 
 1. **Train & Deploy ML Models**
+   - ✅ Earthquake risk assessment using RandomForest (implemented)
    - Flood prediction using LSTM on rainfall data
-   - Earthquake risk assessment using Random Forest
    - Wildfire hotspot detection using satellite imagery
+   - Heatwave, landslide, cyclone and tsunami risk models
 
 2. **Real-Time Features**
    - WebSocket for live updates

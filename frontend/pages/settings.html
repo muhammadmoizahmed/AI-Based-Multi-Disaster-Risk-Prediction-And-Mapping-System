@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings - DisasterGuard</title>
@@ -10,6 +11,8 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <script src="../js/location.js"></script>
+    <script src="../js/api-config.js"></script>
 </head>
 
 <body>
@@ -47,7 +50,7 @@
             <ul class="sidebar-menu">
                 <li><a href="flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i> Flood/Rain</a>
                 </li>
-                <li><a href="earthquake.html"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
+                <li><a href="earthquake.html?v=3"><i class="fas fa-globe-asia" style="color: var(--accent-secondary);"></i>
                         Earthquake</a></li>
                 <li><a href="wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
@@ -78,45 +81,12 @@
             <div>
                 <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;"><i class="fas fa-cog"
                         style="color: var(--accent-primary); margin-right: 0.75rem;"></i>Settings</h1>
-                <p style="color: var(--text-secondary);">Manage your preferences and alert thresholds</p>
+                <p style="color: var(--text-secondary);">Manage your preferences and saved location</p>
             </div>
             <button class="btn btn-primary" onclick="saveSettings()"><i class="fas fa-save"></i> Save Changes</button>
         </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
             <!-- Profile Settings removed - use Profile page instead -->
-            <div class="card-3d" style="padding: 2rem;">
-                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-bell"
-                        style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Alert Thresholds</h3>
-                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                    <div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Flood Risk Threshold</span>
-                            <span id="floodThresholdVal"
-                                style="color: var(--accent-primary); font-weight: 600;">0.60</span>
-                        </div>
-                        <input type="range" min="0" max="1" step="0.05" value="0.6" class="input-field"
-                            style="width: 100%;" oninput="updateThreshold('flood', this.value)">
-                    </div>
-                    <div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Earthquake Risk Threshold</span>
-                            <span id="quakeThresholdVal"
-                                style="color: var(--accent-secondary); font-weight: 600;">0.50</span>
-                        </div>
-                        <input type="range" min="0" max="1" step="0.05" value="0.5" class="input-field"
-                            style="width: 100%;" oninput="updateThreshold('quake', this.value)">
-                    </div>
-                    <div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span>Wildfire Risk Threshold</span>
-                            <span id="fireThresholdVal"
-                                style="color: var(--accent-tertiary); font-weight: 600;">0.40</span>
-                        </div>
-                        <input type="range" min="0" max="1" step="0.05" value="0.4" class="input-field"
-                            style="width: 100%;" oninput="updateThreshold('fire', this.value)">
-                    </div>
-                </div>
-            </div>
             <div class="card-3d" style="padding: 2rem;">
                 <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-envelope"
                         style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Notification Preferences</h3>
@@ -140,23 +110,44 @@
                 </div>
             </div>
             <div class="card-3d" style="padding: 2rem;">
-                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-map-marker-alt"
-                        style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Default Location</h3>
-                <div style="position: relative; margin-bottom: 1rem;">
-                    <i class="fas fa-search"
-                        style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted);"></i>
-                    <input type="text" class="input-field" id="defaultCity" value="Karachi, Sindh"
-                        placeholder="Search city..." style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem;"
-                        autocomplete="off">
-                    <div id="cityDropdown"
-                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-card); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); margin-top: 0.5rem; max-height: 200px; overflow-y: auto; z-index: 1000;">
+                <h3 style="font-weight: 700; margin-bottom: 1.5rem;"><i class="fas fa-location-dot"
+                        style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Location</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div style="border:1px solid var(--border-color); border-radius:10px; padding:1rem;">
+                        <h4 style="margin-bottom:0.75rem;">Add Location</h4>
+                        <div style="display: flex; gap: 0.75rem;">
+                        <input id="savedCity" type="text" class="input-field" placeholder="Search city" style="flex:1;" oninput="showCitySuggestions(this.value)">
+                        <button class="btn btn-primary" onclick="saveUserLocation()"><i class="fas fa-plus"></i> Add</button>
+                    </div>
+                    <ul id="citySuggestions" style="list-style:none; padding:0; margin:0; max-height:160px; overflow:auto; border:1px solid var(--border-color); border-radius:8px; display:none;"></ul>
+                        </div>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top:0.5rem;">
+                            <input id="makeDefaultLocation" type="checkbox">
+                            <span>Set as default location</span>
+                        </label>
+                        <p id="locationStatus" style="color: var(--text-muted); font-size: 0.85rem; margin-top:0.5rem;"></p>
+
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 0.5rem;">Saved locations</h4>
+                        <ul id="savedLocationsList" style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.5rem;"></ul>
+                        <button id="showMoreLocations" class="btn btn-secondary" style="margin-top:0.75rem; display:none;" onclick="showAllSavedLocations()">Show more</button>
                     </div>
                 </div>
-                <p style="font-size: 0.85rem; color: var(--text-muted);">This location will be used as default for all
-                    monitoring dashboards.</p>
             </div>
         </div>
     </main>
+    <div id="defaultLocationModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:2000; align-items:center; justify-content:center;">
+        <div style="background:var(--bg-card); padding:1.5rem; border-radius:12px; max-width:360px; width:90%;">
+            <h4 style="margin-bottom:0.75rem;">Default location already set</h4>
+            <p id="defaultModalText" style="margin-bottom:1rem; color:var(--text-muted);"></p>
+            <div style="display:flex; flex-direction:column; gap:0.5rem;">
+                <button class="btn btn-primary" style="width:100%;" onclick="resolveDefaultModal('change')">Change default</button>
+                <button class="btn btn-secondary" style="width:100%;" onclick="resolveDefaultModal('without')">Save without default</button>
+                <button class="btn btn-secondary" style="width:100%;" onclick="resolveDefaultModal('cancel')">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <!-- User Dropdown -->
     <div id="userDropdown" class="dropdown-menu" style="right: 2rem;">
@@ -179,10 +170,133 @@
                 return;
             }
             AuthManager.loadUserName();
+            renderSavedLocations();
         });
-        function updateThreshold(type, value) {
-            document.getElementById(type + 'ThresholdVal').textContent = parseFloat(value).toFixed(2);
+        let showAllLocations = false;
+        function getSavedLocations() {
+            try { return JSON.parse(localStorage.getItem('disasterguard_saved_locations') || '[]'); } catch (e) { return []; }
         }
+        function setSavedLocations(list) {
+            localStorage.setItem('disasterguard_saved_locations', JSON.stringify(list));
+        }
+        function getDefaultLocation() {
+            try { return JSON.parse(localStorage.getItem('disasterguard_default_location') || 'null'); } catch (e) { return null; }
+        }
+        function setDefaultLocation(value) {
+            localStorage.setItem('disasterguard_default_location', JSON.stringify(value));
+        }
+        async function showCitySuggestions(query) {
+            const ul = document.getElementById('citySuggestions');
+            if (!query || query.length < 2) { ul.style.display = 'none'; ul.innerHTML = ''; return; }
+            try {
+                const res = await fetch(`/api/weather/autocomplete?query=${encodeURIComponent(query)}`);
+                const data = await res.json();
+                const suggestions = data.suggestions || [];
+                ul.innerHTML = suggestions.map(s => {
+                    const name = (typeof s === 'string') ? s : (s.name || s.city || '');
+                    return `<li style="padding:0.5rem 0.75rem; cursor:pointer;" onclick="selectCitySuggestion('${String(name).replace(/'/g, "\\'")}')">${name}</li>`;
+                }).join('');
+                ul.style.display = suggestions.length ? 'block' : 'none';
+            } catch (e) {
+                ul.style.display = 'none';
+            }
+        }
+        function selectCitySuggestion(city) {
+            document.getElementById('savedCity').value = city;
+            document.getElementById('citySuggestions').style.display = 'none';
+        }
+        let defaultModalResolver = null;
+        function showDefaultLocationModal(existingCity, newCity) {
+            return new Promise(resolve => {
+                defaultModalResolver = resolve;
+                document.getElementById('defaultModalText').textContent = `A default location is already set to ${existingCity}. What do you want to do for ${newCity}?`;
+                document.getElementById('defaultLocationModal').style.display = 'flex';
+            });
+        }
+        function resolveDefaultModal(choice) {
+            document.getElementById('defaultLocationModal').style.display = 'none';
+            if (defaultModalResolver) { defaultModalResolver(choice); defaultModalResolver = null; }
+        }
+        async function saveUserLocation() {
+            const city = document.getElementById('savedCity').value.trim();
+            if (!city) {
+                document.getElementById('locationStatus').textContent = 'Please enter a city.';
+                return;
+            }
+            const makeDefault = document.getElementById('makeDefaultLocation').checked;
+            let value = { city, latitude: 0, longitude: 0, source: 'manual' };
+            try {
+                const res = await fetch(`/api/weather/search?city=${encodeURIComponent(city)}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const place = data.city || {};
+                    const lat = Number(place.lat || 0);
+                    const lon = Number(place.lng || place.lon || 0);
+                    if (lat && lon) {
+                        value = { city: place.name || city, latitude: lat, longitude: lon, source: 'search' };
+                    }
+                }
+            } catch (e) {}
+            value.city = value.city || city;
+            const list = getSavedLocations();
+            if (!list.some(x => x.city.toLowerCase() === value.city.toLowerCase())) {
+                list.unshift(value);
+            }
+            setSavedLocations(list);
+            if (makeDefault) {
+                const existing = getDefaultLocation();
+                if (existing && existing.city.toLowerCase() !== value.city.toLowerCase()) {
+                    const choice = await showDefaultLocationModal(existing.city, value.city);
+                    if (choice === 'change') {
+                        setDefaultLocation(value);
+                    } else if (choice === 'cancel') {
+                        document.getElementById('locationStatus').textContent = 'Cancelled.';
+                        return;
+                    }
+                } else {
+                    setDefaultLocation(value);
+                }
+            }
+            try {
+                const user = (window.AuthManager && typeof window.AuthManager.getUser === 'function') ? window.AuthManager.getUser() : null;
+                if (user && user.email) {
+                    fetch('/api/auth/update-location', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: user.email, location: value.city })
+                    });
+                }
+            } catch (e) {}
+            document.getElementById('savedCity').value = '';
+            document.getElementById('makeDefaultLocation').checked = false;
+            document.getElementById('locationStatus').textContent = makeDefault ? 'Location saved and set as default.' : 'Location saved.';
+            renderSavedLocations();
+            renderDefaultLocation();
+        }
+        function renderSavedLocations() {
+            const list = getSavedLocations();
+            const ul = document.getElementById('savedLocationsList');
+            const btn = document.getElementById('showMoreLocations');
+            const visible = showAllLocations ? list : list.slice(0, 5);
+            const def = getDefaultLocation();
+            ul.innerHTML = visible.map(loc => {
+                const isDefault = def && def.city.toLowerCase() === loc.city.toLowerCase();
+                return `<li style="padding:0.5rem 0.75rem; border:1px solid var(--border-color); border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>${loc.city}${isDefault ? ' <strong style="color:var(--accent-primary);">(default)</strong>' : ''}</span>
+                    <button class="btn btn-secondary" style="padding:0.25rem 0.5rem; font-size:0.8rem;" onclick="setDefaultByName('${loc.city.replace(/'/g, "\\'")}')">Set default</button>
+                </li>`;
+            }).join('') || '<li style="color:var(--text-muted);">No saved locations yet.</li>';
+            btn.style.display = (!showAllLocations && list.length > 5) ? 'inline-block' : 'none';
+        }
+        function showAllSavedLocations() {
+            showAllLocations = true;
+            renderSavedLocations();
+        }
+        function setDefaultByName(city) {
+            const loc = getSavedLocations().find(x => x.city.toLowerCase() === city.toLowerCase());
+            if (loc) { setDefaultLocation(loc); renderSavedLocations(); renderDefaultLocation(); }
+        }
+
         function saveSettings() {
             alert('Settings saved successfully!');
         }
@@ -241,6 +355,7 @@
             }
         });
     </script>
+    <script src="../js/mobile-nav.js"></script>
 </body>
 
 </html>

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- NO-CACHE METATAGS -->
@@ -17,6 +18,9 @@
     <script>
         // No localStorage clearing - we need the auth token!
     </script>
+    <script src="../js/location.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/api-config.js"></script>
 </head>
 
 <body>
@@ -329,7 +333,7 @@
             }
 
             // API call to change password
-            fetch('http://localhost:5001/api/admin/change-password', {
+            fetch('/api/admin/change-password', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -379,7 +383,7 @@
             }
 
             // API call to add moderator
-            fetch('http://localhost:5001/api/admin/add-moderator', {
+            fetch('/api/admin/add-moderator', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -415,7 +419,7 @@
         // Remove Moderator
         function removeModerator(id) {
             if (confirm('Are you sure you want to remove this moderator?')) {
-                fetch(`http://localhost:5001/api/admin/remove-moderator/${id}`, {
+                fetch(`/api/admin/remove-moderator/${id}`, {
                     method: 'DELETE',
                     headers: APIManager.getHeaders()
                 })
@@ -437,7 +441,7 @@
 
         // Load Moderators
         function loadModerators() {
-            fetch('http://localhost:5001/api/admin/moderators', {
+            fetch('/api/admin/moderators', {
                 headers: APIManager.getHeaders()
             })
                 .then(response => response.json())
@@ -515,6 +519,7 @@
         // Load moderators on page load
         loadModerators();
     </script>
+    <script src="../js/mobile-nav.js"></script>
 </body>
 
 </html>

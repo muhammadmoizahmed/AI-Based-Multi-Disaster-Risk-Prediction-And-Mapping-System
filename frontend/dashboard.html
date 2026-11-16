@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- NO-CACHE METATAGS -->
@@ -82,7 +83,7 @@
             <ul class="sidebar-menu">
                 <li><a href="pages/flood.html"><i class="fas fa-water" style="color: var(--accent-primary);"></i>
                         Flood/Rain</a></li>
-                <li><a href="pages/earthquake.html"><i class="fas fa-globe-asia"
+                <li><a href="pages/earthquake.html?v=3"><i class="fas fa-globe-asia"
                             style="color: var(--accent-secondary);"></i> Earthquake</a></li>
                 <li><a href="pages/wildfire.html"><i class="fas fa-fire" style="color: var(--accent-tertiary);"></i>
                         Wildfire</a></li>
@@ -118,6 +119,7 @@
             <div>
                 <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">Dashboard</h1>
                 <p style="color: var(--text-secondary);">Welcome back! Here's your disaster monitoring overview.</p>
+                <p id="dashboardLocationStatus" style="color: var(--accent-primary); font-size: 0.9rem; margin-top: 0.5rem;">Detecting your location...</p>
             </div>
             <div style="display: flex; gap: 1rem;">
                 <button class="btn btn-secondary" onclick="refreshData()">
@@ -131,6 +133,23 @@
             </div>
         </div>
 
+        <!-- Location Changer -->
+        <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <div style="position: relative; flex: 1; max-width: 380px;">
+                <i class="fas fa-search" style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-secondary);"></i>
+                <input id="dashboardCityInput" type="text" list="dashboardCityList" autocomplete="off"
+                    placeholder="Search city to change location..."
+                    style="width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+                <datalist id="dashboardCityList"></datalist>
+            </div>
+            <button class="btn btn-primary" onclick="applyDashboardCity()">
+                <i class="fas fa-map-marker-alt"></i> Change Location
+            </button>
+            <button class="btn btn-secondary" onclick="useMyLocation()">
+                <i class="fas fa-location-crosshairs"></i> Use My Location
+            </button>
+        </div>
+
         <!-- Risk Score Cards -->
         <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem;">
             <!-- Flood Risk -->
@@ -138,14 +157,14 @@
                 <div class="risk-header">
                     <span class="risk-title"><i class="fas fa-water"
                             style="margin-right: 0.5rem; color: var(--accent-primary);"></i>Flood Risk</span>
-                    <span id="floodBadge" class="risk-badge high">High</span>
+                    <span id="floodBadge" class="risk-badge">--</span>
                 </div>
-                <div id="floodScore" class="risk-score" style="color: var(--accent-primary);">0.73</div>
+                <div id="floodScore" class="risk-score" style="color: var(--accent-primary);">--</div>
                 <div class="risk-bar">
-                    <div id="floodBar" class="risk-bar-fill high" style="width: 73%;"></div>
+                    <div id="floodBar" class="risk-bar-fill" style="width: 0%;"></div>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                    <small style="color: var(--text-secondary);">Karachi, Sindh</small>
+                    <small id="floodRegion" style="color: var(--text-secondary);">Loading...</small>
                     <a href="pages/flood.html"
                         style="color: var(--accent-primary); font-size: 0.85rem; text-decoration: none;">View Details
                         →</a>
@@ -157,15 +176,15 @@
                 <div class="risk-header">
                     <span class="risk-title"><i class="fas fa-globe-asia"
                             style="margin-right: 0.5rem; color: var(--accent-secondary);"></i>Earthquake Risk</span>
-                    <span id="quakeBadge" class="risk-badge moderate">Moderate</span>
+                    <span id="quakeBadge" class="risk-badge">--</span>
                 </div>
-                <div id="quakeScore" class="risk-score" style="color: var(--accent-secondary);">0.45</div>
+                <div id="quakeScore" class="risk-score" style="color: var(--accent-secondary);">--</div>
                 <div class="risk-bar">
-                    <div id="quakeBar" class="risk-bar-fill moderate" style="width: 45%;"></div>
+                    <div id="quakeBar" class="risk-bar-fill" style="width: 0%;"></div>
                 </div>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                    <small style="color: var(--text-secondary);">Islamabad Region</small>
-                    <a href="pages/earthquake.html"
+                    <small id="quakeRegion" style="color: var(--text-secondary);">Detecting location...</small>
+                    <a id="quakeDetailsLink" href="pages/earthquake.html?v=3"
                         style="color: var(--accent-secondary); font-size: 0.85rem; text-decoration: none;">View Details
                         →</a>
                 </div>
@@ -240,7 +259,7 @@
                 </div>
                 <div class="alert-feed" style="padding: 1rem;">
                     <!-- Alert 1 -->
-                    <div class="alert-item warning">
+                    <div class="alert-item warning" data-locations="Karachi,Sindh">
                         <div class="alert-icon">
                             <i class="fas fa-water"></i>
                         </div>
@@ -252,7 +271,7 @@
                     </div>
 
                     <!-- Alert 2 -->
-                    <div class="alert-item critical">
+                    <div class="alert-item critical" data-locations="Islamabad,ICT">
                         <div class="alert-icon">
                             <i class="fas fa-globe-asia"></i>
                         </div>
@@ -264,7 +283,7 @@
                     </div>
 
                     <!-- Alert 3 -->
-                    <div class="alert-item warning">
+                    <div class="alert-item warning" data-locations="all">
                         <div class="alert-icon">
                             <i class="fas fa-fire"></i>
                         </div>
@@ -276,7 +295,7 @@
                     </div>
 
                     <!-- Alert 4 -->
-                    <div class="alert-item warning">
+                    <div class="alert-item warning" data-locations="all">
                         <div class="alert-icon">
                             <i class="fas fa-cloud-rain"></i>
                         </div>
@@ -347,42 +366,11 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="recentActivityBody">
                         <tr>
-                            <td><i class="fas fa-water"
-                                    style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Flood</td>
-                            <td>Karachi, Sindh</td>
-                            <td><span class="risk-badge high">High (0.73)</span></td>
-                            <td>2025-04-16 14:30</td>
-                            <td><span class="status-badge warning">Monitoring</span></td>
-                            <td><a href="pages/flood.html" style="color: var(--accent-primary);">Details</a></td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-globe-asia"
-                                    style="color: var(--accent-secondary); margin-right: 0.5rem;"></i>Earthquake</td>
-                            <td>Islamabad</td>
-                            <td><span class="risk-badge moderate">Mod (0.45)</span></td>
-                            <td>2025-04-16 12:15</td>
-                            <td><span class="status-badge active">Active</span></td>
-                            <td><a href="pages/earthquake.html" style="color: var(--accent-primary);">Details</a></td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-fire"
-                                    style="color: var(--accent-tertiary); margin-right: 0.5rem;"></i>Wildfire</td>
-                            <td>Punjab Region</td>
-                            <td><span class="risk-badge low">Low (0.12)</span></td>
-                            <td>2025-04-16 08:00</td>
-                            <td><span class="status-badge active">Normal</span></td>
-                            <td><a href="pages/wildfire.html" style="color: var(--accent-primary);">Details</a></td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-cloud-rain"
-                                    style="color: var(--accent-primary); margin-right: 0.5rem;"></i>Heavy Rain</td>
-                            <td>Lahore, Punjab</td>
-                            <td><span class="risk-badge moderate">Mod (0.58)</span></td>
-                            <td>2025-04-15 22:45</td>
-                            <td><span class="status-badge warning">Alert</span></td>
-                            <td><a href="pages/flood.html" style="color: var(--accent-primary);">Details</a></td>
+                            <td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 1.5rem;">
+                                Loading recent activity...
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -448,7 +436,8 @@
 
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/api-config.js"></script>
+    <script src="js/location.js"></script>
     <script>
         // Check authentication
         document.addEventListener('DOMContentLoaded', () => {
@@ -483,83 +472,164 @@
 
             // Start live updates
             startLiveUpdates();
+            loadDashboardEarthquakeRisk();
+            loadFloodDashboardRisk();
+            loadRecentActivity();
+            updateDashboardMap();
         });
 
         // Initialize Mini Map
+        let dashboardMap = null;
+        let dashboardLocationMarker = null;
+        let dashboardRiskMarkers = [];
+        const dashboardRiskColors = {
+            low: '#00c853',
+            moderate: '#ffd600',
+            high: '#ff6d00',
+            extreme: '#ff1744'
+        };
+
         function initMiniMap() {
-            const map = L.map('miniMap', {
+            dashboardMap = L.map('miniMap', {
                 zoomControl: false,
                 attributionControl: false
             }).setView([30.3753, 69.3451], 5);
 
-            // Dark theme map tiles
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+                maxNativeZoom: 16,
                 maxZoom: 19
-            }).addTo(map);
+            }).addTo(dashboardMap);
 
-            // Sample risk markers
-            const locations = [
-                { lat: 24.8607, lon: 67.0011, city: 'Karachi', risk: 'high' },
-                { lat: 31.5497, lon: 74.3436, city: 'Lahore', risk: 'moderate' },
-                { lat: 33.6844, lon: 73.0479, city: 'Islamabad', risk: 'moderate' },
-                { lat: 30.1798, lon: 66.9750, city: 'Quetta', risk: 'low' },
-                { lat: 34.0151, lon: 71.5249, city: 'Peshawar', risk: 'low' }
-            ];
-
-            const colors = {
-                low: '#00c853',
-                moderate: '#ffd600',
-                high: '#ff6d00',
-                extreme: '#ff1744'
-            };
-
-            locations.forEach(loc => {
-                L.circleMarker([loc.lat, loc.lon], {
-                    radius: 15,
-                    fillColor: colors[loc.risk],
-                    color: '#fff',
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.7
-                }).addTo(map).bindPopup(`<b>${loc.city}</b><br>Risk: ${loc.risk.toUpperCase()}`);
-            });
+            loadDashboardMapMarkers();
+            updateDashboardMap();
         }
 
-        // Live updates simulation
+        async function loadDashboardMapMarkers() {
+            if (!dashboardMap) return;
+            try {
+                const res = await fetch('/api/flood-lstm/overview?limit=12');
+                if (!res.ok) return;
+                const data = await res.json();
+                dashboardRiskMarkers.forEach(m => dashboardMap.removeLayer(m));
+                dashboardRiskMarkers = [];
+                (data.cities || []).forEach(c => {
+                    if (typeof c.latitude !== 'number' || typeof c.longitude !== 'number') return;
+                    const color = dashboardRiskColors[c.risk_level] || '#00d4ff';
+                    const pct = Math.round((c.probability || 0) * 100);
+                    const marker = L.circleMarker([c.latitude, c.longitude], {
+                        radius: 10,
+                        fillColor: color,
+                        color: '#fff',
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.75
+                    }).addTo(dashboardMap).bindPopup(`<b>${c.city}</b><br>Flood risk: ${c.risk_level} (${pct}%)`);
+                    dashboardRiskMarkers.push(marker);
+                });
+            } catch (e) {
+                console.warn('Dashboard map markers unavailable', e);
+            }
+        }
+
+        async function updateDashboardMap() {
+            if (!dashboardMap) return;
+            try {
+                const loc = await DisasterLocation.detect();
+                if (dashboardLocationMarker) dashboardMap.removeLayer(dashboardLocationMarker);
+                dashboardLocationMarker = L.circleMarker([loc.latitude, loc.longitude], {
+                    radius: 9,
+                    fillColor: '#00d4ff',
+                    color: '#ffffff',
+                    weight: 3,
+                    opacity: 1,
+                    fillOpacity: 0.95
+                }).addTo(dashboardMap).bindPopup(`<b>Your location</b><br>${loc.city}`);
+                dashboardMap.setView([loc.latitude, loc.longitude], 6);
+            } catch (e) {
+                console.warn('Dashboard map location unavailable', e);
+            }
+        }
+
+        function distanceKm(lat1, lon1, lat2, lon2) {
+            const radius = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat / 2) ** 2 +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) ** 2;
+            return radius * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        function nearestCity(cities, lat, lon) {
+            if (!Array.isArray(cities) || !cities.length) return null;
+            return cities.reduce((best, city) => {
+                if (!best) return city;
+                const bestDistance = distanceKm(lat, lon, best.latitude, best.longitude);
+                const nextDistance = distanceKm(lat, lon, city.latitude, city.longitude);
+                return nextDistance < bestDistance ? city : best;
+            }, null);
+        }
+
+        async function loadDashboardEarthquakeRisk() {
+            const scoreEl = document.getElementById("quakeScore");
+            const badgeEl = document.getElementById("quakeBadge");
+            const barEl = document.getElementById("quakeBar");
+            const regionEl = document.getElementById("quakeRegion");
+            try {
+                const location = await DisasterLocation.detect();
+                const response = await fetch(`/api/earthquake/risk-by-city?city=${encodeURIComponent(location.city)}&live=true&_ts=${Date.now()}`);
+                if (!response.ok) throw new Error(`Earthquake API returned ${response.status}`);
+                const data = await response.json();
+                const probability = data.prediction.damage_probability;
+                const level = data.prediction.risk_level;
+                const colorMap = { low: "#00c853", moderate: "#ffd600", high: "#ff6d00", extreme: "#ff1744" };
+                const color = colorMap[level] || "#ffd600";
+                if (scoreEl) {
+                    scoreEl.textContent = `${Math.round(probability * 100)}%`;
+                    scoreEl.style.color = color;
+                }
+                if (badgeEl) {
+                    badgeEl.textContent = level.charAt(0).toUpperCase() + level.slice(1);
+                    badgeEl.className = `risk-badge ${level}`;
+                    badgeEl.style.color = color;
+                }
+                if (barEl) {
+                    barEl.style.width = `${Math.round(probability * 100)}%`;
+                    barEl.className = `risk-bar-fill ${level}`;
+                }
+                if (regionEl) {
+                    const source = data.data_source === "live_usgs"
+                        ? "live USGS"
+                        : data.data_source === "historical_dataset_fallback"
+                            ? "historical (live unavailable)"
+                            : "historical";
+                    const loc = data.location || {};
+                    const nearest = data.live_source && data.live_source.nearest_event;
+                    let text = `${loc.city}, ${loc.province} · ${source}`;
+                    if (data.data_source === "live_usgs" && loc.window_days != null) {
+                        text += ` · ${loc.events_in_scope || 0} local (${loc.window_days}d)`;
+                    }
+                    regionEl.textContent = text;
+                    regionEl.title = `${loc.basis || ""}${nearest ? ` · nearest M${Number(nearest.magnitude).toFixed(1)} ${Math.round(nearest.distance_km)} km, ${Math.round(nearest.age_days)} days ago` : ""}`;
+                }
+                const detailsLink = document.getElementById("quakeDetailsLink");
+                if (detailsLink) {
+                    detailsLink.href = `pages/earthquake.html?v=3&city=${encodeURIComponent(data.location.city)}`;
+                }
+            } catch (error) {
+                console.warn("Dashboard earthquake risk could not be loaded", error);
+                if (regionEl) regionEl.textContent = "Earthquake risk unavailable";
+            }
+        }
+
+        // Periodic live refresh of real risk data (no simulated values)
         function startLiveUpdates() {
             setInterval(() => {
-                // Simulate slight risk score changes
-                const floodScore = 0.70 + (Math.random() * 0.05);
-                updateRiskCard('flood', floodScore);
-            }, 30000); // Every 30 seconds
-        }
-
-        function updateRiskCard(type, score) {
-            const scoreEl = document.getElementById(`${type}Score`);
-            const barEl = document.getElementById(`${type}Bar`);
-            const badgeEl = document.getElementById(`${type}Badge`);
-
-            scoreEl.textContent = score.toFixed(2);
-            barEl.style.width = `${score * 100}%`;
-
-            // Update badge based on score
-            let badgeClass, badgeText;
-            if (score < 0.3) {
-                badgeClass = 'low';
-                badgeText = 'Low';
-            } else if (score < 0.6) {
-                badgeClass = 'moderate';
-                badgeText = 'Moderate';
-            } else if (score < 0.8) {
-                badgeClass = 'high';
-                badgeText = 'High';
-            } else {
-                badgeClass = 'extreme';
-                badgeText = 'Extreme';
-            }
-
-            badgeEl.className = `risk-badge ${badgeClass}`;
-            badgeEl.textContent = badgeText;
+                loadFloodDashboardRisk();
+                loadDashboardEarthquakeRisk();
+                loadRecentActivity();
+                updateDashboardMap();
+            }, 120000); // Every 2 minutes (backend also caches live data)
         }
 
         // UI Functions
@@ -593,14 +663,94 @@
         function refreshData() {
             const icon = document.getElementById('refreshIcon');
             icon.classList.add('fa-spin');
-
-            showToast('Refreshing data...', 'info');
-
-            setTimeout(() => {
+            Promise.allSettled([
+                loadDashboardEarthquakeRisk(),
+                loadFloodDashboardRisk(),
+                loadRecentActivity(),
+                loadDashboardAlerts(),
+                updateDashboardMap()
+            ]).finally(() => {
                 icon.classList.remove('fa-spin');
                 showToast('Data updated successfully!', 'success');
-            }, 1500);
+            });
+
+            showToast('Refreshing data...', 'info');
         }
+
+        async function refreshDashboardAll() {
+            await Promise.allSettled([
+                loadDashboardEarthquakeRisk(),
+                loadFloodDashboardRisk(),
+                loadRecentActivity(),
+                loadDashboardAlerts(),
+                loadDashboardMapMarkers(),
+                updateDashboardMap()
+            ]);
+            await loadDashboardLocationAlerts();
+        }
+
+        async function applyDashboardCity() {
+            const input = document.getElementById('dashboardCityInput');
+            const city = (input && input.value ? input.value : '').trim();
+            if (!city) {
+                showToast('Please enter a city name', 'error');
+                return;
+            }
+            try {
+                const value = await DisasterLocation.search(city);
+                showToast(`Location changed to ${value.city}`, 'success');
+                await refreshDashboardAll();
+            } catch (error) {
+                console.warn('City search failed', error);
+                showToast(`Could not find "${city}"`, 'error');
+            }
+        }
+
+        async function useMyLocation() {
+            try {
+                DisasterLocation.clearSelected();
+                const input = document.getElementById('dashboardCityInput');
+                if (input) input.value = '';
+                await DisasterLocation.detectOwn(true);
+                showToast('Using your current location', 'success');
+                await refreshDashboardAll();
+            } catch (error) {
+                console.warn('Location detection failed', error);
+                showToast('Could not detect your location', 'error');
+            }
+        }
+
+        // Autocomplete for the dashboard city search
+        (function setupDashboardCityAutocomplete() {
+            let timer = null;
+            function setup() {
+                const input = document.getElementById('dashboardCityInput');
+                const list = document.getElementById('dashboardCityList');
+                if (!input || !list) return;
+                input.addEventListener('input', () => {
+                    const q = input.value.trim();
+                    if (timer) clearTimeout(timer);
+                    if (q.length < 2) { list.innerHTML = ''; return; }
+                    timer = setTimeout(async () => {
+                        try {
+                            const res = await fetch('/api/weather/autocomplete?query=' + encodeURIComponent(q));
+                            if (!res.ok) return;
+                            const data = await res.json();
+                            const names = (data.suggestions || []).map(s => s.name || s.city || s).filter(Boolean);
+                            list.innerHTML = names.map(n => `<option value="${n}"></option>`).join('');
+                        } catch (e) { /* ignore autocomplete errors */ }
+                    }, 250);
+                });
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') { e.preventDefault(); applyDashboardCity(); }
+                });
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setup);
+            } else {
+                setup();
+            }
+        })();
 
         function generateReport() {
             showToast('Generating PDF report...', 'info');
@@ -649,11 +799,228 @@
         // Close dropdowns when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.navbar')) {
-                document.getElementById('notifDropdown').style.display = 'none';
-                document.getElementById('userDropdown').style.display = 'none';
+                const notifDropdown = document.getElementById('notifDropdown');
+                const userDropdown = document.getElementById('userDropdown');
+                if (notifDropdown) notifDropdown.style.display = 'none';
+                if (userDropdown) userDropdown.style.display = 'none';
             }
         });
+
+        function dashboardLocationMatches(alertLocations, location) {
+            const city = (location.city || "").toLowerCase();
+            const haystack = (alertLocations || "").toLowerCase();
+            if (haystack === "all" || haystack === "") return true;
+            return haystack.split(",").some(part => {
+                const value = part.trim();
+                return value && (city.includes(value) || value.includes(city));
+            });
+        }
+
+        async function loadDashboardLocationAlerts() {
+            const statusEl = document.getElementById("dashboardLocationStatus");
+            const feed = document.querySelector(".alert-feed");
+            if (!feed) return;
+            const location = await DisasterLocation.detect();
+            if (statusEl) {
+                const srcLabel = location.source === "gps" ? "GPS"
+                    : location.source === "ip" ? "IP location"
+                    : location.source === "search" ? "selected city"
+                    : "default location";
+                statusEl.textContent = `Showing alerts for ${location.city} (${srcLabel})`;
+            }
+            Array.from(feed.querySelectorAll(".alert-item")).forEach(item => {
+                item.style.display = dashboardLocationMatches(item.dataset.locations, location) ? "" : "none";
+            });
+        }
+
+        async function loadFloodDashboardRisk() {
+            const scoreEl = document.getElementById('floodScore');
+            const badgeEl = document.getElementById('floodBadge');
+            const barEl = document.getElementById('floodBar');
+            const regionEl = document.getElementById('floodRegion');
+            try {
+                const location = await DisasterLocation.detect();
+                let city = location.city;
+                let response = await fetch('/api/flood-lstm/predict-by-city?live=true&city=' + encodeURIComponent(city));
+                if (!response.ok) {
+                    // Selected city may not have flood history; fall back to the nearest supported city.
+                    try {
+                        const citiesRes = await fetch('/api/flood-lstm/cities');
+                        if (citiesRes.ok) {
+                            const citiesData = await citiesRes.json();
+                            const supported = (citiesData.cities || []).filter(c => c.history_available);
+                            const nearest = nearestCity(supported, location.latitude, location.longitude);
+                            if (nearest) {
+                                city = nearest.city;
+                                response = await fetch('/api/flood-lstm/predict-by-city?live=true&city=' + encodeURIComponent(city));
+                            }
+                        }
+                    } catch (e) { /* ignore fallback errors */ }
+                }
+                if (!response.ok) throw new Error('Flood API returned ' + response.status);
+                const data = await response.json();
+                const top = data.prediction;
+                const percent = Math.round(top.flood_probability * 100);
+                const colorMap = { low: '#00c853', moderate: '#ffd600', high: '#ff6d00', extreme: '#ff1744' };
+                const color = colorMap[top.risk_level] || '#00d4ff';
+                if (scoreEl) {
+                    scoreEl.textContent = Math.round(top.flood_probability * 100) + '%';
+                    scoreEl.style.color = color;
+                }
+                if (badgeEl) {
+                    badgeEl.textContent = String(top.risk_level).charAt(0).toUpperCase() + String(top.risk_level).slice(1);
+                    badgeEl.className = 'risk-badge ' + (top.risk_level === 'extreme' ? 'critical' : top.risk_level);
+                    badgeEl.style.color = color;
+                }
+                if (barEl) {
+                    barEl.style.width = percent + '%';
+                    barEl.className = 'risk-bar-fill ' + (top.risk_level === 'extreme' ? 'critical' : top.risk_level);
+                }
+                if (regionEl) regionEl.textContent = city === location.city ? city : `${location.city} → ${city}`;
+            } catch (e) {
+                console.warn('Flood LSTM dashboard risk unavailable:', e);
+                if (scoreEl) scoreEl.textContent = '--';
+                if (badgeEl) badgeEl.textContent = '--';
+                if (barEl) barEl.style.width = '0%';
+                if (regionEl) regionEl.textContent = 'Unavailable';
+            }
+        }
+
+        function riskBadge(level, label) {
+            const cls = level === 'extreme' ? 'critical' : (level || 'low');
+            return `<span class="risk-badge ${cls}">${label}</span>`;
+        }
+
+        async function loadRecentActivity() {
+            const tbody = document.getElementById('recentActivityBody');
+            if (!tbody) return;
+            const rows = [];
+            try {
+                const location = await DisasterLocation.detect();
+                const floodRes = await fetch('/api/flood-lstm/predict-by-city?live=true&city=' + encodeURIComponent(location.city));
+                if (floodRes.ok) {
+                    const fd = await floodRes.json();
+                    const p = fd.prediction;
+                    const pct = Math.round(p.flood_probability * 100);
+                    rows.push({
+                        icon: 'fa-water',
+                        color: 'var(--accent-primary)',
+                        type: 'Flood',
+                        location: location.city + (fd.observation && fd.observation.province ? ', ' + fd.observation.province : ''),
+                        risk: riskBadge(p.risk_level, p.risk_level.charAt(0).toUpperCase() + p.risk_level.slice(1) + ' (' + pct + '%)'),
+                        time: fd.last_observation_date || 'Now',
+                        status: p.flood_probability >= 0.5 ? 'Alert' : 'Monitoring',
+                        statusClass: p.flood_probability >= 0.5 ? 'active' : 'warning',
+                        href: 'pages/flood.html'
+                    });
+                }
+            } catch (e) { console.warn('Recent flood activity unavailable', e); }
+            try {
+                const location = await DisasterLocation.detect();
+                const quakeRes = await fetch('/api/earthquake/risk-by-city?city=' + encodeURIComponent(location.city) + '&live=true&_ts=' + Date.now());
+                if (quakeRes.ok) {
+                    const qd = await quakeRes.json();
+                    const p = qd.prediction;
+                    const pct = Math.round(p.damage_probability * 100);
+                    const scenario = qd.location && qd.location.scenario;
+                    rows.push({
+                        icon: 'fa-globe-asia',
+                        color: 'var(--accent-secondary)',
+                        type: 'Earthquake',
+                        location: qd.location.city + (qd.location.province ? ', ' + qd.location.province : ''),
+                        risk: riskBadge(p.risk_level, p.risk_level.charAt(0).toUpperCase() + p.risk_level.slice(1) + ' (' + pct + '%)'),
+                        time: scenario ? scenario.date : 'No local event',
+                        status: p.damage_probability >= 0.5 ? 'Active' : 'Normal',
+                        statusClass: p.damage_probability >= 0.5 ? 'active' : 'normal',
+                        href: 'pages/earthquake.html?v=3&city=' + encodeURIComponent(qd.location.city)
+                    });
+                }
+            } catch (e) { console.warn('Recent earthquake activity unavailable', e); }
+
+            if (!rows.length) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-secondary); padding: 1.5rem;">No recent activity</td></tr>';
+                return;
+            }
+            tbody.innerHTML = rows.map(r => `
+                <tr>
+                    <td><i class="fas ${r.icon}" style="color: ${r.color}; margin-right: 0.5rem;"></i>${r.type}</td>
+                    <td>${r.location}</td>
+                    <td>${r.risk}</td>
+                    <td>${r.time}</td>
+                    <td><span class="status-badge ${r.statusClass}">${r.status}</span></td>
+                    <td><a href="${r.href}" style="color: var(--accent-primary);">Details</a></td>
+                </tr>
+            `).join('');
+        }
+
+        async function loadDashboardAlerts() {
+            const feed = document.querySelector('.alert-feed');
+            if (!feed) return;
+            const items = [];
+            try {
+                const floodRes = await fetch('/api/flood-lstm/overview?limit=5');
+                if (floodRes.ok) {
+                    const floodData = await floodRes.json();
+                    (floodData.cities || []).filter(city => city.probability >= 0.25).slice(0, 3).forEach(city => {
+                        items.push({
+                            className: city.probability >= 0.5 ? 'critical' : 'warning',
+                            icon: 'fa-water',
+                            title: 'Flood Risk',
+                            text: `${city.city}: ${(city.probability * 100).toFixed(1)}% flood probability`,
+                            time: city.last_observation_date,
+                            locations: city.city
+                        });
+                    });
+                }
+            } catch (e) {
+                console.warn('Flood alerts unavailable:', e);
+            }
+            try {
+                const quakeRes = await fetch('/api/earthquake/usgs-events?limit=5&minmagnitude=4');
+                if (quakeRes.ok) {
+                    const quakeData = await quakeRes.json();
+                    (quakeData.events || []).slice(0, 3).forEach(event => {
+                        items.push({
+                            className: event.magnitude >= 5 ? 'critical' : 'warning',
+                            icon: 'fa-globe-asia',
+                            title: 'Earthquake Detected',
+                            text: `M${event.magnitude} ${event.place}`,
+                            time: new Date(event.time).toLocaleString(),
+                            locations: 'all'
+                        });
+                    });
+                }
+            } catch (e) {
+                console.warn('Earthquake alerts unavailable:', e);
+            }
+            if (items.length === 0) {
+                feed.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem; padding: 1rem;">No active alerts from live data.</p>';
+                return;
+            }
+            feed.innerHTML = items.map(item => `
+                <div class="alert-item ${item.className}" data-locations="${item.locations}">
+                    <div class="alert-icon"><i class="fas ${item.icon}"></i></div>
+                    <div class="alert-content">
+                        <h4>${item.title}</h4>
+                        <p>${item.text}</p>
+                    </div>
+                    <span class="alert-time">${item.time}</span>
+                </div>
+            `).join('');
+            await loadDashboardLocationAlerts();
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", loadDashboardLocationAlerts);
+            document.addEventListener("DOMContentLoaded", loadFloodDashboardRisk);
+            document.addEventListener("DOMContentLoaded", loadDashboardAlerts);
+        } else {
+            loadDashboardLocationAlerts();
+            loadFloodDashboardRisk();
+            loadDashboardAlerts();
+        }
     </script>
+    <script src="js/mobile-nav.js"></script>
 </body>
 
 </html>
